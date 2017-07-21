@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 namespace App\Http\Controllers\Auth;
 
 use App\User;
@@ -7,6 +6,11 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Hash;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
+
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -37,6 +41,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
+
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 
@@ -69,4 +74,68 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    
+
+
+    public function getRegister(){
+        return view('quanlytaichinh.register');
+    }
+
+    
+
+    public function postRegister(RegisterRequest $request)
+    {
+        echo "ok";
+        // $user                 = new User ;
+        // $image                = $request->file('Image');
+        // $nameimg              = $image->getClientOriginalName();
+        // $user->name           = $request->name;
+        // $user->image          = $nameimg;
+        // $user->email          = $request->email;
+        // $user->password       = Hash::make($request->password);
+        // $user->phone          = $request->phone;
+        // $user->address        = $request->address;
+        // $user->birthday       = $request->birthday;
+        // $user->remember_token = $request->_token;
+        // $user->sex            = $request->sex;
+        // $des                  = "public/upload/images";
+        // $image->move($des,$nameimg);
+        // $user->save();
+
+        // return redirect()->route('userinfo');
+    }
+
+    public function getLogin(){
+        return view('auth.login');
+    }
+
+    public function postLogin(LoginRequest $request)
+    {
+        
+
+
+        $remember = $request->remember;
+        $login = array(
+                        'email'    => $request->email,
+                        'password' => $request->password
+                        
+                    );
+
+        if(Auth::attempt($login,$remember)){
+            
+             return redirect()->route('userinfo')->with(['flash_level'=>'success','flash_message'=>"Chúc mừng bạn đã đăng nhập thành công"]);
+        }else{
+            return redirect()->route('getLogin')->with(['flash_level'=>'danger','flash_message'=>'Thông tin tài khoản không chính xác']);
+        }
+
+    }
+
+
+   
+
+    
+
+    
+
 }
