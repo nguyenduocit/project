@@ -94,7 +94,8 @@
 <!-- AdminLTE App -->
 <script src="{{ url('public/dist/js/app.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="{{ url('public/dist/js/demo.js') }}"></script>\
+<script src="{{ url('public/dist/js/demo.js') }}"></script>
 
+<script src="{{ url('public/style/js/javascript.js')}}" ></script>
 </body>
 </html>
