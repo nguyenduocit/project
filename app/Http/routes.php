@@ -48,8 +48,11 @@ Route::group(['prefix'=>'users'],function(){
 
 
 	Route::get('home',function(){
-		return view('quanlytaichinh.main');
+
+		return view('quanlytaichinh/home/index');
 	});
+
+	
 
 // route test
 Route::get('sendMail',['as'=>'sendMail','uses'=>'Auth\AuthController@sendMail']);
