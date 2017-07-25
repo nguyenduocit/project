@@ -22,6 +22,9 @@ use Cookie;
 
 class AuthController extends Controller
 {
+
+
+   
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
@@ -47,8 +50,7 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(){
 
        // $this->middleware($this->guestMiddleware(), ['except' => 'getLogout']);
     }
@@ -59,8 +61,7 @@ class AuthController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
-    {
+    protected function validator(array $data){
         return Validator::make($data, [
             'name'     => 'required|max:255',
             'email'    => 'required|email|max:255|unique:users',
@@ -74,8 +75,7 @@ class AuthController extends Controller
      * @param  array  $data
      * @return User
      */
-    protected function create(array $data)
-    {
+    protected function create(array $data){
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -88,18 +88,16 @@ class AuthController extends Controller
      * Load form Register.
      *
      */
+    
 
     protected function getRegister(){
 
         // If the user is logged in redirect page  home
-
-
         if(Auth::check()){
 
-        return redirect('home')->with(['flash_level'=>'success','flash_message'=>" "]);
+            return redirect('home')->with(['flash_level'=>'success','flash_message'=>" "]);
 
         }
-       
         return view('quanlytaichinh.register');
     }
 
@@ -111,11 +109,9 @@ class AuthController extends Controller
      * @return 
      */
     
-    protected function postRegister(RegisterRequest $request)
-    {
+    protected function postRegister(RegisterRequest $request){
 
         // Save register ;
-
         $user                 = new User ;
         $image                = $request->file('Image');
         $nameimg              = $image->getClientOriginalName();
@@ -128,7 +124,7 @@ class AuthController extends Controller
         $user->birthday       = $request->birthday;
         $user->remember_token = $request->_token;
         $user->sex            = $request->sex;
-        $des                  = "public/upload/images";
+        $des                  = FOLDER_PHOTOS;
         $image->move($des,$nameimg);
 
         // Send mail 
@@ -147,9 +143,8 @@ class AuthController extends Controller
         
         });
 
-
         $user->save();
-            return redirect('users/getLogin')->with(['flash_level'=>'success','flash_message'=>'You need to confirm your email before signing in']);
+        return redirect('users/getLogin')->with(['flash_level'=>'success','flash_message'=>'You need to confirm your email before signing in']);
 
     }
 
@@ -158,8 +153,8 @@ class AuthController extends Controller
      *
      * @return    
      */
-    protected function sendMail()
-    {
+    protected function sendMail(){
+
         $data = ['hoten'=>'Nguyenduoc'];
         Mail::send('emails.blanks', $data, function ($message) {
             $message->from('duocnguyenit1994@gmail.com', 'John Doe');
@@ -178,10 +173,9 @@ class AuthController extends Controller
     protected function getLogin(){
 
         // If the user is logged in redirect page  home
-
         if(Auth::check()){
 
-        return redirect('home')->with(['flash_level'=>'success','flash_message'=>" "]);
+            return redirect('home')->with(['flash_level'=>'success','flash_message'=>" "]);
 
         }
 
@@ -199,9 +193,7 @@ class AuthController extends Controller
 
     protected function postLogin(LoginRequest $request){
         
-
         // Luu thong tin user vao mang 
-
         $remember = $request->remember;
         $login = array(
                         'email'    => $request->email,
@@ -209,29 +201,18 @@ class AuthController extends Controller
                         
                       );
         // kiem tra nguoi dung da xac nhan email
-
         $user = DB::table('users')->where('email', $request->email)->get();
-
-        // Check that the user exists
+       
         
+        // Check that the user exists
         if(empty($user)){
 
             return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'The account information is incorrect']);
-
-
         }
-
-
-        foreach($user as $val){
-            $status = $val->status;
-        }
-
-
-        if( $status != 1 ){
+        //  VERIFY_EMAIL_SUCCESS = 1 User status confirmed
+        if( $user[0]->status != VERIFY_EMAIL_SUCCESS){
             return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'You need to confirm your email before signing in']);
         }
-
-
 
         // check isset cookie
         if(Cookie::get('status-login'))
@@ -240,8 +221,6 @@ class AuthController extends Controller
 
         }
         
-        
-
         // create session login
         
         if(Session::has('number')){
@@ -257,11 +236,9 @@ class AuthController extends Controller
 
         }
 
-
         // 
         
-        if(Session::has('number') && Session::get('number') > 5)
-        {
+        if(Session::has('number') && Session::get('number') > 5){
             $response = new Response();
 
             // create cookie
@@ -270,19 +247,14 @@ class AuthController extends Controller
             return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'The login account has been locked. Login after 15 minutes.']);
 
         }
-
-
         // check  Information login
-        
         if(Auth::attempt($login,$remember)){
 
             // remove session
-            
             Session::forget('number');
 
             // move page
-            
-            return redirect('home')->with(['flash_level'=>'success','flash_message'=>"Chúc mừng bạn đã đăng nhập thành công"]);
+            return redirect('home')->with(['flash_level'=>'success','flash_message'=>"Congratulations on your successful login"]);
 
 
         }else{
@@ -309,19 +281,12 @@ class AuthController extends Controller
             return redirect('users/getResetPassword')->with(['flash_level'=>'danger','flash_message'=>'Accounts do not exist in the database.']);
 
         }
-
-        foreach($user as $val ){
-
-            $id = $val->id;
-        }
-
         // update status
-        $user = User::find($id);
+        $user = User::find($user[0]->id);
 
         $user->status = 1;
 
         $user->save();
-
 
         return redirect('users/getLogin')->with(['flash_level'=>'success','flash_message'=>'Successful confirmation email']);
 

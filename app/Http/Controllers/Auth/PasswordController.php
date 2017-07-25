@@ -62,24 +62,18 @@ class PasswordController extends Controller
         // select information user
         $user = DB::table('users')->where('email', $request->email)->get();
 
-
-
         //If user information does not exist
-
         if(empty($user)){
 
             return redirect('users/getForgotPassword')->with(['flash_level'=>'danger','flash_message'=>'Email accounts do not exist in the database.']);
 
         }
-
-        foreach($user as $val){
-
             // Send mail 
             // create session 
-            Session::put('email', $val->email);
-            Session::put('name',  $val->name);
-            $token  = $val ->remember_token;
-        }
+            Session::put('email', $user[0]->email);
+            Session::put('name',  $user[0]->name);
+            $token  = $user[0]->remember_token;
+        
 
         // Send mail 
         // 
@@ -119,11 +113,7 @@ class PasswordController extends Controller
 
         }
 
-        foreach($user as $val){
-             
-            Session::put('id', $val->id);
-            
-        }
+        Session::put('id', $val->id);
 
         return redirect('users/getResetPassword')->with(['flash_level'=>'success','flash_message'=>'Enter password change information']);
 
@@ -156,8 +146,6 @@ class PasswordController extends Controller
             Session::forget('id');
             
             return redirect('users/getLogin')->with(['flash_level'=>'success','flash_message'=>'Change password successfully invite you to login']);
-
-
 
         }else{
 
