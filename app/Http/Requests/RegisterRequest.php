@@ -44,7 +44,7 @@ class RegisterRequest extends Request
                 'email.required'    => ' Please enter email.',
                 'email.email'       => ' Please enter the correct email format.',
                 'email.unique'      => ' The Email was registered .',
-                'password.required' => ' Please enter your password..',
+                'password.required' => ' Please enter your password.',
                 'password.min'      => ' Password long than 8 characters ',
                 'rpassword'         => ' Passwords do not match',
                 'phone.required'    => ' Please enter a phone number.',

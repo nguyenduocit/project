@@ -212,6 +212,15 @@ class AuthController extends Controller
 
         $user = DB::table('users')->where('email', $request->email)->get();
 
+        // Check that the user exists
+        
+        if(empty($user)){
+
+            return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'The account information is incorrect']);
+
+
+        }
+
 
         foreach($user as $val){
             $status = $val->status;
@@ -289,9 +298,34 @@ class AuthController extends Controller
         
     }
 
-    protected function postConfirmEmail($token){
+    protected function getConfirmEmail($token){
         
-        pre($token);
+        // select information user
+        $user = DB::table('users')->where('remember_token', $token)->get();
+
+        // check empty user
+        if(empty($user)){
+
+            return redirect('users/getResetPassword')->with(['flash_level'=>'danger','flash_message'=>'Accounts do not exist in the database.']);
+
+        }
+
+        foreach($user as $val ){
+
+            $id = $val->id;
+        }
+
+        // update status
+        $user = User::find($id);
+
+        $user->status = 1;
+
+        $user->save();
+
+
+        return redirect('users/getLogin')->with(['flash_level'=>'success','flash_message'=>'Successful confirmation email']);
+
+        
     }
 
     /**

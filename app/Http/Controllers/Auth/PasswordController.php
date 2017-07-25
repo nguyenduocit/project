@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use App\Http\Requests\ForgotPasswordRequest;
+use App\Http\Requests\ResetPasswordRequest;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use Hash;
 use Session;
 use Mail;
 use Cookie;
+use App\User;
 
 
 class PasswordController extends Controller
@@ -45,38 +47,125 @@ class PasswordController extends Controller
     
     protected function getForgotPassword(){
 
-        return view("quanlytaichinh.forgotpass");
+        return view("quanlytaichinh.forgotPass");
         
     }
 
     /**
      * I forgot my password
      *
-     * @param      \App\Http\Requests\ForgotPasswordRequest  $request  The request
+     * @param      \App\Http\Requests\ForgotPasswordRequest  $request  The request email
      */
 
     protected function postForgotPassword(ForgotPasswordRequest $request){
 
-    // select information user
-    $user = DB::table('users')->where('email', $request->email)->get();
+        // select information user
+        $user = DB::table('users')->where('email', $request->email)->get();
 
 
 
-    //If user information does not exist
+        //If user information does not exist
 
-    if(empty($user)){
+        if(empty($user)){
 
-        return redirect('users/getForgotPassword')->with(['flash_level'=>'danger','flash_message'=>'Email accounts do not exist in the database.']);
+            return redirect('users/getForgotPassword')->with(['flash_level'=>'danger','flash_message'=>'Email accounts do not exist in the database.']);
+
+        }
+
+        foreach($user as $val){
+
+            // Send mail 
+            // create session 
+            Session::put('email', $val->email);
+            Session::put('name',  $val->name);
+            $token  = $val ->remember_token;
+        }
+
+        // Send mail 
+        // 
+        $data  = ['token' => $token ];
+        Mail::send('emails.confirmpass', $data, function ($message) {
+
+
+            $message->from('duocnguyenit1994@gmail.com', 'Administrator');
+            
+            $message->to( Session::get('email'), Session::get('name'))->subject('Resets Password');
+        
+        });
+
+        return redirect('users/getForgotPassword')->with(['flash_level'=>'success','flash_message'=>'Check the email we sent you a password.']);
+
 
     }
 
-    echo $request->_token;
+
+    /**
+     * comfirm validate reset password 
+     *
+     * @param      $token
+     *
+     * @return     <type>  The token reset password.
+     */
+
+    protected function getTokenResetPassword($token){
+
+        // select information user
+        $user = DB::table('users')->where('remember_token', $token)->get();
+
+         //If user information does not exist
+        if(empty($user)){
+
+            return redirect('users/getForgotPassword')->with(['flash_level'=>'danger','flash_message'=>'Accounts do not exist in the database.']);
+
+        }
+
+        foreach($user as $val){
+             
+            Session::put('id', $val->id);
+            
+        }
+
+        return redirect('users/getResetPassword')->with(['flash_level'=>'success','flash_message'=>'Enter password change information']);
+
+    }
+
+    /**
+     * 
+     *
+     * @return     <type>  The reset password.
+     */
+
+    protected function getResetPassword(){
+
+        return view('quanlytaichinh.resetPassword');
+    }
+
+
+    protected function postResetPassword(ResetPasswordRequest $request){
+
+        if(Session::has('id')){
+
+            $id = Session::get('id');
+
+            $user = User::find($id);
+
+            $user->password = Hash::make($request->password);
+
+            $user->save();
+
+            Session::forget('id');
+            
+            return redirect('users/getLogin')->with(['flash_level'=>'success','flash_message'=>'Change password successfully invite you to login']);
+
+
+
+        }else{
+
+             return redirect('users/getForgotPassword')->with(['flash_level'=>'danger','flash_message'=>'Enter email to change password']);
+
+        }
+
     
-    pre($user);
-
-
-
-
     }
 
 }
