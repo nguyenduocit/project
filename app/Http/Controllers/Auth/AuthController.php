@@ -132,8 +132,8 @@ class AuthController extends Controller
         $data = ['token' => $request->_token ];
         $link = 'emails.blanks';
         
-        // function send mail 
-        sendMail($link,$data);
+        // function send mail libtary
+        sendMail($link,$data); 
 
         $user->save();
         return redirect('users/getLogin')->with(['flash_level'=>'success','flash_message'=>'You need to confirm your email before signing in']);
