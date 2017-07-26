@@ -6,14 +6,25 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use Hash;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
-
+use App\Http\Requests\ForgotPasswordRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Mail\Mailer;
+use Illuminate\Mail\Message;
+use Illuminate\Http\Response;
+use DB;
+use Hash;
+use Session;
+use Mail;
+use Cookie;
+
 
 class AuthController extends Controller
 {
+
+
+   
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
@@ -39,10 +50,9 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(){
 
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+       // $this->middleware($this->guestMiddleware(), ['except' => 'getLogout']);
     }
 
     /**
@@ -51,11 +61,10 @@ class AuthController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
-    {
+    protected function validator(array $data){
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'name'     => 'required|max:255',
+            'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
     }
@@ -66,8 +75,7 @@ class AuthController extends Controller
      * @param  array  $data
      * @return User
      */
-    protected function create(array $data)
-    {
+    protected function create(array $data){
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -76,60 +84,225 @@ class AuthController extends Controller
     }
 
     
+     /**
+     * Load form Register.
+     *
+     */
+    protected function getRegister(){
 
+        // If the user is logged in redirect page  home
+        if(Auth::check()){
 
-    public function getRegister(){
+            return redirect('home')->with(['flash_level'=>'success','flash_message'=>" "]);
+
+        }
         return view('quanlytaichinh.register');
     }
 
     
+     /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  array  $request
+     * @return 
+     */
+    protected function postRegister(RegisterRequest $request){
 
-    public function postRegister(RegisterRequest $request)
-    {
-        echo "ok";
-        // $user                 = new User ;
-        // $image                = $request->file('Image');
-        // $nameimg              = $image->getClientOriginalName();
-        // $user->name           = $request->name;
-        // $user->image          = $nameimg;
-        // $user->email          = $request->email;
-        // $user->password       = Hash::make($request->password);
-        // $user->phone          = $request->phone;
-        // $user->address        = $request->address;
-        // $user->birthday       = $request->birthday;
-        // $user->remember_token = $request->_token;
-        // $user->sex            = $request->sex;
-        // $des                  = "public/upload/images";
-        // $image->move($des,$nameimg);
-        // $user->save();
+        // Save register ;
+        $user                 = new User ;
+        $image                = $request->file('Image');
+        $nameimg              = $image->getClientOriginalName();
+        $user->name           = $request->name;
+        $user->avata          = $nameimg;
+        $user->email          = $request->email;
+        $user->password       = Hash::make($request->rpassword);
+        $user->phone          = $request->phone;
+        $user->address        = $request->address;
+        $user->birthday       = $request->birthday;
+        $user->remember_token = $request->_token;
+        $user->sex            = $request->sex;
+        // Directory path upload photos  FOLDER_PHOTOS edit bootstrap constant.php
+        $des                  = FOLDER_PHOTOS;
+        $image->move($des,$nameimg);
 
-        // return redirect()->route('userinfo');
-    }
+        // Send mail 
+        // create session 
+        Session::put('email', $request->email);
+        Session::put('name', $request->name);
 
-    public function getLogin(){
-        return view('auth.login');
-    }
-
-    public function postLogin(LoginRequest $request)
-    {
         
+        $data  = ['token' => $request->_token ];
+        Mail::send('emails.blanks', $data, function ($message) {
+
+            // EMAIL_ADMIN = duocnguyenit1994@gmail.com  edit bootstrap constant.php
+            // NAME_ADMIN = Administrator  edit bootstrap constant.php
+            
+            $message->from(EMAIL_ADMIN, NAME_ADMIN);
+            
+            $message->to( Session::get('email'), Session::get('name'))->subject('Confirmation Email');
+        
+        });
+
+        $user->save();
+        return redirect('users/getLogin')->with(['flash_level'=>'success','flash_message'=>'You need to confirm your email before signing in']);
+
+    }
+
+    /**
+     * Send mail test
+     *
+     * @return    
+     */
+    protected function sendMail(){
+
+        $data = ['hoten'=>'Nguyenduoc'];
+        Mail::send('emails.blanks', $data, function ($message) {
+            $message->from( EMAIL_ADMIN, NAME_ADMIN );
+            
+            $message->to('duocnv@rikkeisoft.com', 'John Doe')->subject('test gui mail');
+        
+        });
+    }
+
+    /**
+     * load form login
+     *
+     * @return     <type>  The login.
+     */
+
+    protected function getLogin(){
+
+        // If the user is logged in redirect page  home
+        if(Auth::check()){
+
+            return redirect('home')->with(['flash_level'=>'success','flash_message'=>" "]);
+
+        }
+        return view('quanlytaichinh.login');
+    }
 
 
+    /**
+     * Posts a login.
+     *
+     * @param  request
+     *
+     * @return
+     */
+    protected function postLogin(LoginRequest $request){
+
+        // Luu thong tin user vao mang 
         $remember = $request->remember;
         $login = array(
                         'email'    => $request->email,
                         'password' => $request->password
                         
-                    );
+                      );
+        // kiem tra nguoi dung da xac nhan email
+        $user = DB::table('users')->where('email', $request->email)->get();
+       
+        
+        // Check that the user exists
+        if(empty($user)){
 
-        if(Auth::attempt($login,$remember)){
-            
-             return redirect()->route('userinfo')->with(['flash_level'=>'success','flash_message'=>"Chúc mừng bạn đã đăng nhập thành công"]);
-        }else{
-            return redirect()->route('getLogin')->with(['flash_level'=>'danger','flash_message'=>'Thông tin tài khoản không chính xác']);
+            return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'The account information is incorrect']);
+        }
+        //  VERIFY_EMAIL_SUCCESS = 1 User status confirmed  edit bootstrap constant.php
+        if( $user[0]->status != VERIFY_EMAIL_SUCCESS){
+            return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'You need to confirm your email before signing in']);
         }
 
+        // check isset cookie
+        if(Cookie::get('status-login'))
+        {
+            return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'The login account has been locked. Login after 15 minutes.']);
+
+        }
+        
+        // create session login
+        
+        if(Session::has('number')){
+
+            $number = Session::get('number');
+
+            Session::put('number', $number);
+            
+        }else{
+
+            Session::put('number', '0');
+
+        }
+
+        // number of logins NUMBER_LOGIN = 3  edit bootstrap constant.php 
+        
+        if(Session::has('number') && Session::get('number') > NUMBER_LOGIN){
+            $response = new Response();
+
+            // create cookie
+            // minutes of logins NUMBER_LOGIN = 3  edit bootstrap constant.php 
+            $response ->withCookie('status-login','status-login',MINUTES);
+
+            return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'The login account has been locked. Login after 15 minutes.']);
+
+        }
+        // check  Information login
+        if(Auth::attempt($login,$remember)){
+
+            // remove session
+            Session::forget('number');
+
+            // move page
+            return redirect('home')->with(['flash_level'=>'success','flash_message'=>"Congratulations on your successful login"]);
+
+
+        }else{
+
+            // add session number
+            $number = Session::get('number') +1 ;
+
+            Session::put('number', $number);
+
+            return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'The account information is incorrect.']);
+        }
+
+        
     }
+
+    protected function getConfirmEmail($token){
+        
+        // select information user
+        $user = DB::table('users')->where('remember_token', $token)->get();
+
+        // check empty user
+        if(empty($user)){
+
+            return redirect('users/getResetPassword')->with(['flash_level'=>'danger','flash_message'=>'Accounts do not exist in the database.']);
+
+        }
+        // update status
+        $user = User::find($user[0]->id);
+
+        $user->status = 1;
+
+        $user->save();
+
+        return redirect('users/getLogin')->with(['flash_level'=>'success','flash_message'=>'Successful confirmation email']);
+
+        
+    }
+
+    /**
+     * logout
+     */
+    
+    protected function getLogout(){
+
+        Auth::logout();
+
+        return redirect('users/getLogin');
+    }
+
+
 
 
    

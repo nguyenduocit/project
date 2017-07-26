@@ -24,7 +24,33 @@ class RegisterRequest extends Request
     public function rules()
     {
         return [
-            //
+            
+            'name'      => 'required',
+            'email'     => 'required|email|unique:users,email',
+            'password'  => 'required|min:6',
+            'rpassword' => 'required|same:password',
+            'phone'     => 'required|numeric',
+            'birthday'  => 'required',
+            'Image'     => 'required|image|max:2048',
+            'address'   => 'required',
         ];
+
+
     }
+    public function  messages(){
+            return [
+
+                'name.required'     => ' Please enter a first and last name.',
+                'email.required'    => ' Please enter email.',
+                'email.email'       => ' Please enter the correct email format.',
+                'email.unique'      => ' The Email was registered .',
+                'password.required' => ' Please enter your password.',
+                'password.min'      => ' Password long than 6 characters ',
+                'rpassword'         => ' Passwords do not match',
+                'phone.required'    => ' Please enter a phone number.',
+                'phone.numeric'     => ' Phone numbers must be in digital format.',
+                'address.required'  => " Please enter a adderss.",
+                'birthday.required' => " Please enter a birthday.",
+            ];
+        }
 }

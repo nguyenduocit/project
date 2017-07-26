@@ -1,52 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-  @include('quanlytaichinh.include.head')
+   @include('quanlytaichinh.include.head')
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href=""><b>Login</b></a>
+    <a href=""><b>Reset Password </b></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
+    <p class="login-box-msg"></p>
 
     @include('quanlytaichinh.include.alert')
 
-    <form action="{{ URL::route('users.postLogin') }}" method="post">
+    <form action="{{ URL::route('users.postResetPassword') }}" method="post">
 
       <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-      <div class="form-group has-feedback">
+       <div class="form-group has-feedback">
 
-        <input type="email" name="email" class="form-control" placeholder="Email">
+            <input type="password" name="password" class="form-control" placeholder="Password">
+            <span class="text-danger"><p>{{ $errors->first('password') }}</p></span>
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 
-        <span class="text-danger"><p>{!! $errors->first('email') !!}</p></span>
+        </div>
+        <div class="form-group has-feedback">
 
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-
-      </div>
-      <div class="form-group has-feedback">
-
-        <input type="password" name="password" class="form-control" placeholder="Password">
-
-        <span class="text-danger"><p>{{ $errors->first('password') }}</p></span>
-
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-
-      </div>
+            <input type="password" name="rpassword" class="form-control" placeholder="Retype password">
+            <span class="text-danger"><p>{{ $errors->first('rpassword') }}</p></span>
+            <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+        </div>
       <div class="row">
         <div class="col-xs-8">
           <div class="checkbox icheck">
-            <label>
-              <input name="remember" type="checkbox"> Remember Me
-            </label>
+            
           </div>
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Send</button>
         </div>
         <!-- /.col -->
       </div>
@@ -61,15 +54,13 @@
     </div>
     <!-- /.social-auth-links -->
 
-    <a href="{{ URL::route('users.getForgotPassword')}}">I forgot my password</a><br>
+    
     <a href="{{ URL::route('users.getRegister')}}" class="text-center">Register a new membership</a>
 
   </div>
   <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->
-
-<!-- jQuery 2.2.0 -->
 
 @include('quanlytaichinh.include.java')
 

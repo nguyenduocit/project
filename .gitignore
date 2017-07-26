@@ -2,6 +2,7 @@
 public/storage
 public/hot
 /vendor
+/public/upload/
 storage/*.key
 .env.*.php
 .env.php
