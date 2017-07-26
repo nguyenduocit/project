@@ -18,8 +18,8 @@ class CreateWalletsT extends Migration
             $table->string('name');
             $table->string('color');
             $table->integer('amount');
-            $table->date('created_at');
-            $table->date('modified_at');
+            $table->timestamps();
+           
             
         });
     }

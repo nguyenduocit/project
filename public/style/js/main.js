@@ -5,7 +5,7 @@ $(document).ready(function($) {
 	$('.alert').delay(3000).slideUp();
 
 	$('.delete').click(function(){
-		var link = 'http://192.168.56.56/project/';
+		
 		var id = $(this).attr('id');
 		$.ajax({
 				url:link+'getDelete/'+id,

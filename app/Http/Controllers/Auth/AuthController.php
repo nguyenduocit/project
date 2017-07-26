@@ -88,8 +88,6 @@ class AuthController extends Controller
      * Load form Register.
      *
      */
-    
-
     protected function getRegister(){
 
         // If the user is logged in redirect page  home
@@ -108,7 +106,6 @@ class AuthController extends Controller
      * @param  array  $request
      * @return 
      */
-    
     protected function postRegister(RegisterRequest $request){
 
         // Save register ;
@@ -124,6 +121,7 @@ class AuthController extends Controller
         $user->birthday       = $request->birthday;
         $user->remember_token = $request->_token;
         $user->sex            = $request->sex;
+        // Directory path upload photos  FOLDER_PHOTOS edit bootstrap constant.php
         $des                  = FOLDER_PHOTOS;
         $image->move($des,$nameimg);
 
@@ -136,8 +134,10 @@ class AuthController extends Controller
         $data  = ['token' => $request->_token ];
         Mail::send('emails.blanks', $data, function ($message) {
 
-
-            $message->from('duocnguyenit1994@gmail.com', 'Administrator');
+            // EMAIL_ADMIN = duocnguyenit1994@gmail.com  edit bootstrap constant.php
+            // NAME_ADMIN = Administrator  edit bootstrap constant.php
+            
+            $message->from(EMAIL_ADMIN, NAME_ADMIN);
             
             $message->to( Session::get('email'), Session::get('name'))->subject('Confirmation Email');
         
@@ -157,7 +157,7 @@ class AuthController extends Controller
 
         $data = ['hoten'=>'Nguyenduoc'];
         Mail::send('emails.blanks', $data, function ($message) {
-            $message->from('duocnguyenit1994@gmail.com', 'John Doe');
+            $message->from( EMAIL_ADMIN, NAME_ADMIN );
             
             $message->to('duocnv@rikkeisoft.com', 'John Doe')->subject('test gui mail');
         
@@ -178,7 +178,6 @@ class AuthController extends Controller
             return redirect('home')->with(['flash_level'=>'success','flash_message'=>" "]);
 
         }
-
         return view('quanlytaichinh.login');
     }
 
@@ -190,9 +189,8 @@ class AuthController extends Controller
      *
      * @return
      */
-
     protected function postLogin(LoginRequest $request){
-        
+
         // Luu thong tin user vao mang 
         $remember = $request->remember;
         $login = array(
@@ -209,7 +207,7 @@ class AuthController extends Controller
 
             return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'The account information is incorrect']);
         }
-        //  VERIFY_EMAIL_SUCCESS = 1 User status confirmed
+        //  VERIFY_EMAIL_SUCCESS = 1 User status confirmed  edit bootstrap constant.php
         if( $user[0]->status != VERIFY_EMAIL_SUCCESS){
             return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'You need to confirm your email before signing in']);
         }
@@ -228,7 +226,6 @@ class AuthController extends Controller
             $number = Session::get('number');
 
             Session::put('number', $number);
-
             
         }else{
 
@@ -236,13 +233,14 @@ class AuthController extends Controller
 
         }
 
-        // 
+        // number of logins NUMBER_LOGIN = 3  edit bootstrap constant.php 
         
-        if(Session::has('number') && Session::get('number') > 5){
+        if(Session::has('number') && Session::get('number') > NUMBER_LOGIN){
             $response = new Response();
 
             // create cookie
-            $response ->withCookie('status-login','status-login',3);
+            // minutes of logins NUMBER_LOGIN = 3  edit bootstrap constant.php 
+            $response ->withCookie('status-login','status-login',MINUTES);
 
             return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'The login account has been locked. Login after 15 minutes.']);
 

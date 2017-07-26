@@ -9,23 +9,22 @@
         echo"<pre>";
         print_r($data);
 
-        if($exit)
-        {
+        if($exit){
             die;
         }
     }
 
 
     /**
-     * chuyenh dinh dang text 
+     * Convert text format 
      *
      * @param      string  $str    The string
-     *
-     * @return     <type>  ( description_of_the_return_value )
+     * string nguyễn văn dược
+     * @return     string nguyen-van-duoc
      */
     
-    function safe_title($str = '')
-    {
+    function safe_title($str = ''){
+
         $str = html_entity_decode($str, ENT_QUOTES, "UTF-8");
         $filter_in = array('#(a|à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)#', '#(A|À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ)#', '#(e|è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)#', '#(E|È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ)#', '#(i|ì|í|ị|ỉ)#', '#(I|ĩ|Ì|Í|Ị|Ỉ|Ĩ)#', '#(o|ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)#', '#(O|Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ)#', '#(u|ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)#', '#(U|Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ)#', '#(y|ỳ|ý|ỵ|ỷ|ỹ)#', '#(Y|Ỳ|Ý|Ỵ|Ỷ|Ỹ)#', '#(d|đ)#', '#(D|Đ)#');
         $filter_out = array('a', 'A', 'e', 'E', 'i', 'I', 'o', 'O', 'u', 'U', 'y', 'Y', 'd', 'D');
@@ -39,22 +38,21 @@
 
 
     /**
-     * function cat chuoi 
+     * function Cut string 
      *
      * @param    string $text 
-     * @return     <type>  ( description_of_the_return_value )
+     * @return     string lenght $num
      */
-    function the_excerpt($text ,$num)
-    {
+    function the_excerpt($text ,$num){
        
-        if(strlen($text)> $num)
-        {
+        if(strlen($text)> $num){
+
             $cutstring = substr($text,0,$num);
             $word = substr($text,0,strrpos($cutstring,' '));
             return $word ;
+
         }
-        else
-        {
+        else{
             return $text;
         }
 
@@ -65,15 +63,17 @@
      *
      * @param      integer  $length  The length
      *
-     * @return     string   ( description_of_the_return_value )
+     * @return     string random
      */
 
-    function rand_string($length) {
+    function rand_string($length){
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $size = strlen($chars);
         $str = '';
         for( $i = 0; $i < $length; $i++ ) {
+
             $str .= $chars[rand(0,$size - 1)];
+
          }
         return $str;
     }
