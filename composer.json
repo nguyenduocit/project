@@ -25,8 +25,7 @@
             "App\\": "app/"
         },
         "files":[
-            "app/Library/functions.php",
-            "app/Library/globalVariable.php"
+            "app/Library/functions.php"
         ]
     },
     "autoload-dev": {
