@@ -129,19 +129,11 @@ class AuthController extends Controller
         // create session 
         Session::put('email', $request->email);
         Session::put('name', $request->name);
-
+        $data = ['token' => $request->_token ];
+        $link = 'emails.blanks';
         
-        $data  = ['token' => $request->_token ];
-        Mail::send('emails.blanks', $data, function ($message) {
-
-            // EMAIL_ADMIN = duocnguyenit1994@gmail.com  edit bootstrap constant.php
-            // NAME_ADMIN = Administrator  edit bootstrap constant.php
-            
-            $message->from(EMAIL_ADMIN, NAME_ADMIN);
-            
-            $message->to( Session::get('email'), Session::get('name'))->subject('Confirmation Email');
-        
-        });
+        // function send mail 
+        sendMail($link,$data);
 
         $user->save();
         return redirect('users/getLogin')->with(['flash_level'=>'success','flash_message'=>'You need to confirm your email before signing in']);

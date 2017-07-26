@@ -18,13 +18,13 @@
 
         <div class="form-group has-feedback">
 
-            <input type="text" name="name" class="form-control" placeholder="Full name">
+            <input type="text" name="name" class="form-control" placeholder="Full name" value="{{ old('name')}}">
              <span class="text-danger"><p>{{ $errors->first('name') }}</p></span>
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
 
-            <input type="email" name="email" class="form-control" placeholder="Email">
+            <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email')}}" >
 
              <span class="text-danger"><p>{{ $errors->first('email') }}</p></span>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -45,20 +45,20 @@
         </div>
         <div class="form-group has-feedback">
 
-            <input type="text" name="address" class="form-control" placeholder="Address">
+            <input type="text" name="address" class="form-control" placeholder="Address" value="{{ old('address')}}" >
             <span class="text-danger"><p>{{ $errors->first('address') }}</p></span>
             <span class="fa fa-road form-control-feedback"></span>
         </div>
 
         <div class="form-group has-feedback">
 
-            <input type="number" name="phone" class="form-control" placeholder="phone">
+            <input type="number" name="phone" class="form-control" placeholder="phone" value="{{ old('phone')}}" >
             <span class="text-danger"><p>{{ $errors->first('phone') }}</p></span>
             <span class="fa fa-phone-square form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
 
-            <input type="date" name="birthday" class="form-control" placeholder="birthday">
+            <input type="date" name="birthday" class="form-control" placeholder="birthday" value="{{ old('birthday')}}">
             <span class="text-danger"><p>{{ $errors->first('birthday') }}</p></span>
             
         </div>
