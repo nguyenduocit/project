@@ -27,22 +27,16 @@
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
         <li class="treeview active">
-          <a href="#">
+          <a href="{{URL::route('wallets.getTransfersMoney')}}">
             <i class="fa fa-files-o"></i>
-            <span>Layout Options</span>
-            <span class="label label-primary pull-right">4</span>
+            <span>Transfers Money</span>
+            <span class="label label-primary pull-right"></span>
           </a>
-          <ul class="treeview-menu">
-            <li><a href="../layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-            <li><a href="../layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-            <li class="active"><a href="../layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-            <li><a href="collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
-          </ul>
         </li>
         <li>
-          <a href="../widgets.html">
-            <i class="fa fa-th"></i> <span>Widgets</span>
-            <small class="label pull-right bg-green">new</small>
+          <a href="">
+            <i class="fa fa-th"></i> <span>Add Categorys</span>
+            <small class="label pull-right bg-green"></small>
           </a>
         </li>
 

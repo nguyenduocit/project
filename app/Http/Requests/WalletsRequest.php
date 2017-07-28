@@ -25,6 +25,21 @@ class WalletsRequest extends Request
     {
         return [
             //
+            'name'   => 'required|min:4|unique:wallets,name,'. $this->id,
+            'amount' => 'required|numeric',
+        ];
+    }
+
+    public function  messages(){
+        return [
+
+            
+            'name.required'   => 'Please enter the wallet name.',
+            'name.min'        => 'The wallet name can not be too short',
+            'name.unique'     =>'The wallet name can not be identical',
+            'amount.required' => 'Enter the amount in the wallet',
+            'amount.numeric'  => 'Amount must be numeric',
+
         ];
     }
 }

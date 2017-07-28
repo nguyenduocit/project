@@ -98,6 +98,22 @@
 
     }
 
+    /**
+     * Check if the user has successfully logged in
+     *
+     * @return     <type>  ( description_of_the_return_value )
+     */
+
+    function checkLoginSuccess()
+    {
+
+        if(!Auth::check()){
+
+            return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'You need to sign in to use']);
+
+        }
+    }
+
 
 
     

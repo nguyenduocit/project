@@ -15,4 +15,8 @@ class Wallets extends Model
     protected $fillable = [
         'user_id', 'name', 'color', 'amount', 'created_ad', 'modified_at',
     ];
+
+    public function users(){
+    	return $this-> belongsTo('App\User');
+    }
 }

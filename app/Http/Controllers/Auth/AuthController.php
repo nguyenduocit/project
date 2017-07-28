@@ -9,7 +9,9 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ForgotPasswordRequest;
+use App\Http\Requests\UserProfileRequest;
 use Illuminate\Support\Facades\Auth;
+use File;
 use Illuminate\Mail\Mailer;
 use Illuminate\Mail\Message;
 use Illuminate\Http\Response;
@@ -281,6 +283,48 @@ class AuthController extends Controller
         return redirect('users/getLogin')->with(['flash_level'=>'success','flash_message'=>'Successful confirmation email']);
 
         
+    }
+
+    protected function getUserProfile(){
+
+        return view('quanlytaichinh.user.userProfile');
+    }
+     
+    protected function postUserProfile(UserProfileRequest $request){
+
+    
+        if(Auth::check()){
+
+            $id = Auth::user() ->id;
+
+            $user = User::find($id);
+
+            $image                = $request->file('Image');
+            $user->name           = $request->name;
+
+            if(!empty($image)){
+
+                $nameimg              = $image->getClientOriginalName();
+                $user->avata          = $nameimg;
+                $des                  = FOLDER_PHOTOS;
+                $image->move($des,$nameimg);
+
+                File::delete(FOLDER_PHOTOS.'/'.Auth::user()->avata);
+            }
+            
+            $user->phone          = $request->phone;
+            $user->address        = $request->address;
+            $user->birthday       = $request->birthday;
+            $user->sex            = $request->sex;
+            // Directory path upload photos  FOLDER_PHOTOS edit bootstrap constant.php
+            
+            $user->save();
+
+            Session::forget('id');
+            
+            return redirect('users/getUserProfile')->with(['flash_level'=>'success','flash_message'=>'Edit success information !!!']);
+
+        }
     }
 
     /**

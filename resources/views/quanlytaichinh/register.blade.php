@@ -60,6 +60,7 @@
 
             <input type="date" name="birthday" class="form-control" placeholder="birthday" value="{{ old('birthday')}}">
             <span class="text-danger"><p>{{ $errors->first('birthday') }}</p></span>
+            <span class="fa fa-calendar form-control-feedback"></span>
             
         </div>
 
