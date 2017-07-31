@@ -23,32 +23,30 @@
                 <!-- left column -->
                 <div class="col-md-12">
                   <div class="box">
-                  <div class="box-header">
-                                <div class="row">
-                                    <div class="col-sm-7">
-                                       
-                                    </div>
-                                    <div class="col-sm-2">
-                                      {{--   <div class="box-tools">
-                                            <div class="input-group input-group-sm" style="width: 150px; padding-top: 15px;">
-                                              <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                                              <div class="input-group-btn">
-                                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                              </div>
-                                            </div>
-                                        </div> --}}
-                                    </div>
-                                    
-                                    
-                                    
-                                </div>
+                    <div class="box-header">
+                        <div class="row">
+                            <div class="col-sm-7">     
                             </div>
+                            <div class="col-sm-2">
+                           {{--<div class="box-tools">
+                                    <div class="input-group input-group-sm" style="width: 150px; padding-top: 15px;">
+                                        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+                                        <div class="input-group-btn">
+                                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div> --}}
+                            </div>    
+                         </div>
+                           
+
+                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
+                        @include('quanlytaichinh.include.alert')
                         <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                             <div class="row">
-                                <div class="col-sm-7">
+                                <div class="col-sm-6">
                                     <div class="dataTables_length" id="example1_length" style="padding-top: 15px;">
                                         <label>
                                             Show 
@@ -81,7 +79,7 @@
 
                                 </div>
 
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     <a href="{{ URL::route('wallets.getAdd') }}" class="btn btn-app">
                                         <i class="fa fa-square"></i> Add Wallets 
                                     </a>
@@ -116,7 +114,7 @@
                                                     <td> {{ $stt = $stt +1 }}</td>
                                                     <td> {{ $val->name }} </td>
                                                     <td><input type="color" name="" value="{{ $val->color }}"></td>
-                                                    <td> {{ $val->amount }}</td>
+                                                    <td> {{ number_format($val->amount) }}</td>
                                                     <td> {{ $val ->created_at}}</td>
                                                     <td>{{ $val->updated_at}}</td>
                                                     <td>

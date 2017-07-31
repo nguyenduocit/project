@@ -179,7 +179,7 @@
                             <br>
                             <div class="preview" id="thumbbox" >
                                 <img id="thumbimage"  src="{{url('public/upload/images')}}/{{ Auth::user()->avata }}"  width="15%" alt="Image preview...">
-                                <a class="removeimg" href="javascript:" ></a></div>
+                                <a class="removeimg" href="javascript:" ></a>
                             </div>
                             <span class="text-danger"><p>{{ $errors->first('Image') }}</p></span>
                         </div>

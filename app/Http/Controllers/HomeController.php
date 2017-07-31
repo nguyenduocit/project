@@ -26,7 +26,7 @@ class HomeController extends Controller
 
         $id =  Auth::user()->id;
     	
-    	$listWallets = Wallets::where('user_id',$id)->orderBy('id','DESC')->get();
+    	$listWallets = Wallets::where('user_id',$id)->orderBy('id','DESC')->paginate(16);
 
     	return view('quanlytaichinh.home.index',compact('listWallets'));
     }

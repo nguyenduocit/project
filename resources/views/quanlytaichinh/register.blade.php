@@ -76,10 +76,6 @@
             <input type="file" id="required2" name="Image"  value="" placeholder = "">
             <span class="text-danger"><p>{{ $errors->first('Image') }}</p></span>
         </div>
-
-
-        
-
         <div class="row">
             <!-- <div class="col-xs-8">
               <div class="checkbox icheck">

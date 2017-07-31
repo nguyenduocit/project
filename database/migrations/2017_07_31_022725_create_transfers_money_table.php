@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWalletsT extends Migration
+class CreateTransfersMoneyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,14 @@ class CreateWalletsT extends Migration
      */
     public function up()
     {
-        Schema::create('wallets', function (Blueprint $table) {
+        Schema::create('transfers_moneys', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->string('name');
-            $table->string('color');
+            $table->integer('transfer_wallet');
+            $table->integer('receive_wallet');
             $table->integer('amount');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
-           
-            
         });
     }
 
@@ -31,6 +30,6 @@ class CreateWalletsT extends Migration
      */
     public function down()
     {
-        Schema::drop('wallets');
+        Schema::drop('transfers_moneys');
     }
 }

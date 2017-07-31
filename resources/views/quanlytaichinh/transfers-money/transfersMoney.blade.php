@@ -18,23 +18,22 @@
             </section>
             
             <!-- Main content -->
-             <section class="content">
+            <section class="content">
+                  
+                  <div class="box">
+                    <div class="box-header with-border">
+                      <h3 class="box-title"></h3>
 
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-xs-12">
-                          <div class="box">
-                            <div class="box-header">
-                                <div class="row">
-                                    <div class="col-sm-7">
-                                        <h3 class="box-title"></h3>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-
-                            <!-- /.box-header -->
-                            <form role="form" action="{{ URL::route('wallets.postTransfersMoney')}}" method="post">
+                      <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                          <i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                          <i class="fa fa-times"></i></button>
+                      </div>
+                    </div>
+                    <div class="box-body">
+                        @include('quanlytaichinh.include.alert')
+                      <form role="form" action="{{ URL::route('wallets.postTransfersMoney')}}" method="post">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="box-body">
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
@@ -43,7 +42,7 @@
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-12 ">
                                           
-                                            <select name="transfer-wallet"  class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                            <select name="transfer_wallet" id="transfer-wallet"  class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                               <option value=""></option>
                                               @foreach($listwallets as $vallets)
                                                     <option value="{{ $vallets->id }}">{{ $vallets->name }}</option>
@@ -57,14 +56,23 @@
                                 </div>
 
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-3 col-sm-6 col-xs-12 ">
+                                        <label for="exampleInputEmail1">Amount Transfer </label>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 ">
+                                        <input type="text" id="transfer-wallets" readonly="readonly" class="form-control" value="" id="exampleInputAmount" placeholder="Amount Transfer">
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                         <div class="col-md-3 col-sm-6 col-xs-12 ">
                                              <label for="exampleInputEmail1">Receive Wallet</label>
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-12 ">
-                                            <select name="receive-Wallet"  class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                            <select name="receive_wallet" id="receive-wallet"  class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                               <option value=""></option>
                                               @foreach($listwallets as $vallets)
-                                                    <option value="{{ $vallets->id }}">{{ $vallets->name }}</option>
+                                                    <option value="{{ $vallets->id }}" >{{ $vallets->name }}</option>
                                               @endforeach
                                             </select>
                                             <span class="text-danger"><p>{{ $errors->first('receive-Wallet') }}</p></span>
@@ -73,13 +81,22 @@
 
                                         </div>
                                 </div>
+
+                                <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-3 col-sm-6 col-xs-12 ">
+                                        <label for="exampleInputEmail1">Amount Receive </label>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 ">
+                                        <input type="text" id="receive-wallets" readonly="readonly"  class="form-control" id="exampleInputAmount" placeholder="Amount Receive">
+                                    </div>
+                                </div>
                                
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                     <div class="col-md-3 col-sm-6 col-xs-12 ">
                                         <label for="exampleInputEmail1">Amount </label>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12 ">
-                                        <input type="text" name="amount" class="form-control" id="exampleInputAmount" placeholder="Enter Amount" value="{{ old('amount')}}">
+                                        <input type="number" name="amount" class="form-control" id="exampleInputAmount" placeholder="Enter Amount" value="{{ old('amount')}}">
                                         <span class="text-danger"><p>{{ $errors->first('amount') }}</p></span>
                                     </div>
                                 </div><br> <br>
@@ -90,13 +107,10 @@
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>
-                            <!-- /.box-body -->
-                        </div>
-                      <!-- /.box -->
                     </div>
-                </div>
-                <!-- ./col -->
-              <!-- Default box -->
+                    <!-- /.box-body -->
+                  </div>
+                  <!-- /.box -->
             </section>
             <!-- /.content -->
         </div>

@@ -4,8 +4,11 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
+
 class WalletsRequest extends Request
 {
+
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,7 +28,7 @@ class WalletsRequest extends Request
     {
         return [
             //
-            'name'   => 'required|min:4|unique:wallets,name,'. $this->id,
+            'name'   => 'required|min:4|unique:wallets,name,'.$this->id,
             'amount' => 'required|numeric',
         ];
     }

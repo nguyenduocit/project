@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\WalletsRequest;
 use App\Http\Requests;
 use App\Wallets;
+use App\TransfersMoney;
+use DB;
 
 class WalletsController extends Controller
 {
@@ -17,7 +19,24 @@ class WalletsController extends Controller
 
     protected function getInfoWallets($id){
 
-        return view('quanlytaichinh.wallets.infoWallets');
+
+        
+        $transfersMoney = DB::table('transfers_moneys')->where('transfer_wallet',$id)->orWhere('receive_wallet',$id)->orderBy('id','DESC')->paginate(1);
+        
+        foreach($transfersMoney as $transfers){
+            $nameWalletTransfers = DB::table('wallets')->where('id',$transfers->transfer_wallet)->get();
+
+            $transfers ->name_transfer_wallet = $nameWalletTransfers[0]->name;
+        }
+
+        foreach($transfersMoney as $transfer){
+            $nameWalletTransfer = DB::table('wallets')->where('id',$transfer->receive_wallet)->get();
+
+            $transfer ->name_receive_wallet = $nameWalletTransfer[0]->name;
+        }
+
+        
+        return view('quanlytaichinh.wallets.infoWallets',compact('transfersMoney'));
 
     }
 
@@ -52,7 +71,7 @@ class WalletsController extends Controller
 		$wallets->amount      = $request->amount;
 		$wallets->save();
 
-		return redirect('home')->with(['flash_level'=>'success','flash_message'=>'You need to sign in to use']);
+		return redirect('home')->with(['flash_level'=>'success','flash_message'=>'Congratulations, you have successfully added your wallet.']);
     }
 
     /**
@@ -80,7 +99,6 @@ class WalletsController extends Controller
 
                 $listWallets = Wallets::where('user_id',$id)->orderBy('id','DESC')->skip(0)->take($num)->get();
             }
-
 
             die(json_encode($listWallets));
 
@@ -128,8 +146,6 @@ class WalletsController extends Controller
         return view('quanlytaichinh.wallets.edit', compact('wallets'));
     }
 
-
-
     /**
      * Posts an edit wallets.
      *
@@ -156,7 +172,6 @@ class WalletsController extends Controller
         return redirect('wallets/getList')->with(['flash_level'=>'success','flash_message'=>'Edit successfully wallets']);
 
     }
-
 
        /**
      * Gets the delete.

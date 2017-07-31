@@ -18,31 +18,21 @@
             </section>
             
             <!-- Main content -->
-             <section class="content">
-
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-xs-12">
-                          <div class="box">
-                            <div class="box-header">
-                                <div class="row">
-                                    <div class="col-sm-11">
-                                        <h3 class="box-title"></h3>
-                                    </div>
-                                    
-                                   
-                                    <div class="col-sm-1">
-                                        <a href="{{ URL::route('wallets.getList') }}" class="btn btn-app">
-                                            <i class="fa fa-list"></i> List Wallets 
-                                        </a>
-                                      
-                                    </div>
-                                    
-                                    
-                                </div>
-                            </div>
-                            <!-- /.box-header -->
-                            <form role="form" action="{{ URL::route('wallets.postAdd')}}" method="post">
+            <section class="content">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <div class="col-sm-10">
+                            
+                        </div>
+                        <div class="col-sm-1">
+                            <a href="{{ URL::route('wallets.getList') }}" class="btn btn-app">
+                                <i class="fa fa-list"></i> List Wallets 
+                            </a>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        @include('quanlytaichinh.include.alert')
+                        <form role="form" action="{{ URL::route('wallets.postAdd')}}" method="post">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="box-body">
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
@@ -85,15 +75,13 @@
                                 <div class="box-footer">
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
-                            </form>
-                            <!-- /.box-body -->
-                        </div>
-                      <!-- /.box -->
+                        </form>
                     </div>
+                    <!-- /.box-body -->
                 </div>
-                <!-- ./col -->
-              <!-- Default box -->
+                  <!-- /.box -->
             </section>
+            
             <!-- /.content -->
         </div>
     @stop

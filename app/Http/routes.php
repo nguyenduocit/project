@@ -68,6 +68,9 @@ Route::group(['prefix'=>'wallets'],function(){
 	// Transfers money
 	Route::get('getTransfersMoney',['as'=>'wallets.getTransfersMoney','uses'=>'TransfersMoneyController@getTransfersMoney']);
 	Route::post('postTransfersMoney',['as'=>'wallets.postTransfersMoney','uses'=>'TransfersMoneyController@postTransfersMoney']);
+	Route::get('getAmountTransfers/{id}',['as'=>'wallets.getAmountTransfers','uses'=>'TransfersMoneyController@getAmountTransfers']);
+
+	
 
 });
 	

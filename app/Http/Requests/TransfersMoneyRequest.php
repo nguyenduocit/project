@@ -25,8 +25,8 @@ class TransfersMoneyRequest extends Request
     {
         return [
             //
-            'transfer-wallet' => 'required|numeric',
-            'receive-Wallet'  => 'required|numeric',
+            'transfer_wallet' => 'required|numeric',
+            'receive_wallet'  => 'required|numeric',
             'amount'          => 'required|numeric',
 
         ];

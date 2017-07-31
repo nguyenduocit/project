@@ -150,6 +150,8 @@ $(document).ready(function($) {
 			$.ajax({
 				url:link+'wallets/getDeleteAll',
 				type: 'get',
+				async:true,
+			 	dataType:'json',
 				data : {'ids': ids},
 				success: function(data)
 				{
@@ -183,6 +185,51 @@ $(document).ready(function($) {
       $(".filename").text("");
     });
 
+   /**
+    * show amount transfer wallet 
+    */
+
+   $('#transfer-wallet').change(function(){
+		
+		var id = $('#transfer-wallet').find(":selected").val();
+		console.log(id);
+		$.ajax({
+				url:link+'wallets/getAmountTransfers/'+id, 
+				type:'get',
+				async:true,
+		 		dataType:'text',
+				data :{'id': id},
+				success: function(data)
+				{
+					$('#transfer-wallets').val(data);
+				}
+
+			});
+		
+	});
+
+   /**
+    * show amount receive-wallet
+    */
+
+   $('#receive-wallet').change(function(){
+		
+		var id = $('#receive-wallet').find(":selected").val();
+		console.log(id);
+		$.ajax({
+				url:link+'wallets/getAmountTransfers/'+id, 
+				type:'get',
+				async:true,
+		 		dataType:'text',
+				data :{'id': id},
+				success: function(data)
+				{
+					$('#receive-wallets').val(data);
+				}
+
+			});
+		
+	});
 
 
 

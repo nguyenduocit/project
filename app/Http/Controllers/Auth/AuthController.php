@@ -202,7 +202,7 @@ class AuthController extends Controller
             return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'The account information is incorrect']);
         }
         //  VERIFY_EMAIL_SUCCESS = 1 User status confirmed  edit bootstrap constant.php
-        if( $user[0]->status != VERIFY_EMAIL_SUCCESS){
+        if( $user[0]->status != VERIFY_EMAIL){
             return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'You need to confirm your email before signing in']);
         }
 
@@ -227,14 +227,14 @@ class AuthController extends Controller
 
         }
 
-        // number of logins NUMBER_LOGIN = 3  edit bootstrap constant.php 
+        // number of logins NUMBER_LOGIN_ERORR = 3  edit bootstrap constant.php 
         
-        if(Session::has('number') && Session::get('number') > NUMBER_LOGIN){
+        if(Session::has('number') && Session::get('number') > NUMBER_LOGIN_ERORR){
             $response = new Response();
 
             // create cookie
-            // minutes of logins NUMBER_LOGIN = 3  edit bootstrap constant.php 
-            $response ->withCookie('status-login','status-login',MINUTES);
+            // minutes of logins NUMBER_MINUTES_LOCK = 15 edit bootstrap constant.php 
+            $response ->withCookie('status-login','status-login',NUMBER_MINUTES_LOCK);
 
             return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'The login account has been locked. Login after 15 minutes.']);
 
