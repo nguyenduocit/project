@@ -1,3 +1,7 @@
+<?php $link =  url('/');?>
+<script >
+	var link = '{{ $link }}'+'/';
+</script>
 <!-- jQuery 2.2.0 -->
 <script src="{{ url('public/plugins/jQuery/jQuery-2.2.0.min.js') }}"></script>
 <!-- Bootstrap 3.3.6 -->

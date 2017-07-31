@@ -96,7 +96,7 @@
                                     <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
                                         <thead>
                                             <tr role="row">
-                                                <th class="sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="descending" style="width: 100px;"><input type="checkbox" name="" class="checkall" > Check All</th>
+                                                <th class="sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="descending" style="width: 100px;"><input type="checkbox" name="" class="checkall" ></th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 100px;" >STT</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 307px;">Name</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 244px;">Color</th>
@@ -119,7 +119,7 @@
                                                     <td>{{ $val->updated_at}}</td>
                                                     <td>
                                                         <a href="{{URL::route('wallets.getEdit',$val->id)}}"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>
-                                                        <a   title="Delete" class="delete" id="{{ $val->id}}"><i onclick=" return confirmDelete('You confirm the deletion')" class="fa fa-fw fa-trash-o"></i></a>
+                                                        <a   title="Delete" class="delete" id="{{ $val->id}}" name="{{ $val->name }}"><i class="fa fa-fw fa-trash-o"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach

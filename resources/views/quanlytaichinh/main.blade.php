@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
 <head>
   @include('quanlytaichinh.include.head')

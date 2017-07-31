@@ -18,6 +18,7 @@
 
  <!-- iCheck -->
   <link rel="stylesheet" href="{{ url('public/plugins/iCheck/square/blue.css') }}">
+  <link rel="stylesheet" href="{{ url('public/style/css/style.css') }}">
 
   
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

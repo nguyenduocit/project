@@ -113,9 +113,16 @@ class AuthController extends Controller
         // Save register ;
         $user                 = new User ;
         $image                = $request->file('Image');
-        $nameimg              = $image->getClientOriginalName();
+        if(!empty($image)){
+
+                $nameimg              = $image->getClientOriginalName();
+                // Directory path upload photos  FOLDER_PHOTOS edit bootstrap constant.php
+                $user->avata          = $nameimg;
+                $des                  = FOLDER_PHOTOS;
+                $image->move($des,$nameimg);
+
+            }
         $user->name           = $request->name;
-        $user->avata          = $nameimg;
         $user->email          = $request->email;
         $user->password       = Hash::make($request->rpassword);
         $user->phone          = $request->phone;
@@ -123,9 +130,8 @@ class AuthController extends Controller
         $user->birthday       = $request->birthday;
         $user->remember_token = $request->_token;
         $user->sex            = $request->sex;
-        // Directory path upload photos  FOLDER_PHOTOS edit bootstrap constant.php
-        $des                  = FOLDER_PHOTOS;
-        $image->move($des,$nameimg);
+       
+       
 
         // Send mail 
         // create session 

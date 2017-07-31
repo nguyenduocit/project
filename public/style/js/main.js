@@ -1,18 +1,23 @@
 
 $(document).ready(function($) {
 
-	var link = 'http://192.168.56.56/project/';
-
-	// ẩn thông báo
 	$('.alert').delay(3000).slideUp();
+
+	// var link = 'http://192.168.56.56/project/';
 
 	/**
 	 * delete wallets
 	 */
 	$('.delete').click(function(){
-		
+
 		var id = $(this).attr('id');
-		console.log(id);
+		var name = $(this).attr('name');
+		
+		if(!confirm('You confirm the deletion '+name+'?'))
+		{
+			return false;
+		}
+		
 		$.ajax({
 				url:link+'wallets/getDelete/'+id, 
 				type:'get',
@@ -151,14 +156,14 @@ $(document).ready(function($) {
 				url:link+'wallets/getDeleteAll',
 				type: 'get',
 				async:true,
-			 	dataType:'json',
+			 	dataType:'text',
 				data : {'ids': ids},
 				success: function(data)
 				{
-					console.log(data);
+					
 					$(ids).each(function(id, val)
 					{
-						//xoa cac the <tr> chua danh muc tung ung
+						//console.log(val);
 						$('tr.row_'+val).fadeOut();
 					});
 				}
@@ -230,7 +235,38 @@ $(document).ready(function($) {
 			});
 		
 	});
+   // hide input Image preview...
+   $('.showimg').hide();
 
+   // show input Image preview...
+   $('#uploadfile').click(function(){
+   		$('.showimg').show();
+   });
+
+   // format data input number
+    $('#exampleInputAmount').keyup(function(){
+        var val = $(this).val();        
+        val = val.replace(/,/igm, '');        
+        val = val.split('').reverse().join('');        
+        val = val.replace(/(\d{3})/ig, "$1 ").trim().split('').reverse().join('').replace(/\s/igm, ',');        
+        $(this).val(val);
+    });
+
+    $('#exampleInputAmount').onfocus(function(){
+        var val = $(this).val();        
+        val = val.replace(/,/igm, '');        
+        val = val.split('').reverse().join('');        
+        val = val.replace(/(\d{3})/ig, "$1 ").trim().split('').reverse().join('').replace(/\s/igm, ',');        
+        $(this).val(val);
+    });
+
+    
+    $('body').on('click', '#btn-submit', function () {        
+    	var total=$('#exampleInputAmount').val().replace(/,/igm,'');        
+    	$('#exampleInputAmount').val(total);        
+    	$('#form-add').submit();    
+    });
+    
 
 
 

@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+@section('title')
+  Reset Password
+@stop
 <html>
 <head>
    @include('quanlytaichinh.include.head')

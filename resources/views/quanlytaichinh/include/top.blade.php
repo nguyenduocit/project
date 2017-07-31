@@ -103,14 +103,22 @@
         @if(Auth::check())
         <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="{{url('public/upload/images')}}/{{ Auth::user()->avata }}" class="user-image" alt="User Image">
+               @if(Auth::user()->avata)
+                    <img src="{{url('public/upload/images')}}/{{ Auth::user()->avata }}" class="user-image" alt="User Image">
+                @else
+                    <img src="{{url('public/upload/icon/user.jpg')}}" class="user-image" alt="User Image">
+                @endif
 
               <span class="hidden-xs">{{ Auth::user()->name}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{{url('public/upload/images')}}/{{ Auth::user()->avata }}" class="img-circle" alt="User Image">
+                @if(Auth::user()->avata)
+                    <img src="{{url('public/upload/images')}}/{{ Auth::user()->avata }}" class="img-circle" alt="User Image">
+                @else
+                    <img src="{{url('public/upload/icon/user.jpg')}}" class="img-circle" alt="User Image">
+                @endif
 
                 <p>
                   {{ Auth::user()->name}}- Web Developer RikkeiSoft

@@ -26,11 +26,16 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="{{url('public/upload/images')}}/{{ Auth::user()->avata }}" alt="User profile picture">
+              
+              @if(Auth::user()->avata)
+                <img class="profile-user-img img-responsive img-circle" src="{{url('public/upload/images')}}/{{ Auth::user()->avata }}" class="img-circle" alt="User profile picture">
+              @else
+                    <img class="profile-user-img img-responsive img-circle" src="{{url('public/upload/icon/user.jpg')}}" class="img-circle" alt="User profile picture">
+              @endif
 
               <h3 class="profile-username text-center">{{ Auth::user()->name}}</h3>
 
-              <p class="text-muted text-center">Software Engineer</p>
+              <p class="text-muted text-center"></p>
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
@@ -138,7 +143,7 @@
 
                         <input type="hidden" name="_token" value="{{ csrf_token()}}">
 
-                        <div class="form-group has-feedback">
+                        <div class="form-group has-feedback  @if($errors->first('name')) has-error @endif">
 
                             <input type="text" name="name" class="form-control" placeholder="Full name" value="{{ Auth::user()->name}}">
                              <span class="text-danger"><p>{{ $errors->first('name') }}</p></span>
@@ -178,8 +183,15 @@
                             <input type="file" id="uploadfile" name="Image"  value="" placeholder = "" onchange="readURL(this);"  >
                             <br>
                             <div class="preview" id="thumbbox" >
-                                <img id="thumbimage"  src="{{url('public/upload/images')}}/{{ Auth::user()->avata }}"  width="15%" alt="Image preview...">
+                                
+                                @if(Auth::user()->avata)
+                                    <img id="thumbimage"  src="{{url('public/upload/images')}}/{{ Auth::user()->avata }}"  width="15%" alt="Image preview...">
+                                    <a class="removeimg" href="javascript:" ></a>
+                                @else
+                                   
+                                    <img id="thumbimage"  src="{{url('public/upload/icon/user.jpg')}}"  width="15%" alt="Image preview...">
                                 <a class="removeimg" href="javascript:" ></a>
+                                @endif
                             </div>
                             <span class="text-danger"><p>{{ $errors->first('Image') }}</p></span>
                         </div>

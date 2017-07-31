@@ -29,10 +29,9 @@ class RegisterRequest extends Request
             'email'     => 'required|email|unique:users,email,'. $this->id,
             'password'  => 'required|min:6',
             'rpassword' => 'required|same:password',
-            'phone'     => 'required|numeric',
-            'birthday'  => 'required',
+            'phone'     => 'numeric',
             'Image'     => 'image|max:2048',
-            'address'   => 'required',
+            
         ];
 
 
@@ -47,10 +46,9 @@ class RegisterRequest extends Request
                 'password.required' => ' Please enter your password.',
                 'password.min'      => ' Password long than 6 characters ',
                 'rpassword'         => ' Passwords do not match',
-                'phone.required'    => ' Please enter a phone number.',
                 'phone.numeric'     => ' Phone numbers must be in digital format.',
-                'address.required'  => " Please enter a adderss.",
-                'birthday.required' => " Please enter a birthday.",
+                
+                
             ];
         }
 }

@@ -4,7 +4,11 @@
       @if(Auth::check())
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{url('public/upload/images')}}/{{ Auth::user()->avata }}" class="img-circle" alt="User Image">
+           @if(Auth::user()->avata)
+                <img src="{{url('public/upload/images')}}/{{ Auth::user()->avata }}" class="img-circle" alt="User Image">
+           @else
+                <img src="{{url('public/upload/icon/user.jpg')}}" class="img-circle" alt="User Image">
+           @endif
         </div>
         <div class="pull-left info">
           <p>{{ Auth::user()->name}}</p>
@@ -15,24 +19,60 @@
       <!-- search form -->
       <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
-          <!-- <input type="text" name="q" class="form-control" placeholder="Search...">
+          {{-- <input type="text" name="q" class="form-control" placeholder="Search...">
               <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>
-              </span> -->
+              </span> --}}
         </div>
       </form>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
+
         <li class="treeview active">
-          <a href="{{URL::route('wallets.getTransfersMoney')}}">
-            <i class="fa fa-files-o"></i>
-            <span>Transfers Money</span>
+
+          <a href="{{ URL::route('wallets.getAdd') }}">
+
+            <i class="fa fa-square"></i>
+
+            <span>Add Wallets </span>
+
             <span class="label label-primary pull-right"></span>
+
           </a>
+
         </li>
+
+        <li class="treeview active">
+
+          <a href="{{ URL::route('wallets.getList') }}">
+
+            <i class="fa fa-list"></i>
+
+            <span>List Wallets </span>
+
+            <span class="label label-primary pull-right"></span>
+
+          </a>
+          
+        </li>
+
+        <li class="treeview active">
+
+          <a href="{{URL::route('wallets.getTransfersMoney')}}">
+
+            <i class="fa fa-files-o"></i>
+
+            <span>Transfers Money</span>
+
+            <span class="label label-primary pull-right"></span>
+
+          </a>
+
+        </li>
+
         <li>
           <a href="">
             <i class="fa fa-th"></i> <span>Add Categorys</span>

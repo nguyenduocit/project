@@ -21,7 +21,7 @@ class WalletsController extends Controller
 
 
         
-        $transfersMoney = DB::table('transfers_moneys')->where('transfer_wallet',$id)->orWhere('receive_wallet',$id)->orderBy('id','DESC')->paginate(1);
+        $transfersMoney = DB::table('transfers_moneys')->where('transfer_wallet',$id)->orWhere('receive_wallet',$id)->orderBy('id','DESC')->paginate(15);
         
         foreach($transfersMoney as $transfers){
             $nameWalletTransfers = DB::table('wallets')->where('id',$transfers->transfer_wallet)->get();

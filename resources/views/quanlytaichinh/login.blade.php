@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+@section('title')
+  Login
+@stop
 <html>
 <head>
   @include('quanlytaichinh.include.head')
@@ -18,16 +21,16 @@
 
       <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-      <div class="form-group has-feedback">
+      <div class="form-group @if($errors->first('email')) has-error @endif">
 
         <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email')}}">
 
         <span class="text-danger"><p>{!! $errors->first('email') !!}</p></span>
-
+        
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 
       </div>
-      <div class="form-group has-feedback">
+      <div class="form-group has-feedback @if($errors->first('password')) has-error @endif">
 
         <input type="password" name="password" class="form-control" placeholder="Password">
 

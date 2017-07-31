@@ -33,14 +33,14 @@
                     </div>
                     <div class="box-body">
                         @include('quanlytaichinh.include.alert')
-                      <form role="form" action="{{ URL::route('wallets.postTransfersMoney')}}" method="post">
+                      <form role="form" action="{{ URL::route('wallets.postTransfersMoney')}}" method="post" id="form-add">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="box-body">
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                         <div class="col-md-3 col-sm-6 col-xs-12 ">
                                              <label for="exampleInputEmail1">Transfer wallet</label>
                                         </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-12 ">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 @if($errors->first('transfer_wallet')) has-error @endif">
                                           
                                             <select name="transfer_wallet" id="transfer-wallet"  class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                               <option value=""></option>
@@ -48,7 +48,7 @@
                                                     <option value="{{ $vallets->id }}">{{ $vallets->name }}</option>
                                               @endforeach
                                             </select>
-                                            <span class="text-danger"><p>{{ $errors->first('transfer-wallet') }}</p></span>
+                                            <span class="text-danger"><p>{{ $errors->first('transfer_wallet') }}</p></span>
                                         </div>
                                         <div class="col-md-3 col-sm-3 col-xs-0 ">
 
@@ -68,14 +68,14 @@
                                         <div class="col-md-3 col-sm-6 col-xs-12 ">
                                              <label for="exampleInputEmail1">Receive Wallet</label>
                                         </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-12 ">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 @if($errors->first('receive_wallet')) has-error @endif">
                                             <select name="receive_wallet" id="receive-wallet"  class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                               <option value=""></option>
                                               @foreach($listwallets as $vallets)
                                                     <option value="{{ $vallets->id }}" >{{ $vallets->name }}</option>
                                               @endforeach
                                             </select>
-                                            <span class="text-danger"><p>{{ $errors->first('receive-Wallet') }}</p></span>
+                                            <span class="text-danger"><p>{{ $errors->first('receive_wallet') }}</p></span>
                                         </div>
                                         <div class="col-md-3 col-sm-3 col-xs-0 ">
 
@@ -95,8 +95,8 @@
                                     <div class="col-md-3 col-sm-6 col-xs-12 ">
                                         <label for="exampleInputEmail1">Amount </label>
                                     </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-12 ">
-                                        <input type="number" name="amount" class="form-control" id="exampleInputAmount" placeholder="Enter Amount" value="{{ old('amount')}}">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 @if($errors->first('amount')) has-error @endif">
+                                        <input type="text" name="amount" class="form-control" id="exampleInputAmount" placeholder="Enter Amount" value="{{ old('amount')}}">
                                         <span class="text-danger"><p>{{ $errors->first('amount') }}</p></span>
                                     </div>
                                 </div><br> <br>
@@ -104,7 +104,7 @@
                               <!-- /.box-body -->
 
                                 <div class="box-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button id="btn-submit" type="button" class="btn btn-primary btn-submit">Submit</button>
                                 </div>
                             </form>
                     </div>
