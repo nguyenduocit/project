@@ -197,7 +197,7 @@ $(document).ready(function($) {
    $('#transfer-wallet').change(function(){
 		
 		var id = $('#transfer-wallet').find(":selected").val();
-		console.log(id);
+		results  = '#transfer-wallets';
 		$.ajax({
 				url:link+'wallets/getAmountTransfers/'+id, 
 				type:'get',
@@ -206,7 +206,9 @@ $(document).ready(function($) {
 				data :{'id': id},
 				success: function(data)
 				{
-					$('#transfer-wallets').val(data);
+					$(results).val(data);
+					formatNumber(results);
+
 				}
 
 			});
@@ -230,6 +232,8 @@ $(document).ready(function($) {
 				success: function(data)
 				{
 					$('#receive-wallets').val(data);
+					formatNumber('#receive-wallets');
+
 				}
 
 			});
@@ -243,29 +247,49 @@ $(document).ready(function($) {
    		$('.showimg').show();
    });
 
+
    // format data input number
     $('#exampleInputAmount').keyup(function(){
-        var val = $(this).val();        
+
+        formatNumber('#exampleInputAmount');
+    });
+
+    $('#exampleInputAmount').focus(function(){
+
+        formatNumber('#exampleInputAmount');
+    });
+
+    $('#exampleInputAmount').mousemove(function(){
+
+        formatNumber('#exampleInputAmount');
+    });
+
+    /**
+     * function formart number 
+     *
+     * @param      {<type>}  results  The results
+     */
+
+    function formatNumber(results){
+    	var val = $(results).val();        
         val = val.replace(/,/igm, '');        
         val = val.split('').reverse().join('');        
         val = val.replace(/(\d{3})/ig, "$1 ").trim().split('').reverse().join('').replace(/\s/igm, ',');        
-        $(this).val(val);
-    });
-
-    $('#exampleInputAmount').onfocus(function(){
-        var val = $(this).val();        
-        val = val.replace(/,/igm, '');        
-        val = val.split('').reverse().join('');        
-        val = val.replace(/(\d{3})/ig, "$1 ").trim().split('').reverse().join('').replace(/\s/igm, ',');        
-        $(this).val(val);
-    });
-
+        $(results).val(val);
+    }
     
+
     $('body').on('click', '#btn-submit', function () {        
-    	var total=$('#exampleInputAmount').val().replace(/,/igm,'');        
+    	var total=$('#exampleInputAmount').val().replace(/,/igm,''); 
     	$('#exampleInputAmount').val(total);        
     	$('#form-add').submit();    
     });
+
+
+    $('#example1_length').change(function(){
+
+    	$('#example1_paginate').hide();
+    })
     
 
 

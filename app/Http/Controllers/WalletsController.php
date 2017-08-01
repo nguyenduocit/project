@@ -63,7 +63,7 @@ class WalletsController extends Controller
      * @return [type]                  [description]
      */
     protected function postAdd(WalletsRequest $request){
-    	
+
 		$wallets              = new Wallets;
 		$wallets->user_id     = Auth::user()->id;
 		$wallets->name        = $request->name;

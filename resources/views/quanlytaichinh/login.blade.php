@@ -39,11 +39,11 @@
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 
       </div>
-      <div class="row">
+      <div class="row" style="margin-left: 8px;">
         <div class="col-xs-8">
           <div class="checkbox icheck">
             <label>
-              <input name="remember" type="checkbox"> Remember Me
+              <input name="remember" type="checkbox" > Remember Me
             </label>
           </div>
         </div>

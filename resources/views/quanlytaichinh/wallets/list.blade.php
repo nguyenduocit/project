@@ -51,10 +51,10 @@
                                         <label>
                                             Show 
                                             <select name="example1_length" aria-controls="example1" class="form-control input-sm" id="number-list-wallets">
-                                                <option value="5">5</option>
                                                 <option value="10">10</option>
                                                 <option value="15">15</option>
                                                 <option value="20">20</option>
+                                                <option value="50">50</option>
                                             </select>
                                             entries
                                         </label>
@@ -114,7 +114,7 @@
                                                     <td> {{ $stt = $stt +1 }}</td>
                                                     <td> {{ $val->name }} </td>
                                                     <td><input type="color" name="" value="{{ $val->color }}"></td>
-                                                    <td> {{ number_format($val->amount) }}</td>
+                                                    <td> {{ number_format($val->amount) }}đ</td>
                                                     <td> {{ $val ->created_at}}</td>
                                                     <td>{{ $val->updated_at}}</td>
                                                     <td>

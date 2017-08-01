@@ -1,4 +1,4 @@
-@extends('quanlytaichinh.main')
+`@extends('quanlytaichinh.main')
     @section('title')
       Add Wallets
     @stop
@@ -65,7 +65,7 @@
                                         <label for="exampleInputEmail1">Amount </label>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12 @if($errors->first('amount')) has-error @endif">
-                                        <input type="text" name="amount" class="form-control" id="exampleInputAmount" placeholder="Enter Amount" value="{{ old('amount')}}">
+                                        <input type="text" name="amount" class="form-control" id="exampleInputAmount" placeholder="Enter Amount" maxlength="18" value="{{ old('amount')}}">
                                         <span class="text-danger"><p>{{ $errors->first('amount') }}</p></span>
                                     </div>
                                 </div><br> <br>

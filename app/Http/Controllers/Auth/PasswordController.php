@@ -75,7 +75,8 @@ class PasswordController extends Controller
         
         // Send mail 
         // 
-        $data  = ['token' => $token ];
+        $data = ['token' => $token ];
+        $link = 'emails.confirmpass';
         
         // function send mail 
         sendMail($link,$data);
@@ -103,7 +104,7 @@ class PasswordController extends Controller
 
         }
 
-        Session::put('id', $val->id);
+        Session::put('id', $user[0]->id);
 
         return redirect('users/getResetPassword')->with(['flash_level'=>'success','flash_message'=>'Enter password change information']);
 

@@ -29,7 +29,7 @@ class WalletsRequest extends Request
         return [
             //
             'name'   => 'required|min:4|max:255|unique:wallets,name,'.$this->id,
-            'amount' => 'required|numeric|max:18',
+            'amount' => 'required|numeric',
         ];
     }
 
@@ -43,7 +43,7 @@ class WalletsRequest extends Request
             'name.unique'     =>'The wallet name can not be identical',
             'amount.required' => 'Enter the amount in the wallet',
             'amount.numeric'  => 'Amount must be numeric',
-            'amount.max'      => 'Your amount must not exceed 18 digits',
+            
 
         ];
     }
