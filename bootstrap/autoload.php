@@ -27,7 +27,7 @@ require __DIR__.'/../vendor/autoload.php';
 |
 */
 
-require __DIR__.'/constant.php';
+require __DIR__.'/../config/constant.php';
 
 /*
 |--------------------------------------------------------------------------

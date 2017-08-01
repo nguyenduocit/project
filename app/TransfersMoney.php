@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Wallets extends Model
+class TransfersMoney extends Model
 {
     //
      /**
@@ -13,10 +13,8 @@ class Wallets extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'name', 'color', 'amount', 'created_ad', 'updated_at',
+        'transfer_wallet','receive_wallet','amount','user_id','	created_at','updated_at',
     ];
 
-    public function users(){
-    	return $this-> belongsTo('App\User');
-    }
+    
 }

@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+@section('title')
+  Reset Password
+@stop
 <html>
 <head>
    @include('quanlytaichinh.include.head')
@@ -20,7 +23,7 @@
 
        <div class="form-group has-feedback">
 
-            <input type="password" name="password" class="form-control" placeholder="Password">
+            <input type="password" name="password" class="form-control" placeholder="Password" >
             <span class="text-danger"><p>{{ $errors->first('password') }}</p></span>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 

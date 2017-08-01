@@ -56,7 +56,6 @@ class PasswordController extends Controller
      *
      * @param      \App\Http\Requests\ForgotPasswordRequest  $request  The request email
      */
-
     protected function postForgotPassword(ForgotPasswordRequest $request){
 
         // select information user
@@ -74,24 +73,17 @@ class PasswordController extends Controller
             Session::put('name',  $user[0]->name);
             $token  = $user[0]->remember_token;
         
-
         // Send mail 
         // 
-        $data  = ['token' => $token ];
-        Mail::send('emails.confirmpass', $data, function ($message) {
-
-
-            $message->from('duocnguyenit1994@gmail.com', 'Administrator');
-            
-            $message->to( Session::get('email'), Session::get('name'))->subject('Resets Password');
+        $data = ['token' => $token ];
+        $link = 'emails.confirmpass';
         
-        });
+        // function send mail 
+        sendMail($link,$data);
 
         return redirect('users/getForgotPassword')->with(['flash_level'=>'success','flash_message'=>'Check the email we sent you a password.']);
 
-
     }
-
 
     /**
      * comfirm validate reset password 
@@ -100,7 +92,6 @@ class PasswordController extends Controller
      *
      * @return     <type>  The token reset password.
      */
-
     protected function getTokenResetPassword($token){
 
         // select information user
@@ -113,7 +104,7 @@ class PasswordController extends Controller
 
         }
 
-        Session::put('id', $val->id);
+        Session::put('id', $user[0]->id);
 
         return redirect('users/getResetPassword')->with(['flash_level'=>'success','flash_message'=>'Enter password change information']);
 
@@ -130,7 +121,13 @@ class PasswordController extends Controller
         return view('quanlytaichinh.resetPassword');
     }
 
-
+    /**
+     * Posts a reset password.
+     *
+     * @param      \App\Http\Requests\ResetPasswordRequest  $request  The request
+     *
+     * @return     <type>                                   ( description_of_the_return_value )
+     */
     protected function postResetPassword(ResetPasswordRequest $request){
 
         if(Session::has('id')){
@@ -149,7 +146,7 @@ class PasswordController extends Controller
 
         }else{
 
-             return redirect('users/getForgotPassword')->with(['flash_level'=>'danger','flash_message'=>'Enter email to change password']);
+            return redirect('users/getForgotPassword')->with(['flash_level'=>'danger','flash_message'=>'Enter email to change password']);
 
         }
 

@@ -1,5 +1,5 @@
 <!-- Logo -->
-    <a href="../../index2.html" class="logo">
+    <a href="{{ URL::route('home') }}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>M</b>L</span>
       <!-- logo for regular state and mobile devices -->
@@ -18,7 +18,7 @@
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <!-- Messages: style can be found in dropdown.less-->
-          <li class="dropdown messages-menu">
+         {{--  <li class="dropdown messages-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
               <span class="label label-success">4</span>
@@ -98,19 +98,27 @@
                 <a href="#">View all tasks</a>
               </li>
             </ul>
-          </li>
+          </li> --}}
           <!-- User Account: style can be found in dropdown.less -->
         @if(Auth::check())
         <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="{{url('public/upload/images')}}/{{ Auth::user()->avata }}" class="user-image" alt="User Image">
+               @if(Auth::user()->avata)
+                    <img src="{{url('public/upload/images')}}/{{ Auth::user()->avata }}" class="user-image" alt="User Image">
+                @else
+                    <img src="{{url('public/upload/icon/user.jpg')}}" class="user-image" alt="User Image">
+                @endif
 
               <span class="hidden-xs">{{ Auth::user()->name}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{{url('public/upload/images')}}/{{ Auth::user()->avata }}" class="img-circle" alt="User Image">
+                @if(Auth::user()->avata)
+                    <img src="{{url('public/upload/images')}}/{{ Auth::user()->avata }}" class="img-circle" alt="User Image">
+                @else
+                    <img src="{{url('public/upload/icon/user.jpg')}}" class="img-circle" alt="User Image">
+                @endif
 
                 <p>
                   {{ Auth::user()->name}}- Web Developer RikkeiSoft
@@ -121,7 +129,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="{{ URL::route('users.getUserProfile')}}" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="{{ URL::route('users.getLogout')}}" class="btn btn-default btn-flat">Sign out</a>

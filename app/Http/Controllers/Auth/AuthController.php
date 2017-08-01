@@ -9,7 +9,9 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ForgotPasswordRequest;
+use App\Http\Requests\UserProfileRequest;
 use Illuminate\Support\Facades\Auth;
+use File;
 use Illuminate\Mail\Mailer;
 use Illuminate\Mail\Message;
 use Illuminate\Http\Response;
@@ -111,9 +113,16 @@ class AuthController extends Controller
         // Save register ;
         $user                 = new User ;
         $image                = $request->file('Image');
-        $nameimg              = $image->getClientOriginalName();
+        if(!empty($image)){
+
+                $nameimg              = $image->getClientOriginalName();
+                // Directory path upload photos  FOLDER_PHOTOS edit bootstrap constant.php
+                $user->avata          = $nameimg;
+                $des                  = FOLDER_PHOTOS;
+                $image->move($des,$nameimg);
+
+            }
         $user->name           = $request->name;
-        $user->avata          = $nameimg;
         $user->email          = $request->email;
         $user->password       = Hash::make($request->rpassword);
         $user->phone          = $request->phone;
@@ -121,27 +130,18 @@ class AuthController extends Controller
         $user->birthday       = $request->birthday;
         $user->remember_token = $request->_token;
         $user->sex            = $request->sex;
-        // Directory path upload photos  FOLDER_PHOTOS edit bootstrap constant.php
-        $des                  = FOLDER_PHOTOS;
-        $image->move($des,$nameimg);
+       
+       
 
         // Send mail 
         // create session 
         Session::put('email', $request->email);
         Session::put('name', $request->name);
-
+        $data = ['token' => $request->_token ];
+        $link = 'emails.blanks';
         
-        $data  = ['token' => $request->_token ];
-        Mail::send('emails.blanks', $data, function ($message) {
-
-            // EMAIL_ADMIN = duocnguyenit1994@gmail.com  edit bootstrap constant.php
-            // NAME_ADMIN = Administrator  edit bootstrap constant.php
-            
-            $message->from(EMAIL_ADMIN, NAME_ADMIN);
-            
-            $message->to( Session::get('email'), Session::get('name'))->subject('Confirmation Email');
-        
-        });
+        // function send mail libtary
+        sendMail($link,$data); 
 
         $user->save();
         return redirect('users/getLogin')->with(['flash_level'=>'success','flash_message'=>'You need to confirm your email before signing in']);
@@ -208,7 +208,7 @@ class AuthController extends Controller
             return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'The account information is incorrect']);
         }
         //  VERIFY_EMAIL_SUCCESS = 1 User status confirmed  edit bootstrap constant.php
-        if( $user[0]->status != VERIFY_EMAIL_SUCCESS){
+        if( $user[0]->status != VERIFY_EMAIL){
             return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'You need to confirm your email before signing in']);
         }
 
@@ -233,14 +233,14 @@ class AuthController extends Controller
 
         }
 
-        // number of logins NUMBER_LOGIN = 3  edit bootstrap constant.php 
+        // number of logins NUMBER_LOGIN_ERORR = 3  edit bootstrap constant.php 
         
-        if(Session::has('number') && Session::get('number') > NUMBER_LOGIN){
+        if(Session::has('number') && Session::get('number') > NUMBER_LOGIN_ERORR){
             $response = new Response();
 
             // create cookie
-            // minutes of logins NUMBER_LOGIN = 3  edit bootstrap constant.php 
-            $response ->withCookie('status-login','status-login',MINUTES);
+            // minutes of logins NUMBER_MINUTES_LOCK = 15 edit bootstrap constant.php 
+            $response ->withCookie('status-login','status-login',NUMBER_MINUTES_LOCK);
 
             return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'The login account has been locked. Login after 15 minutes.']);
 
@@ -289,6 +289,48 @@ class AuthController extends Controller
         return redirect('users/getLogin')->with(['flash_level'=>'success','flash_message'=>'Successful confirmation email']);
 
         
+    }
+
+    protected function getUserProfile(){
+
+        return view('quanlytaichinh.user.userProfile');
+    }
+     
+    protected function postUserProfile(UserProfileRequest $request){
+
+    
+        if(Auth::check()){
+
+            $id = Auth::user() ->id;
+
+            $user = User::find($id);
+
+            $image                = $request->file('Image');
+            $user->name           = $request->name;
+
+            if(!empty($image)){
+
+                $nameimg              = $image->getClientOriginalName();
+                $user->avata          = $nameimg;
+                $des                  = FOLDER_PHOTOS;
+                $image->move($des,$nameimg);
+
+                File::delete(FOLDER_PHOTOS.'/'.Auth::user()->avata);
+            }
+            
+            $user->phone          = $request->phone;
+            $user->address        = $request->address;
+            $user->birthday       = $request->birthday;
+            $user->sex            = $request->sex;
+            // Directory path upload photos  FOLDER_PHOTOS edit bootstrap constant.php
+            
+            $user->save();
+
+            Session::forget('id');
+            
+            return redirect('users/getUserProfile')->with(['flash_level'=>'success','flash_message'=>'Edit success information !!!']);
+
+        }
     }
 
     /**

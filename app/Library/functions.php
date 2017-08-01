@@ -14,6 +14,7 @@
         }
     }
 
+    
 
     /**
      * Convert text format 
@@ -76,6 +77,42 @@
 
          }
         return $str;
+    }
+    /**
+     * Sends a mail.
+     *
+     * @param      <type>  $link   The link 
+     * @param      <type>  $data   The data
+     */
+    function sendMail($link,$data){
+
+        Mail::send($link, $data, function ($message) {
+
+            // EMAIL_ADMIN = duocnguyenit1994@gmail.com  edit bootstrap constant.php
+            // NAME_ADMIN = Administrator  edit bootstrap constant.php
+            
+            $message->from(EMAIL_ADMIN, NAME_ADMIN);
+            
+            $message->to( Session::get('email'), Session::get('name'))->subject('Confirmation Email');
+        
+        });
+
+    }
+
+    /**
+     * Check if the user has successfully logged in
+     *
+     * @return     <type>  ( description_of_the_return_value )
+     */
+
+    function checkLoginSuccess()
+    {
+
+        if(!Auth::check()){
+
+            return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'You need to sign in to use']);
+
+        }
     }
 
 

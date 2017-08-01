@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+@section('title')
+  Register
+@stop
 <html>
 <head>
   @include('quanlytaichinh.include.head')
@@ -16,69 +19,69 @@
 
         <input type="hidden" name="_token" value="{{ csrf_token()}}">
 
-        <div class="form-group has-feedback">
+        <div class="form-group has-feedback @if($errors->first('name')) has-error @endif">
 
-            <input type="text" name="name" class="form-control" placeholder="Full name">
+            <input type="text" name="name" class="form-control" placeholder="Full name" value="{{ old('name')}}">
              <span class="text-danger"><p>{{ $errors->first('name') }}</p></span>
-            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            <span class="glyphicon glyphicon-user form-control-feedback" style="color: red;"></span>
         </div>
-        <div class="form-group has-feedback">
+        <div class="form-group has-feedback @if($errors->first('email')) has-error @endif">
 
-            <input type="email" name="email" class="form-control" placeholder="Email">
+            <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email')}}" >
 
-             <span class="text-danger"><p>{{ $errors->first('email') }}</p></span>
-            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            <span class="text-danger"><p>{{ $errors->first('email') }}</p></span>
+            <span class="glyphicon glyphicon-envelope form-control-feedback" style="color: red;" ></span>
 
         </div>
-        <div class="form-group has-feedback">
+        <div class="form-group has-feedback @if($errors->first('password')) has-error @endif">
 
             <input type="password" name="password" class="form-control" placeholder="Password">
             <span class="text-danger"><p>{{ $errors->first('password') }}</p></span>
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            <span class="glyphicon glyphicon-lock form-control-feedback" style="color: red;" ></span>
 
         </div>
-        <div class="form-group has-feedback">
+        <div class="form-group has-feedback @if($errors->first('rpassword')) has-error @endif">
 
             <input type="password" name="rpassword" class="form-control" placeholder="Retype password">
             <span class="text-danger"><p>{{ $errors->first('rpassword') }}</p></span>
-            <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+            <span class="glyphicon glyphicon-log-in form-control-feedback" style="color: red;"></span>
         </div>
         <div class="form-group has-feedback">
 
-            <input type="text" name="address" class="form-control" placeholder="Address">
-            <span class="text-danger"><p>{{ $errors->first('address') }}</p></span>
+            <input type="text" name="address" class="form-control" placeholder="Address" value="{{ old('address')}}" >
             <span class="fa fa-road form-control-feedback"></span>
         </div>
 
         <div class="form-group has-feedback">
 
-            <input type="number" name="phone" class="form-control" placeholder="phone">
-            <span class="text-danger"><p>{{ $errors->first('phone') }}</p></span>
+            <input type="number" name="phone" class="form-control" placeholder="phone" value="{{ old('phone')}}" >
             <span class="fa fa-phone-square form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
 
-            <input type="date" name="birthday" class="form-control" placeholder="birthday">
-            <span class="text-danger"><p>{{ $errors->first('birthday') }}</p></span>
+            <input type="date" name="birthday" class="form-control" placeholder="birthday" value="{{ old('birthday')}}">
+            
+            <span class="fa fa-calendar form-control-feedback"></span>
             
         </div>
 
         <div class="form-group has-feedback">
 
-            <input type="radio" id="" name="sex" class="" checked="" value="1" placeholder = ""> Nam
+            <input type="radio" id="" name="sex" class="" checked="" value="1" placeholder = ""> Boy
             
-            <input type="radio" id="" name="sex" class="" value="0" placeholder = ""> Nữ
+            <input type="radio" id="" name="sex" class="" value="0" placeholder = ""> Girl
         </div>
 
         <div class="form-group has-feedback">
 
-            <input type="file" id="required2" name="Image"  value="" placeholder = "">
-            <span class="text-danger"><p>{{ $errors->first('Image') }}</p></span>
+            <input type="file" id="uploadfile" name="Image"  value="" placeholder = "" onchange="readURL(this);" >
+              <div class="preview showimg" id="thumbbox" >
+                  <img id="thumbimage"  src=""  width="30%" alt="Image preview...">
+                  <a class="removeimg" href="javascript:" ></a>
+              </div>
+
+              <span class="text-danger"><p>{{ $errors->first('Image') }}</p></span>
         </div>
-
-
-        
-
         <div class="row">
             <!-- <div class="col-xs-8">
               <div class="checkbox icheck">

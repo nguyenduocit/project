@@ -3,6 +3,7 @@
   <title>@yield('title')</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="shortcut icon" href="{{url('public/upload/icon/iconlogo.png')}}" type="image/x-icon"/>
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="{{ url('public/bootstrap/css/bootstrap.min.css')}}">
   <!-- Font Awesome -->
@@ -17,6 +18,7 @@
 
  <!-- iCheck -->
   <link rel="stylesheet" href="{{ url('public/plugins/iCheck/square/blue.css') }}">
+  <link rel="stylesheet" href="{{ url('public/style/css/style.css') }}">
 
   
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

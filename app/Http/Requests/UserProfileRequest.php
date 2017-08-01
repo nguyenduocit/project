@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class RegisterRequest extends Request
+class UserProfileRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,12 +26,10 @@ class RegisterRequest extends Request
         return [
             
             'name'      => 'required',
-            'email'     => 'required|email|unique:users,email,'. $this->id,
-            'password'  => 'required|min:6',
-            'rpassword' => 'required|same:password',
-            'phone'     => 'numeric',
+            'phone'     => 'required|numeric',
+            'birthday'  => 'required',
             'Image'     => 'image|max:2048',
-            
+            'address'   => 'required',
         ];
 
 
@@ -40,15 +38,10 @@ class RegisterRequest extends Request
             return [
 
                 'name.required'     => ' Please enter a first and last name.',
-                'email.required'    => ' Please enter email.',
-                'email.email'       => ' Please enter the correct email format.',
-                'email.unique'      => ' The Email was registered .',
-                'password.required' => ' Please enter your password.',
-                'password.min'      => ' Password long than 6 characters ',
-                'rpassword'         => ' Passwords do not match',
+                'phone.required'    => ' Please enter a phone number.',
                 'phone.numeric'     => ' Phone numbers must be in digital format.',
-                
-                
+                'address.required'  => " Please enter a adderss.",
+                'birthday.required' => " Please enter a birthday.",
             ];
         }
 }

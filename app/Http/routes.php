@@ -39,19 +39,54 @@ Route::group(['prefix'=>'users'],function(){
 
 	//reset password 
 	Route::get('getTokenResetPassword/{token}',['as'=>'users.getTokenResetPassword','uses' =>"Auth\PasswordController@getTokenResetPassword"]);
-
 	Route::get('getResetPassword',['as'=>'users.getResetPassword','uses'=>'Auth\PasswordController@getResetPassword']);
-
 	Route::post('postResetPassword',['as'=>'users.postResetPassword','uses'=>'Auth\PasswordController@postResetPassword']);
+
+	//user profile
+	Route::get('getUserProfile',['as'=>'users.getUserProfile','uses'=>'Auth\AuthController@getUserProfile']);
+	Route::post('postUserProfile',['as'=>'users.postUserProfile','uses'=>'Auth\AuthController@postUserProfile']);
 	
 });
 
 
-	Route::get('home',function(){
+Route::get('home',['as' =>'home','uses' =>'HomeController@index']);
 
-		return view('quanlytaichinh/home/index');
-	});
+Route::group(['prefix'=>'wallets'],function(){
 
+	Route::get('getAdd',['as'=>'wallets.getAdd','uses'=>'WalletsController@getAdd']);
+	Route::post('postAdd',['as'=>'wallets.postAdd','uses'=>'WalletsController@postAdd']);
+	Route::get('getList',['as'=>'wallets.getList','uses'=>'WalletsController@getList']);
+	Route::get('getDelete/{id}',['as'=>'wallets.getDelete','uses' =>'WalletsController@getDelete']);
+	Route::get('keySearch/{key}',['as'=>'wallets.keySearch','uses'=>'WalletsController@keySearch']);
+	Route::get('getEdit/{id}',['as'=>'wallets.getEdit','uses'=>'WalletsController@getEdit']);
+	Route::post('postEdit/{id}',['as'=>'wallets.postEdit','uses'=>'WalletsController@postEdit']);
+	
+	//wallets
+	Route::get('getInfoWallets/{id}',['as'=>'wallets.getInfoWallets','uses'=>'WalletsController@getInfoWallets']);
+	
+
+	// Transfers money
+	Route::get('getListTransfers',['as'=>'wallets.getListTransfers','uses'=>'TransfersMoneyController@getListTransfers']);
+	
+	Route::get('getTransfersMoney',['as'=>'wallets.getTransfersMoney','uses'=>'TransfersMoneyController@getTransfersMoney']);
+	Route::post('postTransfersMoney',['as'=>'wallets.postTransfersMoney','uses'=>'TransfersMoneyController@postTransfersMoney']);
+
+	Route::get('getAmountTransfers/{id}',['as'=>'wallets.getAmountTransfers','uses'=>'TransfersMoneyController@getAmountTransfers']);
+	Route::get('getDeleteTransfers/{id}',['as'=>'wallets.getDeleteTransfers','uses' =>'TransfersMoneyController@getDeleteTransfers']);
+
+	Route::get('getEditTransfers/{id}',['as'=>'wallets.getEditTransfers','uses'=>'TransfersMoneyController@getEditTransfers']);
+	Route::post('postEditTransfers/{id}',['as'=>'wallets.postEditTransfers','uses'=>'TransfersMoneyController@postEditTransfers']);
+
+	Route::get('keySearchTransfers/{key}',['as'=>'wallets.keySearchTransfers','uses'=>'TransfersMoneyController@keySearchTransfers']);
+
+});
+
+
+Route::group(['prefix'=>'categorys'],function(){
+
+	Route::get('getAdd',['as'=>'categorys.getAdd','uses'=>'CategorysController@getAdd']);
+
+});
 	
 
 // route test
