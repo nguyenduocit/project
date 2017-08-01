@@ -8,9 +8,33 @@ use App\Http\Requests\TransfersMoneyRequest;
 use App\Wallets;
 use App\TransfersMoney;
 use App\Http\Requests;
+use DB;
 
 class TransfersMoneyController extends Controller
 {
+    protected function getListTransfers(){
+
+
+        
+        $transfersMoney = DB::table('transfers_moneys')->where('user_id',Auth::user()->id)->orderBy('id','DESC')->paginate(15);
+        
+        
+        foreach($transfersMoney as $transfers){
+            $nameWalletTransfers = DB::table('wallets')->where('id',$transfers->transfer_wallet)->get();
+            $transfers ->name_transfer_wallet = $nameWalletTransfers[0]->name;
+        }
+
+        foreach($transfersMoney as $transfer){
+            $nameWalletReceive = DB::table('wallets')->where('id',$transfer->receive_wallet)->get();
+            $transfer ->name_receive_wallet = $nameWalletReceive[0]->name;
+
+
+        }
+        return view('quanlytaichinh.transfers-money.transfersMoneyList',compact('transfersMoney'));
+
+    }
+
+
     /**
      * Gets the transfers money. readonly="readonly"
      *
@@ -18,14 +42,14 @@ class TransfersMoneyController extends Controller
      */
     protected function getTransfersMoney()
     {
-    	$listwallets = Wallets::all();
+    	$listwallets = Wallets::select('id','name')->where('user_id',Auth::user()->id)->get();
     	if(empty($listwallets)){
 
     		return redirect('home')->with(['flash_level'=>'success','flash_message'=>'You do not have wallets']);
 
     	}
 
-    	return view('quanlytaichinh.transfers-money.transfersMoney',compact('listwallets'));
+    	return view('quanlytaichinh.transfers-money.transfersMoneyAdd',compact('listwallets'));
     }
 
     /**
@@ -66,23 +90,23 @@ class TransfersMoneyController extends Controller
             return redirect('wallets/getTransfersMoney')->with(['flash_level'=>'danger','flash_message'=>"The money in the wallet is not enough to transfer !"]);
         }
 
-        // Get data received
-        $amountReceive = Wallets::select('amount')->where('id',$request->receive_wallet)->get();
+        // // Get data received
+        // $amountReceive = Wallets::select('amount')->where('id',$request->receive_wallet)->get();
 
-        $amountRec = $amountReceive[0]->amount;
+        // $amountRec = $amountReceive[0]->amount;
 
-        $amountReceiveUpdate = $amountRec + $request->amount;
+        // $amountReceiveUpdate = $amountRec + $request->amount;
 
-        // Update Receive Wallet
-        $wallets = Wallets::find($request->receive_wallet);
-        $wallets->amount      = $amountReceiveUpdate;
-        $wallets->save();
+        // // Update Receive Wallet
+        // $wallets = Wallets::find($request->receive_wallet);
+        // $wallets->amount      = $amountReceiveUpdate;
+        // $wallets->save();
 
-        // Update Transfer wallet 
-        $amountTransferUpdate = $amountTran - $request->amount;
-        $wallets = Wallets::find($request->transfer_wallet);
-        $wallets->amount      = $amountTransferUpdate;
-        $wallets->save();
+        // // Update Transfer wallet 
+        // $amountTransferUpdate = $amountTran - $request->amount;
+        // $wallets = Wallets::find($request->transfer_wallet);
+        // $wallets->amount      = $amountTransferUpdate;
+        // $wallets->save();
 
         // insert Transfers Money
         $transfersMoney                   = new TransfersMoney;
@@ -97,6 +121,94 @@ class TransfersMoneyController extends Controller
         return redirect('wallets/getTransfersMoney')->with(['flash_level'=>'success','flash_message'=>'Transfer money successfully!!!']);
     }
 
+    /**
+     * Gets the delete transfers.
+     *
+     * @param      <type>  $id     The identifier
+     *
+     * @return     <type>  The delete transfers.
+     */
+    
+
+    protected function getDeleteTransfers($id){
+
+        $transfersMoney = TransfersMoney::find($id);
+
+        if(empty($transfersMoney)){
+            return redirect('wallets/getList')->with(['flash_level'=>'danger','flash_message'=>'Does not exist in the database']);
+        }
+
+        $transfersMoney ->delete($id);
+    }
+
+    /**
+     * { function_description }
+     *
+     * @param      <type>  $key    The key
+     */
+    
+    protected function keySearchTransfers($key){
+
+        $transfersMoney = TransfersMoney::Where('amount','like',"%$key%")->get();
+
+    
+        die (json_encode($transfersMoney));
+
+    }
+
+    /**
+     * Gets the edit transfers.
+     *
+     * @param      <type>  $id     The identifier
+     *
+     * @return     <type>  The edit transfers.
+     */
+    
+    protected function getEditTransfers($id){
+
+        $listwallets = Wallets::select('id','name')->where('user_id',Auth::user()->id)->get();
+        if(empty($listwallets)){
+
+            return redirect('home')->with(['flash_level'=>'success','flash_message'=>'You do not have wallets']);
+
+        }
+
+        $transfersMoney = TransfersMoney::find($id);
+        
+
+        return view('quanlytaichinh.transfers-money.transfersMoneyEdit',compact('listwallets','transfersMoney'));
+    }
+
+    /**
+     * Posts edit transfers.
+     *
+     * @param      <type>                                    $id       The identifier
+     * @param      \App\Http\Requests\TransfersMoneyRequest  $request  The request
+     *
+     * @return     <type>                                    ( description_of_the_return_value )
+     */
+
+    protected function postEditTransfers($id,TransfersMoneyRequest $request){
+
+
+        $transfersMoney = TransfersMoney::find($id);
+
+        if(empty($transfersMoney)){
+
+            return redirect('wallets/getListTransfers')->with(['flash_level'=>'danger','flash_message'=>'No transaction exists !!!']);
+        }
+
+        $transfersMoney ->transfer_wallet = $request->transfer_wallet;
+        $transfersMoney ->receive_wallet  = $request->receive_wallet;
+        $transfersMoney ->amount          = $request->amount;
+
+        $transfersMoney ->save();
+
+
+        return redirect('wallets/getListTransfers')->with(['flash_level'=>'success','flash_message'=>'Edit successfully Transfers !!!']);
+
+
+    }
 
 
 

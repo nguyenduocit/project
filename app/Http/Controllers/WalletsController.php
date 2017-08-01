@@ -22,20 +22,19 @@ class WalletsController extends Controller
 
         
         $transfersMoney = DB::table('transfers_moneys')->where('transfer_wallet',$id)->orWhere('receive_wallet',$id)->orderBy('id','DESC')->paginate(15);
+        // pre($transfersMoney);
         
         foreach($transfersMoney as $transfers){
             $nameWalletTransfers = DB::table('wallets')->where('id',$transfers->transfer_wallet)->get();
-
             $transfers ->name_transfer_wallet = $nameWalletTransfers[0]->name;
         }
 
         foreach($transfersMoney as $transfer){
-            $nameWalletTransfer = DB::table('wallets')->where('id',$transfer->receive_wallet)->get();
+            $nameWalletReceive = DB::table('wallets')->where('id',$transfer->receive_wallet)->get();
+            $transfer ->name_receive_wallet = $nameWalletReceive[0]->name;
 
-            $transfer ->name_receive_wallet = $nameWalletTransfer[0]->name;
+
         }
-
-        
         return view('quanlytaichinh.wallets.infoWallets',compact('transfersMoney'));
 
     }
@@ -104,9 +103,12 @@ class WalletsController extends Controller
 
         }else{
             $num =10;
-             $listWallets = Wallets::where('user_id',$id)->orderBy('id','DESC')->paginate($num);
 
-             return view('quanlytaichinh.wallets.list', compact('listWallets'));
+            $listWallets = Wallets::where('user_id',$id)->orderBy('id','DESC')->paginate($num);
+
+            $sumAmount = DB::table('wallets')->where('user_id',$id)->sum('amount');
+
+             return view('quanlytaichinh.wallets.list', compact('listWallets','sumAmount'));
         }  
 
     }
@@ -186,40 +188,49 @@ class WalletsController extends Controller
         $wallets = Wallets::find($id);
 
         if(empty($wallets)){
-            return redirect('wallets/getList')->with(['flash_level'=>'danger','flash_message'=>'Does not exist in the database']);
+
+            return 'error';
+            
+        }
+
+        $transfersMoney = DB::table('transfers_moneys')->where('transfer_wallet',$id)->orWhere('receive_wallet',$id)->get();
+        if(!empty($transfersMoney)){
+
+            return 'error';
+
         }
 
         $wallets->delete($id);
-        return $id;
+        
 
     }
 
-    /**
-     * Gets the delete all.
-     *
-     * @param      \Illuminate\Http\Request  $request  The request
-     *
-     * @return     <type>                    The delete all.
-     */
+    // /**
+    //  * Gets the delete all.
+    //  *
+    //  * @param      \Illuminate\Http\Request  $request  The request
+    //  *
+    //  * @return     <type>                    The delete all.
+    //  */
 
-    protected function getDeleteAll(Request $request){
+    // protected function getDeleteAll(Request $request){
 
-        $id_Wallets = $request->ids;
+    //     $id_Wallets = $request->ids;
 
-        foreach($id_Wallets as $id )
-        {
-            $wallets = Wallets::find($id);
+    //     foreach($id_Wallets as $id )
+    //     {
+    //         $wallets = Wallets::find($id);
 
-            if(empty($wallets)){
-                return redirect('wallets/getList')->with(['flash_level'=>'danger','flash_message'=>'Does not exist in the database']);
-            }
+    //         if(empty($wallets)){
+    //             return redirect('wallets/getList')->with(['flash_level'=>'danger','flash_message'=>'Does not exist in the database']);
+    //         }
 
-            $wallets->delete($id);
+    //         $wallets->delete($id);
 
 
-        }
+    //     }
 
-    }
+    // }
 
     
 

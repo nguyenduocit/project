@@ -31,7 +31,7 @@
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
 
-        <li class="treeview active">
+        <li class="treeview">
 
           <a href="{{ URL::route('wallets.getAdd') }}">
 
@@ -45,7 +45,7 @@
 
         </li>
 
-        <li class="treeview active">
+        <li class="treeview ">
 
           <a href="{{ URL::route('wallets.getList') }}">
 
@@ -59,7 +59,7 @@
           
         </li>
 
-        <li class="treeview active">
+        <li class="treeview ">
 
           <a href="{{URL::route('wallets.getTransfersMoney')}}">
 
@@ -70,11 +70,24 @@
             <span class="label label-primary pull-right"></span>
 
           </a>
-
         </li>
 
+         <li class="treeview ">
+
+          <a href="{{URL::route('wallets.getListTransfers')}}">
+
+            <i class="fa fa-files-o"></i>
+
+            <span>List Transfers Money</span>
+
+            <span class="label label-primary pull-right"></span>
+
+          </a>
+        </li>
+
+
         <li>
-          <a href="">
+          <a href="{{URL::route('categorys.getAdd')}}">
             <i class="fa fa-th"></i> <span>Add Categorys</span>
             <small class="label pull-right bg-green"></small>
           </a>

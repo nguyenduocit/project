@@ -26,8 +26,13 @@ $(document).ready(function($) {
 				data :{'id': id},
 				success: function(data)
 				{
+					if(!data =='error'){
+
+						$('tr.row_'+id).fadeOut();
+					}else{
+						alert('Can not delete !!! You need to delete the previous wallets transaction')
+					}
 					
-					$('tr.row_'+id).fadeOut();
 					
 				}
 
@@ -61,7 +66,6 @@ $(document).ready(function($) {
 
 						stt = stt +1;
 						html += '<tr class="row_' +wallets['id']+' select" >';
-						html += '<td class="sorting_1"><input type="checkbox" name=""> </td>';
 						html += '<td>'+stt+'</td>';
 						html += '<td>'+wallets['name']+'</td>';
 						html += '<td><input type="color" name="" value="'+wallets['color']+'"></td>';
@@ -70,7 +74,7 @@ $(document).ready(function($) {
 						html += '<td>'+wallets['updated_at']+'</td>';
 						html += '<td>';
 						html += '<a href="'+linkEdit+wallets['id']+'"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>';
-						html += '<a   title="Delete" class="delete" id="'+wallets['id']+'"><i onclick=" return confirmDelete("You confirm the deletion")" class="fa fa-fw fa-trash-o"></i></a>'
+						html += '<a   title="Delete" class="delete" id="'+wallets['id']+'"><i class="fa fa-fw fa-trash-o"></i></a>'
          				html += '</td>'
 						html += '</tr>';
 					});
@@ -103,7 +107,6 @@ $(document).ready(function($) {
 
 						stt = stt +1;
 						html += '<tr class="row_'+wallets['id']+' select" >';
-						html += '<td class="sorting_1"><input type="checkbox" name=""> </td>';
 						html += '<td>'+stt+'</td>';
 						html += '<td>'+wallets['name']+'</td>';
 						html += '<td><input type="color" name="" value="'+wallets['color']+'"></td>';
@@ -129,50 +132,6 @@ $(document).ready(function($) {
 			$('.select').find('input:checkbox').prop('checked', checked);   
 		}); 
 
-
-
-	// delete all category 
-		var $list_action 	= $('.delete-all-wallets');
-		$list_action.find('#submit').click(function(){ //tim toi the co id = submit,su kien click
-			if(!confirm('You definitely want to delete all your data ?'))
-			{
-				return false;
-			}
-
-			var ids = new Array();
-			$('[name="id[]"]:checked').each(function()
-			{
-				ids.push($(this).val());
-			});
-
-			console.log(ids);
-
-
-			if (!ids.length) return false;
-
-			var url  = $(this).attr('url');
-			console.log(url);
-			$.ajax({
-				url:link+'wallets/getDeleteAll',
-				type: 'get',
-				async:true,
-			 	dataType:'text',
-				data : {'ids': ids},
-				success: function(data)
-				{
-					
-					$(ids).each(function(id, val)
-					{
-						//console.log(val);
-						$('tr.row_'+val).fadeOut();
-					});
-				}
-
-			})
-			return false;
-		});
-
-	
 
     $(".Choicefile").bind('click', function  () { 
     $("#uploadfile").click();
@@ -290,12 +249,98 @@ $(document).ready(function($) {
 
     	$('#example1_paginate').hide();
     })
+
+
+
+    //Transaction 
+    //
+    /**
+	 * delete Transaction 
+	 */
+	$('.delete-transaction').click(function(){
+
+		var id = $(this).attr('id');
+		
+		if(!confirm('You confirm the deletion '+name+'?'))
+		{
+			return false;
+		}
+		
+		$.ajax({
+				url:link+'wallets/getDeleteTransfers/'+id, 
+				type:'get',
+				async:true,
+		 		dataType:'text',
+				data :{'id': id},
+				success: function(data)
+				{
+					console.log(data);
+					$('tr.row_'+id).fadeOut();
+					
+				}
+
+			});
+		
+	});
     
+    
+
+	/*
+	 * search 
+	 */
+	var linkEditTransfers = link+'wallets/getEditTransfers/';
+	$('#search-transaction').keyup(function(){
+
+		var key = $(this).val();
+		console.log(key);
+		$.ajax({
+				url:link+'wallets/keySearchTransfers/'+key, 
+				type:'get',
+				async:true,
+		 		dataType:'json',
+				data :{'key': key},
+				success: function(data)
+				{
+					
+					var html = '';
+					var stt = 0;
+					$.each (data, function (key, transfersMoney){
+
+						stt = stt +1;
+						html += '<tr class="row_' +transfersMoney['id']+' select" >';
+						html += '<td class="sorting_1"><input type="checkbox" name="id[]"> </td>';
+						html += '<td>'+stt+'</td>';
+						html += '<td>'+transfersMoney['name_transfer_wallet']+'</td>';
+						html += '<td>'+transfersMoney['name_receive_wallet']+'</td>';
+						html += '<td>'+transfersMoney['amount']+'</td>';
+						html += '<td>'+transfersMoney['created_at']+'</td>';
+						html += '<td>'+transfersMoney['updated_at']+'</td>';
+						html += '<td>';
+						html += '<a href="'+linkEditTransfers+transfersMoney['id']+'"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>';
+						html += '<a   title="Delete" class="delete-transaction" id="'+transfersMoney['id']+'"><i class="fa fa-fw fa-trash-o"></i></a>'
+         				html += '</td>'
+						html += '</tr>';
+					});
+
+					$('#tbody-wallets').html(html); 
+				}
+
+			});
+		
+	});
+
+
+	
+
 
 
 
 
 });
+
+
+
+
 /**
  * show img 
  *

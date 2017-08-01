@@ -96,7 +96,7 @@
                                     <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
                                         <thead>
                                             <tr role="row">
-                                                <th class="sorting_desc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="descending" style="width: 100px;"><input type="checkbox" name="" class="checkall" ></th>
+                                                
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 100px;" >STT</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 307px;">Name</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 244px;">Color</th>
@@ -110,7 +110,6 @@
                                         <?php $stt = 0 ;?>
                                             @foreach($listWallets as $val)
                                                 <tr class="row_{{ $val->id }} select" >
-                                                    <td class="sorting_1"><input type="checkbox" name="id[]" value="{{ $val->id }}"> </td>
                                                     <td> {{ $stt = $stt +1 }}</td>
                                                     <td> {{ $val->name }} </td>
                                                     <td><input type="color" name="" value="{{ $val->color }}"></td>
@@ -122,7 +121,14 @@
                                                         <a   title="Delete" class="delete" id="{{ $val->id}}" name="{{ $val->name }}"><i class="fa fa-fw fa-trash-o"></i></a>
                                                     </td>
                                                 </tr>
+
                                             @endforeach
+
+                                            <tr>
+                                                <td colspan="3" class="text-center" headers=""><b>Total :</b></td>
+                                                <td colspan="4"  headers=""> <b>{{ number_format($sumAmount) }}đ</b></td>
+                                                
+                                            </tr>
                                           
                                         </tbody>
                                     </table>
@@ -132,11 +138,7 @@
                                 <div class="col-sm-5">
                                     {{-- <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing 1 to 57 of 57 entries</div> --}}
 
-                                    <div class="delete-all-wallets itemActions">
-                                        <a url="" class="button blueB" id="submit" href="#submit">
-                                            <span class="btn btn-primary" style="color:white;">Delete All</span>
-                                        </a>
-                                    </div>
+                                    
                                 </div>
                                 <div class="col-sm-7">
                                     <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">

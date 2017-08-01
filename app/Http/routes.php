@@ -60,17 +60,31 @@ Route::group(['prefix'=>'wallets'],function(){
 	Route::get('keySearch/{key}',['as'=>'wallets.keySearch','uses'=>'WalletsController@keySearch']);
 	Route::get('getEdit/{id}',['as'=>'wallets.getEdit','uses'=>'WalletsController@getEdit']);
 	Route::post('postEdit/{id}',['as'=>'wallets.postEdit','uses'=>'WalletsController@postEdit']);
-	Route::get('getDeleteAll',['as'=>'wallets.getDeleteAll','uses'=>'WalletsController@getDeleteAll']);
-
+	
 	//wallets
 	Route::get('getInfoWallets/{id}',['as'=>'wallets.getInfoWallets','uses'=>'WalletsController@getInfoWallets']);
+	
 
 	// Transfers money
+	Route::get('getListTransfers',['as'=>'wallets.getListTransfers','uses'=>'TransfersMoneyController@getListTransfers']);
+	
 	Route::get('getTransfersMoney',['as'=>'wallets.getTransfersMoney','uses'=>'TransfersMoneyController@getTransfersMoney']);
 	Route::post('postTransfersMoney',['as'=>'wallets.postTransfersMoney','uses'=>'TransfersMoneyController@postTransfersMoney']);
-	Route::get('getAmountTransfers/{id}',['as'=>'wallets.getAmountTransfers','uses'=>'TransfersMoneyController@getAmountTransfers']);
 
-	
+	Route::get('getAmountTransfers/{id}',['as'=>'wallets.getAmountTransfers','uses'=>'TransfersMoneyController@getAmountTransfers']);
+	Route::get('getDeleteTransfers/{id}',['as'=>'wallets.getDeleteTransfers','uses' =>'TransfersMoneyController@getDeleteTransfers']);
+
+	Route::get('getEditTransfers/{id}',['as'=>'wallets.getEditTransfers','uses'=>'TransfersMoneyController@getEditTransfers']);
+	Route::post('postEditTransfers/{id}',['as'=>'wallets.postEditTransfers','uses'=>'TransfersMoneyController@postEditTransfers']);
+
+	Route::get('keySearchTransfers/{key}',['as'=>'wallets.keySearchTransfers','uses'=>'TransfersMoneyController@keySearchTransfers']);
+
+});
+
+
+Route::group(['prefix'=>'categorys'],function(){
+
+	Route::get('getAdd',['as'=>'categorys.getAdd','uses'=>'CategorysController@getAdd']);
 
 });
 	
