@@ -12,6 +12,12 @@ use DB;
 
 class TransfersMoneyController extends Controller
 {
+    /**
+     * Gets the list transfers.
+     *
+     * @return     <type>  The list transfers.
+     */
+    
     protected function getListTransfers(){
 
 

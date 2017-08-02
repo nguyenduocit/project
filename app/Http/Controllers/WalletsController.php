@@ -89,20 +89,18 @@ class WalletsController extends Controller
 
         $id =  Auth::user()->id;
 
-        if(isset($request->num) || isset($request->arrange)){
+        $num =15;
+        if(isset($request->num)){
             
+            $num = $request->num;
 
-           if(isset($request->num)){
-
-                $num = $request->num;
-
-                $listWallets = Wallets::where('user_id',$id)->orderBy('id','DESC')->skip(0)->take($num)->get();
-            }
+            $listWallets = Wallets::where('user_id',$id)->orderBy('id','DESC')->skip(0)->take($num)->get();
+            
 
             die(json_encode($listWallets));
 
         }else{
-            $num =10;
+            
 
             $listWallets = Wallets::where('user_id',$id)->orderBy('id','DESC')->paginate($num);
 

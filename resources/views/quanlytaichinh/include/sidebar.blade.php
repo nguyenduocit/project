@@ -28,71 +28,71 @@
       </form>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu">
+    <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
+            
 
         <li class="treeview">
 
-          <a href="{{ URL::route('wallets.getAdd') }}">
+            <a href="{{ URL::route('wallets.getAdd') }}">
 
-            <i class="fa fa-square"></i>
+                <i class="fa fa-square"></i>
 
-            <span>Add Wallets </span>
+                <span>Add Wallets </span>
 
-            <span class="label label-primary pull-right"></span>
-
-          </a>
-
+                <span class="label label-primary pull-right"></span>
+            </a> 
         </li>
 
         <li class="treeview ">
 
-          <a href="{{ URL::route('wallets.getList') }}">
+            <a href="{{ URL::route('wallets.getList') }}">
 
-            <i class="fa fa-list"></i>
+                <i class="fa fa-list"></i>
 
-            <span>List Wallets </span>
+                <span>List Wallets </span>
 
-            <span class="label label-primary pull-right"></span>
+                <span class="label label-primary pull-right"></span>
+            </a>   
+        </li>
 
-          </a>
-          
+        <li class="treeview ">
+            <a href="{{URL::route('wallets.getTransfersMoney')}}">
+
+                <i class="fa fa-files-o"></i>
+
+                <span>Transfers Money</span>
+
+                <span class="label label-primary pull-right"></span>
+            </a>
         </li>
 
         <li class="treeview ">
 
-          <a href="{{URL::route('wallets.getTransfersMoney')}}">
+            <a href="{{URL::route('wallets.getListTransfers')}}">
+                <i class="fa fa-files-o"></i>
 
-            <i class="fa fa-files-o"></i>
+                <span>List Transfers Money</span>
 
-            <span>Transfers Money</span>
-
-            <span class="label label-primary pull-right"></span>
-
-          </a>
-        </li>
-
-         <li class="treeview ">
-
-          <a href="{{URL::route('wallets.getListTransfers')}}">
-
-            <i class="fa fa-files-o"></i>
-
-            <span>List Transfers Money</span>
-
-            <span class="label label-primary pull-right"></span>
-
-          </a>
+                <span class="label label-primary pull-right"></span>
+            </a>   
         </li>
 
 
-        <li>
-          <a href="{{URL::route('categorys.getAdd')}}">
-            <i class="fa fa-th"></i> <span>Add Categorys</span>
-            <small class="label pull-right bg-green"></small>
-          </a>
+        <li class="treeview ">
+            <a href="{{URL::route('categorys.getAdd')}}">
+                <i class="fa fa-th"></i> <span>Add Categorys</span>
+                <small class="label pull-right bg-green"></small>
+            </a> 
         </li>
 
-      </ul>
+        <li class="treeview " >
+            <a href="{{URL::route('categorys.getList')}}">
+                <i class="fa fa-th"></i> <span>List Categorys</span>
+                <small class="label pull-right bg-green"></small>
+            </a>
+        </li>
+
+    </ul>
     </section>
     <!-- /.sidebar -->

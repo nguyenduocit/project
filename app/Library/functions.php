@@ -105,14 +105,43 @@
      * @return     <type>  ( description_of_the_return_value )
      */
 
-    function checkLoginSuccess()
-    {
+    function checkLoginSuccess(){
 
         if(!Auth::check()){
 
             return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'You need to sign in to use']);
 
         }
+    }
+
+    /**
+     * { function_description }
+     *
+     * @param      <type>   $data    The data
+     * @param      integer  $parent  The parent
+     * @param      string   $str     The string
+     * @param      integer  $select  The select
+     */
+    function cateParent($data,$parent = 0, $str ='--',$select=0){
+       foreach ($data as $key => $value)
+       {
+            $id = $value['id'];
+           $name = $value['name'];
+
+            if($value['parent_id'] == $parent )
+            {
+               if($select!=0 && $id ==$select)
+               {
+                    echo "<option value='".$value['id']."' selected='selected'> $str $name</option>";
+                }
+                else{
+                  echo "<option value='".$value['id']."'> $str $name</option>";
+                }
+                cateParent($data,$id,$str.'--',$select);
+            }
+
+       }
+
     }
 
 

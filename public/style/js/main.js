@@ -26,7 +26,7 @@ $(document).ready(function($) {
 				data :{'id': id},
 				success: function(data)
 				{
-					if(!data =='error'){
+					if(data !='error'){
 
 						$('tr.row_'+id).fadeOut();
 					}else{
@@ -93,7 +93,9 @@ $(document).ready(function($) {
 
 			var num = $('#number-list-wallets').find(":selected").val();
 
-			 $.ajax({
+			$('#example1_paginate').hide();
+
+			$.ajax({
 			 	url:link+'wallets/getList',
 			 	type:'get',
 			 	async:true,
@@ -245,13 +247,6 @@ $(document).ready(function($) {
     });
 
 
-    $('#example1_length').change(function(){
-
-    	$('#example1_paginate').hide();
-    })
-
-
-
     //Transaction 
     //
     /**
@@ -283,8 +278,6 @@ $(document).ready(function($) {
 		
 	});
     
-    
-
 	/*
 	 * search 
 	 */
@@ -329,7 +322,92 @@ $(document).ready(function($) {
 		
 	});
 
+	// Category 
+	// 
+	$('.delete-categorys').click(function(){
 
+		var id = $(this).attr('id');
+		
+		if(!confirm('You confirm the deletion '+name+'?'))
+		{
+			return false;
+		}
+		
+		$.ajax({
+				url:link+'categorys/getDelete/'+id, 
+				type:'get',
+				async:true,
+		 		dataType:'text',
+				data :{'id': id},
+				success: function(data)
+				{
+					console.log(data);
+					if(data != 'error'){
+
+						$('tr.row_'+id).fadeOut();
+
+					}else{
+						alert('Can not delete !!! You need to delete the subcategories first.')
+					}
+					
+				}
+
+			});
+		
+	});
+
+	var linkEdit = link +'categorys/getEdit/';
+	/**
+	 * Number of products per page
+	 */
+	$('#number-list-category').change(function(){
+
+			var num = $('#number-list-category').find(":selected").val();
+
+			$('#example1_paginate').hide();
+
+			$.ajax({
+			 	url:link+'categorys/getList',
+			 	type:'get',
+			 	async:true,
+			 	dataType:'json',
+			 	data:{'num':num },
+			 	success:function(data)
+			 	{
+			 		console.log(data);
+			 		var html = '';
+					var stt = 0;
+					$.each (data, function (key,category){
+
+						stt = stt +1;
+						html += '<tr class="row_'+category['id']+' select" >';
+						html += '<td>'+stt+'</td>';
+						html += '<td>'+category['name']+'</td>';
+
+						if(category['type'] == 1){
+							html += '<td>Receipt</td>';
+						}else if(category['type'] == 2){
+							html +='<td>Credit transfer</td>';
+						}
+
+						html += '<td>'+category['nameParent']+'</td>';
+						html += '<td>'+category['created_at']+'</td>';
+						html += '<td>'+category['updated_at']+'</td>';
+						html += '<td>';
+						html += '<a href="'+linkEdit+category['id']+'"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>';
+						html += '<a   title="Delete" class="delete-categorys" id="'+category['id']+'"><i class="fa fa-fw fa-trash-o"></i></a>'
+         				html += '</td>'
+						html += '</tr>';
+					});
+
+					$('#tbody-wallets').html(html); 
+				}
+			 	
+			 });
+		});
+
+
+	//
 	
 
 

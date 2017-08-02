@@ -24,6 +24,7 @@
                         <div class="col-sm-10">
                             
                         </div>
+                        
                         <div class="col-sm-1">
                             <a href="{{ URL::route('wallets.getList') }}" class="btn btn-app">
                                 <i class="fa fa-list"></i> List Wallets 

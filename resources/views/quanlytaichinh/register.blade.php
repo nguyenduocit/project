@@ -67,9 +67,9 @@
 
         <div class="form-group has-feedback">
 
-            <input type="radio" id="" name="sex" class="" checked="" value="1" placeholder = ""> Boy
+            <input type="radio" id="" name="sex" class="" checked="" value="1" placeholder = "">Male
             
-            <input type="radio" id="" name="sex" class="" value="0" placeholder = ""> Girl
+            <input type="radio" id="" name="sex" class="" value="0" placeholder = "">Female
         </div>
 
         <div class="form-group has-feedback">
