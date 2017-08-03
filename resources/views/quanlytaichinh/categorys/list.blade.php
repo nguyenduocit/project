@@ -1,18 +1,18 @@
 @extends('quanlytaichinh.main')
     @section('title')
-    Categorys list
+    Categorys List Expenses
     @stop
     @section('content')
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
               <h1>
-               Categorys list
+               Categorys list expenses
                 <small>Directory listing information</small>
               </h1>
               <ol class="breadcrumb">
                 <li><a href="{{ URL::route('home') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-               <li><a href="#"> Information Categorys </a></li>
+               <li><a href="#"> Information Categorys expensee </a></li>
               </ol>
             </section>
 
@@ -96,7 +96,11 @@
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Category Parent</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Created at</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Updated at</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Add Subcategories</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Action</th>
+                                                
+                                                
+
                                             </tr>
                                         </thead>
 
@@ -108,9 +112,9 @@
                                                         <td> {{ $val->name}} </td>
                                                         <td>
                                                             @if($val->type == 1)
-                                                                Receipt
+                                                                Expenses
                                                             @elseif($val->type == 2)
-                                                                Credit transfer
+                                                                Income
                                                             @endif
                                                             
                                                         </td>
@@ -118,8 +122,14 @@
                                                         <td> {{ $val ->created_at}}</td>
                                                         <td> {{ $val->updated_at}}</td>
                                                         <td>
+                                                            @if($val ->parent_id == 0)
+                                                            <a href="{{URL::route('categorys.getAddSubcategories',$val->id)}}" class="btn btn-primary text-center">Add</a>
+                                                            @endif
+                                                        </td>
+                                                        <td>
                                                             <a href="{{URL::route('categorys.getEdit',$val->id)}}"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>
                                                             <a   title="Delete" class="delete-categorys" id="{{ $val->id}}" name="{{ $val->name}}"><i  class="fa fa-fw fa-trash-o"></i></a>
+                                                            
                                                         </td>
                                                     </tr>
                                                 @endforeach 

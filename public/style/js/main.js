@@ -357,6 +357,7 @@ $(document).ready(function($) {
 	});
 
 	var linkEdit = link +'categorys/getEdit/';
+	var linkAdd  = link + 'categorys/getAddSubcategories/';
 	/**
 	 * Number of products per page
 	 */
@@ -393,6 +394,11 @@ $(document).ready(function($) {
 						html += '<td>'+category['nameParent']+'</td>';
 						html += '<td>'+category['created_at']+'</td>';
 						html += '<td>'+category['updated_at']+'</td>';
+						html += '<td>';
+						if(category['parent_id'] == 0){
+							html += '<a href="'+linkAdd +category['id']+'" class="btn btn-primary text-center">Add</a>'
+						}
+						html += '</td>';
 						html += '<td>';
 						html += '<a href="'+linkEdit+category['id']+'"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>';
 						html += '<a   title="Delete" class="delete-categorys" id="'+category['id']+'"><i class="fa fa-fw fa-trash-o"></i></a>'

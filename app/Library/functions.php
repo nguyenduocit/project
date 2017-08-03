@@ -122,7 +122,7 @@
      * @param      string   $str     The string
      * @param      integer  $select  The select
      */
-    function cateParent($data,$parent = 0, $str ='--',$select=0){
+    function cateParent($data,$select_name="",$parent = 0, $str ='--',$select=0){
        foreach ($data as $key => $value)
        {
             $id = $value['id'];
@@ -132,10 +132,22 @@
             {
                if($select!=0 && $id ==$select)
                {
-                    echo "<option value='".$value['id']."' selected='selected'> $str $name</option>";
+                    echo "<option";
+                    if(old($select_name) == $value['id'] ){
+
+                    echo 'selected ="selected"';
+
+                    }   
+                    echo" value='".$value['id']."' selected='selected'> $str $name</option>";
                 }
                 else{
-                  echo "<option value='".$value['id']."'> $str $name</option>";
+                  echo "<option ";
+                  if(old($select_name) == $value['id'] ){
+
+                    echo 'selected ="selected"';
+
+                  }   
+                  echo"value='".$value['id']."'> $str $name</option>";
                 }
                 cateParent($data,$id,$str.'--',$select);
             }

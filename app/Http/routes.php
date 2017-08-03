@@ -87,6 +87,10 @@ Route::group(['prefix'=>'categorys'],function(){
 	Route::get('getAdd',['as'=>'categorys.getAdd','uses'=>'CategorysController@getAdd']);
 	Route::post('postAdd',['as'=>'categorys.postAdd','uses'=>'CategorysController@postAdd']);
 
+	//Add Subcategories
+	Route::get('getAddSubcategories/{id}',['as'=>'categorys.getAddSubcategories','uses'=>'CategorysController@getAddSubcategories']);
+	Route::post('postAddSubcategories',['as'=>'categorys.postAddSubcategories','uses'=>'CategorysController@postAddSubcategories']);
+
 	// Edit 
 	Route::get('getEdit/{id}',['as'=>'categorys.getEdit','uses'=>'CategorysController@getEdit']);
 	Route::post('postEdit/{id}',['as'=>'categorys.postEdit','uses'=>'CategorysController@postEdit']);

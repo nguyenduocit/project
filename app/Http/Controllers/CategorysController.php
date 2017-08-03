@@ -16,15 +16,16 @@ class CategorysController extends Controller
 	 *
 	 * @return     <type>  The list.
 	 */
-	protected function getList(Request $request){
+	public function getList(Request $request){
 
-		$num = 15;
+        // The number of elements displayed on a page . Eit in file constant.php (NUMBER_PAGINATE = 15)
+		$num = NUMBER_PAGINATE;
 
 		if(isset($request->num)){
 
 			$num = $request->num;
 
-			$listCategory = Categorys::select('id','name','type','parent_id','created_at','updated_at')->where('user_id',Auth::user()->id)->skip(0)->take($num)->get();
+			$listCategory = Categorys::select('id','name','type','parent_id','created_at','updated_at')->where('user_id',Auth::user()->id)->orderBy('id','DESC')->skip(0)->take($num)->get();
 
 			if(!empty($listCategory)){
 
@@ -37,7 +38,7 @@ class CategorysController extends Controller
 						$category ->nameParent = $listNameParent[0]->name;
 
 					}else{
-						$category ->nameParent = "Category parent";
+						$category ->nameParent = "";
 					}
 					
 
@@ -49,7 +50,7 @@ class CategorysController extends Controller
 
 		}else{
 
-			$listCategory = Categorys::select('id','name','type','parent_id','created_at','updated_at')->where('user_id',Auth::user()->id)->paginate($num);
+			$listCategory = Categorys::select('id','name','type','parent_id','created_at','updated_at')->where('user_id',Auth::user()->id)->orderBy('id','DESC')->paginate($num);
 
 			if(!empty($listCategory)){
 
@@ -62,7 +63,7 @@ class CategorysController extends Controller
 						$category ->nameParent = $listNameParent[0]->name;
 
 					}else{
-						$category ->nameParent = "Category parent";
+						$category ->nameParent = "";
 					}
 					
 
@@ -80,11 +81,11 @@ class CategorysController extends Controller
      *
      * @return     <type>  The add.
      */
-    protected function getAdd(){
+    public function getAdd(){
 
-    	$parent = Categorys::select('id','name','parent_id')->where('user_id',Auth::user()->id)->get()->toArray();
+    	//$parent = Categorys::select('id','name','parent_id')->where('user_id',Auth::user()->id)->where('parent_id',0)->get()->toArray();
 
-    	return view('quanlytaichinh.categorys.add',compact('parent'));
+    	return view('quanlytaichinh.categorys.add');
     }
 
     /**
@@ -92,12 +93,12 @@ class CategorysController extends Controller
      *
      * @param      \App\Http\CategoryRequest  $request  The request
      */
-    protected function postAdd(CategoryRequest $request){
+    public function postAdd(CategoryRequest $request){
 
 		$category            = new Categorys;
 		$category->name      = $request->name;
 		$category->type      = $request->type;
-		$category->parent_id = $request->parent_id;
+		$category->parent_id = "";
 		$category->user_id   = Auth::user()->id;
 		
 		$category ->save();
@@ -111,14 +112,12 @@ class CategorysController extends Controller
      * @return     <type>  The edit.
      */
     
-    protected function getEdit($id){
+    public function getEdit($id){
     	
-    	$parent = Categorys::select('id','name','parent_id')->where('user_id',Auth::user()->id)->get()->toArray();
-
+    	
     	$category = Categorys::select('id','name','parent_id','type')->where('id',$id)->get();
 
-
-    	return view('quanlytaichinh.categorys.edit',compact('parent','category'));
+    	return view('quanlytaichinh.categorys.edit',compact('category'));
 
 
     }
@@ -132,7 +131,7 @@ class CategorysController extends Controller
      * @return     <type>                              ( description_of_the_return_value )
      */
 
-    protected function postEdit($id,CategoryRequest $request){
+    public function postEdit($id,CategoryRequest $request){
 
     	$category = Categorys::find($id);
 
@@ -142,8 +141,6 @@ class CategorysController extends Controller
     	}
 
     	$category->name      = $request->name;
-		$category->type      = $request->type;
-		$category->parent_id = $request->parent_id;
 
 		$category ->save();
 
@@ -160,7 +157,7 @@ class CategorysController extends Controller
      * @return     string  The delete.
      */
     
-    protected function getDelete($id){
+    public function getDelete($id){
 
     	$category = Categorys::find($id);
 
@@ -179,6 +176,57 @@ class CategorysController extends Controller
 
     	$category ->delete($id);
 
+    }
+
+    /**
+     * Gets the add subcategories.
+     *
+     * @param      <type>  $id     The identifier
+     */
+
+    public function getAddSubcategories($id){
+
+        $listCategory = Categorys::select('id','name','type','parent_id','created_at','updated_at')->where('id',$id)->get();
+
+        if(!empty($listCategory)){
+
+            foreach($listCategory as $category){
+
+                if($category->parent_id != 0){
+
+                    $listNameParent = Categorys::select('name')->where('user_id',Auth::user()->id )->where('id',$category->parent_id)->get();
+
+                    $category ->nameParent = $listNameParent[0]->name;
+
+                }else{
+
+                    $category ->nameParent = "";
+                }
+            
+            }
+
+        }
+        
+        return view('quanlytaichinh.categorys.addSubcategories',compact('listCategory'));
+
+    }
+
+    /**
+     * Posts add subcategories.
+     *
+     * @param      <type>  $id     The identifier
+     */
+    public function postAddSubcategories(CategoryRequest $request){
+
+        $category            = new Categorys;
+        $category->name      = $request->name;
+        $category->type      = $request->type;
+        $category->parent_id = $request->parent_id;
+        $category->user_id   = Auth::user()->id;
+        
+        $category ->save();
+
+        return redirect('categorys/getList')->with(['flash_level'=>'success','flash_message'=>"Add category successfully !!!"]);
     }
 
 

@@ -38,7 +38,7 @@
                                 <div class="box-body">
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                         <div class="col-md-3 col-sm-6 col-xs-12 ">
-                                             <label for="exampleInputEmail1">Transfer wallet</label>
+                                             <label for="exampleInputEmail1">Transfer wallet <span class="obligatory">*</span></label>
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-12 @if($errors->first('transfer_wallet')) has-error @endif">
                                           
@@ -66,7 +66,7 @@
 
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                         <div class="col-md-3 col-sm-6 col-xs-12 ">
-                                             <label for="exampleInputEmail1">Receive Wallet</label>
+                                             <label for="exampleInputEmail1">Receive Wallet <span class="obligatory">*</span></label>
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-12 @if($errors->first('receive_wallet')) has-error @endif">
                                             <select name="receive_wallet" id="receive-wallet"  class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
@@ -93,7 +93,7 @@
                                
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                     <div class="col-md-3 col-sm-6 col-xs-12 ">
-                                        <label for="exampleInputEmail1">Amount </label>
+                                        <label for="exampleInputEmail1">Amount <span class="obligatory">*</span></label>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12 @if($errors->first('amount')) has-error @endif">
                                         <input type="text" name="amount" class="form-control" id="exampleInputAmount" placeholder="Enter Amount" value="{{ number_format($transfersMoney->amount) }}">

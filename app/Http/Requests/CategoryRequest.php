@@ -25,9 +25,9 @@ class CategoryRequest extends Request
     {
         return [
             //
-            'name'      => 'required|min:10|max:255|unique:categorys,name,'.$this->id,
-            'type'      => 'required',
-            'parent_id' => 'required',
+            'name'      => 'required|max:255|unique:categorys,name,'.$this->id,
+            
+           
 
         ];
     }
@@ -35,11 +35,10 @@ class CategoryRequest extends Request
     public function  messages(){
         return [
             'name.required'      => 'Please enter the category name.',
-            'name.min'           => 'The category name can not be too short',
             'name.max'           => 'Your category name must not be longer than 255 characters',
             'name.unique'        =>'The category name can not be identical',
-            'type.required'      =>'Please select a category',
-            'parent_id.required' =>'Please select a category',
+            
+            
             
         ];
     }

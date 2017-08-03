@@ -32,3 +32,7 @@ define('NUMBER_LOGIN_ERORR', 3);
 
 define('NUMBER_MINUTES_LOCK',15);
 
+/**
+ * number page paginate 
+ */
+define('NUMBER_PAGINATE',15);

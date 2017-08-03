@@ -16,7 +16,7 @@ class CreateCategorysTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->tinyInteger('type');
-            $table->tinyInteger('parent_id');
+            $table->integer('parent_id')->nullable();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

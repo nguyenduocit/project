@@ -25,7 +25,7 @@
                         <div class="box-header">
                           @include('quanlytaichinh.include.alert')
                             <div class="row">
-                                <div class="col-sm-7">
+                                {{-- <div class="col-sm-7">
                                     <!--  <h3 class="box-title">Responsive Hover Table</h3> -->
                                 </div>
                                 <div class="col-sm-2">
@@ -48,7 +48,7 @@
                                      <a href="{{ URL::route('wallets.getList') }}" class="btn btn-app">
                                         <i class="fa fa-list"></i> List Wallets 
                                     </a>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <!-- /.box-header -->
@@ -58,7 +58,7 @@
                                   <!-- small box -->
                                   <div class="small-box " style="background: {{ $val -> color }};">
                                     <div class="inner">
-                                      <h3>{{ number_format($val->amount) }}đ</h3>
+                                      <b>{{ number_format($val->amount) }}đ</b>
 
                                       <p>{{ $val -> name }}</p>
                                     </div>

@@ -16,7 +16,7 @@ class HomeController extends Controller
      * get list wallets
      * @return listWallets
      */
-    protected function index(){
+    public function index(){
 
     	if(!Auth::check()){
 

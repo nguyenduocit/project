@@ -1,18 +1,18 @@
 @extends('quanlytaichinh.main')
     @section('title')
-      Add Categorys
+      Add Subcategories
     @stop
     @section('content')
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
               <h1>
-                Add Categorys
-                <small>Add to your categorys</small>
+                Add Subcategories
+                <small>Add to your Subcategories</small>
               </h1>
               <ol class="breadcrumb">
                 <li><a href="{{ URL::route('home') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="#"> Add Categorys</a></li>
+                <li><a href="#"> Add Subcategories</a></li>
                 
               </ol>
             </section>
@@ -32,9 +32,44 @@
                     </div>
                     <div class="box-body">
                         @include('quanlytaichinh.include.alert')
-                        <form role="form" action="{{ URL::route('categorys.postAdd')}}" method="post" id="form-add">
+                        <form role="form" action="{{ URL::route('categorys.postAddSubcategories')}}" method="post" id="form-add">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
                                 <div class="box-body">
+
+                                     <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-3 col-sm-6 col-xs-12 ">
+                                             <label for="exampleInputEmail1">Name Categorys Parent:</label>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+        
+                                           <p>{{ $listCategory[0]->name}}</p>
+                                           <input type="hidden" name="parent_id" value="{{$listCategory[0]->id}}">
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-xs-0 ">
+
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-3 col-sm-6 col-xs-12 ">
+                                             <label for="exampleInputEmail1">Type:</label>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12 @if($errors->first('type')) has-error @endif">
+                                            @if( $listCategory[0]->type ==1)
+                                                Expenses
+                                                <input type="hidden" name="type" value="{{$listCategory[0]->type}}">
+                                            @elseif($listCategory[0]->type ==2)
+                                                <input type="hidden" name="type" value="{{$listCategory[0]->type}}">
+                                                Income
+                                            @endif
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-xs-0 ">
+
+                                        </div>
+                                    </div>
+
+
                                     <div class="form-group col-md-12 col-sm-12 col-xs-12 ">
                                             <div class="col-md-3 col-sm-6 col-xs-12 ">
                                                  <label for="exampleInputEmail1">Name Categorys <span class="obligatory">*</span></label>
@@ -65,23 +100,8 @@
                                         <div class="col-md-3 col-sm-3 col-xs-0 ">
 
                                         </div>
-                                    </div>
- --}}
-                                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                        <div class="col-md-3 col-sm-6 col-xs-12 ">
-                                             <label for="exampleInputEmail1">Type<span class="obligatory">*</span></label>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-12 @if($errors->first('type')) has-error @endif">
-                                            <select name="type" id="type"   class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                                                <option @if(old('type') == 1 ) selected ="selected" @endif value="1" >Expenses</option>
-                                                <option @if(old('type') == 2 ) selected ="selected" @endif value="2" >Income</option>
-                                            </select>
-                                            <span class="text-danger"><p>{{ $errors->first('type') }}</p></span>
-                                        </div>
-                                        <div class="col-md-3 col-sm-3 col-xs-0 ">
-
-                                        </div>
-                                    </div>
+                                    </div>--}}
+                                    
 
                                     
                                 </div>
