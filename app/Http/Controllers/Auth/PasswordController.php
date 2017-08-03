@@ -45,7 +45,7 @@ class PasswordController extends Controller
      *  function forgot Password 
      */
     
-    protected function getForgotPassword(){
+    public function getForgotPassword(){
 
         return view("quanlytaichinh.forgotPass");
         
@@ -56,7 +56,7 @@ class PasswordController extends Controller
      *
      * @param      \App\Http\Requests\ForgotPasswordRequest  $request  The request email
      */
-    protected function postForgotPassword(ForgotPasswordRequest $request){
+    public function postForgotPassword(ForgotPasswordRequest $request){
 
         // select information user
         $user = DB::table('users')->where('email', $request->email)->get();
@@ -92,7 +92,7 @@ class PasswordController extends Controller
      *
      * @return     <type>  The token reset password.
      */
-    protected function getTokenResetPassword($token){
+    public function getTokenResetPassword($token){
 
         // select information user
         $user = DB::table('users')->where('remember_token', $token)->get();
@@ -116,7 +116,7 @@ class PasswordController extends Controller
      * @return     <type>  The reset password.
      */
 
-    protected function getResetPassword(){
+    public function getResetPassword(){
 
         return view('quanlytaichinh.resetPassword');
     }
@@ -128,7 +128,7 @@ class PasswordController extends Controller
      *
      * @return     <type>                                   ( description_of_the_return_value )
      */
-    protected function postResetPassword(ResetPasswordRequest $request){
+    public function postResetPassword(ResetPasswordRequest $request){
 
         if(Session::has('id')){
 

@@ -31,7 +31,6 @@ Route::group(['prefix'=>'users'],function(){
 
 	//confim email
 	Route::get('getConfirmEmail/{token}',['as'=>'users.getConfirmEmail','uses' =>'Auth\AuthController@getConfirmEmail']);
-	
 
 	//forgot my password
 	Route::get('getForgotPassword',['as'=>'users.getForgotPassword','uses' => 'Auth\PasswordController@getForgotPassword']);
@@ -64,7 +63,6 @@ Route::group(['prefix'=>'wallets'],function(){
 	//wallets
 	Route::get('getInfoWallets/{id}',['as'=>'wallets.getInfoWallets','uses'=>'WalletsController@getInfoWallets']);
 	
-
 	// Transfers money
 	Route::get('getListTransfers',['as'=>'wallets.getListTransfers','uses'=>'TransfersMoneyController@getListTransfers']);
 	
@@ -78,13 +76,32 @@ Route::group(['prefix'=>'wallets'],function(){
 	Route::post('postEditTransfers/{id}',['as'=>'wallets.postEditTransfers','uses'=>'TransfersMoneyController@postEditTransfers']);
 
 	Route::get('keySearchTransfers/{key}',['as'=>'wallets.keySearchTransfers','uses'=>'TransfersMoneyController@keySearchTransfers']);
-
 });
 
 
 Route::group(['prefix'=>'categorys'],function(){
 
+	Route::get('getList',['as'=>'categorys.getList','uses'=>'CategorysController@getList']);
+
+	// Add
 	Route::get('getAdd',['as'=>'categorys.getAdd','uses'=>'CategorysController@getAdd']);
+	Route::post('postAdd',['as'=>'categorys.postAdd','uses'=>'CategorysController@postAdd']);
+
+	//Add Subcategories
+	Route::get('getAddSubcategories/{id}',['as'=>'categorys.getAddSubcategories','uses'=>'CategorysController@getAddSubcategories']);
+	Route::post('postAddSubcategories',['as'=>'categorys.postAddSubcategories','uses'=>'CategorysController@postAddSubcategories']);
+
+	// Edit 
+	Route::get('getEdit/{id}',['as'=>'categorys.getEdit','uses'=>'CategorysController@getEdit']);
+	Route::post('postEdit/{id}',['as'=>'categorys.postEdit','uses'=>'CategorysController@postEdit']);
+
+	//Delete
+	Route::get('getDelete/{id}',['as'=>'categorys.getDelete','uses'=>'CategorysController@getDelete']);
+});
+
+Route::group(['prefix'=>'transection'],function(){
+
+	
 
 });
 	

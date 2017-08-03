@@ -16,7 +16,7 @@ class CreateWalletsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('color');
-            $table->integer('amount');
+            $table->bigInteger('amount');
             $table->integer('user_id')->unsigned(); //khóa ngoại onDelete khi xóa cái gì thì ;
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

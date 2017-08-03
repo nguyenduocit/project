@@ -90,7 +90,7 @@ class AuthController extends Controller
      * Load form Register.
      *
      */
-    protected function getRegister(){
+    public function getRegister(){
 
         // If the user is logged in redirect page  home
         if(Auth::check()){
@@ -108,7 +108,7 @@ class AuthController extends Controller
      * @param  array  $request
      * @return 
      */
-    protected function postRegister(RegisterRequest $request){
+    public function postRegister(RegisterRequest $request){
 
         // Save register ;
         $user                 = new User ;
@@ -153,7 +153,7 @@ class AuthController extends Controller
      *
      * @return    
      */
-    protected function sendMail(){
+    public function sendMail(){
 
         $data = ['hoten'=>'Nguyenduoc'];
         Mail::send('emails.blanks', $data, function ($message) {
@@ -170,7 +170,7 @@ class AuthController extends Controller
      * @return     <type>  The login.
      */
 
-    protected function getLogin(){
+    public function getLogin(){
 
         // If the user is logged in redirect page  home
         if(Auth::check()){
@@ -189,7 +189,7 @@ class AuthController extends Controller
      *
      * @return
      */
-    protected function postLogin(LoginRequest $request){
+    public function postLogin(LoginRequest $request){
 
         // Luu thong tin user vao mang 
         $remember = $request->remember;
@@ -268,7 +268,7 @@ class AuthController extends Controller
         
     }
 
-    protected function getConfirmEmail($token){
+    public function getConfirmEmail($token){
         
         // select information user
         $user = DB::table('users')->where('remember_token', $token)->get();
@@ -291,12 +291,12 @@ class AuthController extends Controller
         
     }
 
-    protected function getUserProfile(){
+    public function getUserProfile(){
 
         return view('quanlytaichinh.user.userProfile');
     }
      
-    protected function postUserProfile(UserProfileRequest $request){
+    public function postUserProfile(UserProfileRequest $request){
 
     
         if(Auth::check()){
@@ -337,7 +337,7 @@ class AuthController extends Controller
      * logout
      */
     
-    protected function getLogout(){
+    public function getLogout(){
 
         Auth::logout();
 

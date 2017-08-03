@@ -24,6 +24,7 @@
                         <div class="col-sm-10">
                             
                         </div>
+                        
                         <div class="col-sm-1">
                             <a href="{{ URL::route('wallets.getList') }}" class="btn btn-app">
                                 <i class="fa fa-list"></i> List Wallets 
@@ -37,7 +38,7 @@
                                 <div class="box-body">
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12 ">
                                         <div class="col-md-3 col-sm-6 col-xs-12 ">
-                                             <label for="exampleInputEmail1">Name Wallets</label>
+                                             <label for="exampleInputEmail1">Name Wallets <span class="obligatory">*</span></label>
                                         </div>
                                         <div class=" form-group  col-md-6 col-sm-6 col-xs-12 @if($errors->first('name')) has-error @endif">
                                             <input type="text" name="name" class="form-control" id="exampleInputWallets" placeholder="Enter Name Wallets" value="{{ old('name')}}">
@@ -62,7 +63,7 @@
 
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                     <div class="col-md-3 col-sm-6 col-xs-12 ">
-                                        <label for="exampleInputEmail1">Amount </label>
+                                        <label for="exampleInputEmail1">Amount <span class="obligatory">*</span></label>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12 @if($errors->first('amount')) has-error @endif">
                                         <input type="text" name="amount" class="form-control" id="exampleInputAmount" placeholder="Enter Amount" maxlength="18" value="{{ old('amount')}}">

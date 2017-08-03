@@ -12,11 +12,18 @@ use DB;
 
 class TransfersMoneyController extends Controller
 {
-    protected function getListTransfers(){
+    /**
+     * Gets the list transfers.
+     *
+     * @return     <type>  The list transfers.
+     */
+    
+    public function getListTransfers(){
 
-
+        // The number of elements displayed on a page . Eit in file constant.php (NUMBER_PAGINATE = 15)
+        $num = NUMBER_PAGINATE;
         
-        $transfersMoney = DB::table('transfers_moneys')->where('user_id',Auth::user()->id)->orderBy('id','DESC')->paginate(15);
+        $transfersMoney = DB::table('transfers_moneys')->where('user_id',Auth::user()->id)->orderBy('id','DESC')->paginate($num);
         
         
         foreach($transfersMoney as $transfers){
@@ -40,8 +47,7 @@ class TransfersMoneyController extends Controller
      *
      * @return     <type>  The transfers money.
      */
-    protected function getTransfersMoney()
-    {
+    public function getTransfersMoney(){
     	$listwallets = Wallets::select('id','name')->where('user_id',Auth::user()->id)->get();
     	if(empty($listwallets)){
 
@@ -58,7 +64,7 @@ class TransfersMoneyController extends Controller
      *  @return amount 
      */
 
-    protected function getAmountTransfers($id){
+    public function getAmountTransfers($id){
 
         $amountWallets = Wallets::select('amount')->where('id',$id)->get();
 
@@ -73,7 +79,7 @@ class TransfersMoneyController extends Controller
      */
     
    
-    protected function postTransfersMoney(TransfersMoneyRequest $request){
+    public function postTransfersMoney(TransfersMoneyRequest $request){
 
         if($request->transfer_wallet == $request->receive_wallet ){
 
@@ -130,7 +136,7 @@ class TransfersMoneyController extends Controller
      */
     
 
-    protected function getDeleteTransfers($id){
+    public function getDeleteTransfers($id){
 
         $transfersMoney = TransfersMoney::find($id);
 
@@ -147,7 +153,7 @@ class TransfersMoneyController extends Controller
      * @param      <type>  $key    The key
      */
     
-    protected function keySearchTransfers($key){
+    public function keySearchTransfers($key){
 
         $transfersMoney = TransfersMoney::Where('amount','like',"%$key%")->get();
 
@@ -164,7 +170,7 @@ class TransfersMoneyController extends Controller
      * @return     <type>  The edit transfers.
      */
     
-    protected function getEditTransfers($id){
+    public function getEditTransfers($id){
 
         $listwallets = Wallets::select('id','name')->where('user_id',Auth::user()->id)->get();
         if(empty($listwallets)){
@@ -188,7 +194,7 @@ class TransfersMoneyController extends Controller
      * @return     <type>                                    ( description_of_the_return_value )
      */
 
-    protected function postEditTransfers($id,TransfersMoneyRequest $request){
+    public function postEditTransfers($id,TransfersMoneyRequest $request){
 
 
         $transfersMoney = TransfersMoney::find($id);

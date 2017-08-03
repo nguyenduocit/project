@@ -96,11 +96,11 @@
 
                 @if(Auth::user()->sex == 1)
 
-                <p class="text-muted">Boy</p>
+                <p class="text-muted">Male</p>
 
                 @elseif(Auth::user()->sex == 0)
 
-                <p class="text-muted">Girl</p>
+                <p class="text-muted">Female</p>
 
                 @endif
                     
@@ -173,9 +173,9 @@
 
                         <div class="form-group has-feedback">
 
-                            <input type="radio" id="" name="sex" class="" checked="" value="1" placeholder = ""> Boy
+                            <input type="radio" id="" name="sex" class="" checked="" value="1" placeholder = ""> Male
                             
-                            <input type="radio" id="" name="sex" class="" value="0" placeholder = ""> Girl
+                            <input type="radio" id="" name="sex" class="" value="0" placeholder = ""> Female
                         </div>
 
                         <div class="form-group has-feedback">

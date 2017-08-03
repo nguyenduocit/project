@@ -1,13 +1,13 @@
 @extends('quanlytaichinh.main')
     @section('title')
-      Edit Transfers Money
+      Transfers Money
     @stop
     @section('content')
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
               <h1>
-                Edit Transfers Money
+                Transfers Money
                 <small> </small>
               </h1>
               <ol class="breadcrumb">
@@ -33,7 +33,7 @@
                     </div>
                     <div class="box-body">
                         @include('quanlytaichinh.include.alert')
-                      <form role="form" action="{{ URL::route('wallets.postEditTransfers',$transfersMoney->id)}}" method="post" id="form-add">
+                      <form role="form" action="{{ URL::route('wallets.postTransfersMoney')}}" method="post" id="form-add">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="box-body">
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
@@ -45,7 +45,7 @@
                                             <select name="transfer_wallet" id="transfer-wallet"  class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                               <option value=""></option>
                                               @foreach($listwallets as $vallets)
-                                                    <option value="{{ $vallets->id }}"  @if($transfersMoney->transfer_wallet == $vallets->id) selected="selected" @endif>{{ $vallets->name }}</option>
+                                                    <option @if(old('transfer_wallet') == $vallets->id ) selected ="selected" @endif value="{{ $vallets->id }}">{{ $vallets->name }}</option>
                                               @endforeach
                                             </select>
                                             <span class="text-danger"><p>{{ $errors->first('transfer_wallet') }}</p></span>
@@ -72,7 +72,7 @@
                                             <select name="receive_wallet" id="receive-wallet"  class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                               <option value=""></option>
                                               @foreach($listwallets as $vallets)
-                                                    <option value="{{ $vallets->id }}" @if($transfersMoney->receive_wallet == $vallets->id) selected="selected" @endif >{{ $vallets->name }}</option>
+                                                    <option @if(old('receive_wallet') == $vallets->id ) selected ="selected" @endif value="{{ $vallets->id }}" >{{ $vallets->name }}</option>
                                               @endforeach
                                             </select>
                                             <span class="text-danger"><p>{{ $errors->first('receive_wallet') }}</p></span>
@@ -96,7 +96,7 @@
                                         <label for="exampleInputEmail1">Amount <span class="obligatory">*</span></label>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12 @if($errors->first('amount')) has-error @endif">
-                                        <input type="text" name="amount" class="form-control" id="exampleInputAmount" placeholder="Enter Amount" value="{{ number_format($transfersMoney->amount) }}">
+                                        <input type="text" name="amount" class="form-control" id="exampleInputAmount" placeholder="Enter Amount" value="{{ old('amount')}}">
                                         <span class="text-danger"><p>{{ $errors->first('amount') }}</p></span>
                                     </div>
                                 </div><br> <br>

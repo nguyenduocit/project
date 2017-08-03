@@ -17,7 +17,7 @@ class WalletsController extends Controller
     //     return checkLoginSuccess();
     // }
 
-    protected function getInfoWallets($id){
+    public function getInfoWallets($id){
 
 
         
@@ -45,7 +45,7 @@ class WalletsController extends Controller
      * load form creat wallets 
      * @return [type] [description]
      */
-    protected function getAdd(){
+    public function getAdd(){
 
         if(!Auth::check()){
 
@@ -61,7 +61,7 @@ class WalletsController extends Controller
      * @param  WalletsRequest $request [description]
      * @return [type]                  [description]
      */
-    protected function postAdd(WalletsRequest $request){
+    public function postAdd(WalletsRequest $request){
 
 		$wallets              = new Wallets;
 		$wallets->user_id     = Auth::user()->id;
@@ -79,7 +79,7 @@ class WalletsController extends Controller
      * @return     <type>  The list. $listWallets
      */
 
-    protected function getList(Request $request){
+    public function getList(Request $request){
        
         if(!Auth::check()){
 
@@ -89,20 +89,19 @@ class WalletsController extends Controller
 
         $id =  Auth::user()->id;
 
-        if(isset($request->num) || isset($request->arrange)){
+        // The number of elements displayed on a page . Eit in file constant.php (NUMBER_PAGINATE = 15)
+        $num = NUMBER_PAGINATE;
+        if(isset($request->num)){
             
+            $num = $request->num;
 
-           if(isset($request->num)){
-
-                $num = $request->num;
-
-                $listWallets = Wallets::where('user_id',$id)->orderBy('id','DESC')->skip(0)->take($num)->get();
-            }
+            $listWallets = Wallets::where('user_id',$id)->orderBy('id','DESC')->skip(0)->take($num)->get();
+            
 
             die(json_encode($listWallets));
 
         }else{
-            $num =10;
+            
 
             $listWallets = Wallets::where('user_id',$id)->orderBy('id','DESC')->paginate($num);
 
@@ -121,7 +120,7 @@ class WalletsController extends Controller
      * @param      <type>  $key    The key
      */
 
-    protected function keySearch($key){
+    public function keySearch($key){
 
         $listWallets = Wallets::where('name','like',"%$key%")->orWhere('amount','like',"%$key%")->get();
 
@@ -137,7 +136,7 @@ class WalletsController extends Controller
      * @return     <type>  The edit.
      */
 
-    protected function getEdit($id){
+    public function getEdit($id){
 
         $wallets = Wallets::find($id);
 
@@ -157,7 +156,7 @@ class WalletsController extends Controller
      * @return     <type>                             ( description_of_the_return_value )
      */
 
-    protected function postEdit($id,WalletsRequest $request){
+    public function postEdit($id,WalletsRequest $request){
 
         $wallets = Wallets::find($id);
 
@@ -183,7 +182,7 @@ class WalletsController extends Controller
      * @return     <type>  The delete. $id
      */
 
-    protected function getDelete($id){
+    public function getDelete($id){
 
         $wallets = Wallets::find($id);
 
@@ -213,7 +212,7 @@ class WalletsController extends Controller
     //  * @return     <type>                    The delete all.
     //  */
 
-    // protected function getDeleteAll(Request $request){
+    // public function getDeleteAll(Request $request){
 
     //     $id_Wallets = $request->ids;
 

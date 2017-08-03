@@ -51,10 +51,10 @@
                                         <label>
                                             Show 
                                             <select name="example1_length" aria-controls="example1" class="form-control input-sm" id="number-list-wallets">
-                                                <option value="10">10</option>
                                                 <option value="15">15</option>
                                                 <option value="20">20</option>
                                                 <option value="50">50</option>
+                                                <option value="100">100</option>
                                             </select>
                                             entries
                                         </label>
