@@ -101,6 +101,10 @@ Route::group(['prefix'=>'categorys'],function(){
 
 Route::group(['prefix'=>'transection'],function(){
 
+	Route::get('getList',['as'=>'transection.getList','uses'=>'TransactionController@getList']);
+
+	Route::get('getAdd',['as'=>'transection.getAdd','uses'=>'TransactionController@getAdd']);
+	Route::post('postAdd',['as'=>'transection.postAdd','uses'=>'TransactionController@postAdd']);
 	
 
 });

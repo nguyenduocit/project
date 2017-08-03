@@ -93,6 +93,13 @@
             </a>
         </li>
 
+        <li class="treeview " >
+            <a href="{{URL::route('transection.getAdd')}}">
+                <i class="fa fa-th"></i> <span>Add Transaction</span>
+                <small class="label pull-right bg-green"></small>
+            </a>
+        </li>
+
     </ul>
     </section>
     <!-- /.sidebar -->
