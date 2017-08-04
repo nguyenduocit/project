@@ -10,6 +10,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\UserProfileRequest;
+use App\Http\Requests\ChangePasswordRequest;
 use Illuminate\Support\Facades\Auth;
 use File;
 use Illuminate\Mail\Mailer;
@@ -268,6 +269,14 @@ class AuthController extends Controller
         
     }
 
+    /**
+     * Gets the confirm email.
+     *
+     * @param      <type>  $token  The token
+     *
+     * @return     <type>  The confirm email.
+     */
+
     public function getConfirmEmail($token){
         
         // select information user
@@ -331,6 +340,19 @@ class AuthController extends Controller
             return redirect('users/getUserProfile')->with(['flash_level'=>'success','flash_message'=>'Edit success information !!!']);
 
         }
+    }
+    /**
+     * Posts a profile reset password.
+     *
+     * @param      \App\Http\Requests\ChangePasswordRequest  $request  The request
+     */
+    public function postProfileResetPassword(ChangePasswordRequest $request){
+
+      $id             = Auth::user() ->id;
+      $user           = User::find($id);
+      $user->password = Hash::make($request->rpassword);
+      $user->save();
+      return redirect('users/getUserProfile')->with(['flash_level'=>'success','flash_message'=>'Edit password successfully !!!']);
     }
 
     /**

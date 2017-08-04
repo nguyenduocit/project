@@ -13,9 +13,57 @@ use DB;
 
 class TransactionController extends Controller
 {
-    public function getList(){
+    /**
+     * Gets the list transaction  
+     *
+     * @return     <type>  The list transaction 
+     */
+    
+    public function getList(Request $request){
+
+        // The number of elements displayed on a page . Eit in file constant.php (NUMBER_PAGINATE = 15)
+        $num = NUMBER_PAGINATE;
+
+        if(isset($request->num)){
+
+            $num = $request->num;
+
+            $listTransaction = Transaction::select('id','category_id','user_id','wallets_id','amount','describe', 'created_at', 'updated_at')->where('user_id',Auth::user()->id)->orderBy('id','DESC')->skip(0)->take($num)->get();
+
+            foreach($listTransaction as $transaction){
+                $wallets = Wallets::select('id','name')->where('id',$transaction->wallets_id)->get()->toArray();
+                $transaction->nameWallets = $wallets[0]['name'];
+            }
+
+            foreach($listTransaction as $transaction){
+                $category = Categorys::select('id','name')->where('id',$transaction->category_id)->get()->toArray();
+
+                $transaction->nameCategory = $category[0]['name'];
+            }
+            die(json_encode($listTransaction));
+            
+        }else{
+
+            $listTransaction = Transaction::select('id','category_id','user_id','wallets_id','amount','describe', 'created_at', 'updated_at')->where('user_id',Auth::user()->id)->orderBy('id','DESC')->paginate($num);
+
+            foreach($listTransaction as $transaction){
+                $wallets = Wallets::select('id','name')->where('id',$transaction->wallets_id)->get()->toArray();
+                $transaction->nameWallets = $wallets[0]['name'];
+            }
+
+            foreach($listTransaction as $transaction){
+                $category = Categorys::select('id','name')->where('id',$transaction->category_id)->get()->toArray();
+
+                $transaction->nameCategory = $category[0]['name'];
+            }
+
+            return view('quanlytaichinh.transaction.list',compact("listTransaction"));
+
+        }
+       
         
     }
+
     /**
      * Gets the add.
      *
@@ -23,11 +71,12 @@ class TransactionController extends Controller
      */
     public function getAdd(){
 
-		$wallets  = Wallets::all()->toArray();
-		$category = Categorys::all()->toArray();
+		$wallets  = Wallets::select('id','name')->where('user_id',Auth::user()->id)->get()->toArray();
+		$category = Categorys::select('id','name')->where('user_id',Auth::user()->id)->get()->toArray();
 
     	return view('quanlytaichinh.transaction.add',compact('wallets','category'));
     }
+
 
     /**
      * Posts an add.
@@ -36,19 +85,76 @@ class TransactionController extends Controller
      *
      * @return     <type>                                 ( description_of_the_return_value )
      */
+    
     public function postAdd(TransactionRequest $request){
 
     	$transaction = new Transaction;
 
-		$transaction ->category_id = $request->category_id;
-		$transaction ->user_id     = Auth::user()->id;
-		$transaction ->wallets_id  = $request->wallets_id;
-		$transaction ->amount     = $request->amount;
-		$transaction ->describe    = $request->describe;
+        $transaction ->category_id = $request->category_id;
+        $transaction ->user_id     = Auth::user()->id;
+        $transaction ->wallets_id  = $request->wallets_id;
+        $transaction ->amount      = $request->amount;
+        $transaction ->describe    = $request->describe;
 
 		$transaction ->save();
 
-		return redirect('home')->with(['flash_level'=>'success','flash_message'=>'Congratulations, you have successfully added your wallet.']);
+		return redirect('transection/getList')->with(['flash_level'=>'success','flash_message'=>'More successful transactions!!!']);
+    }
+
+    /**
+     * Gets the edit transaction.
+     *
+     * @param      <type>  $id     The identifier
+     *
+     * @return     <type>  The edit.
+     */
+
+
+    public function getEdit($id){
+
+
+        $wallets  = Wallets::select('id','name')->where('user_id',Auth::user()->id)->get()->toArray();
+        $category = Categorys::select('id','name')->where('user_id',Auth::user()->id)->get()->toArray();
+
+        $transaction = Transaction::find($id);
+
+        return view('quanlytaichinh.transaction.edit',compact('wallets','category','transaction'));
+    }
+
+    /**
+     * Gets the delete transaction.
+     *
+     * @param      <type>  $id     The identifier
+     *
+     * @return     string  The delete.
+     */
+
+    public function postEdit($id,TransactionRequest $request){
+
+        $transaction = Transaction::find($id);
+
+        $transaction ->category_id = $request->category_id;
+        $transaction ->wallets_id  = $request->wallets_id;
+        $transaction ->amount      = $request->amount;
+        $transaction ->describe    = $request->describe;
+
+        $transaction ->save();
+
+        return redirect('transection/getList')->with(['flash_level'=>'success','flash_message'=>'Edit successful transactions !!!']);
+
+    }
+    public function getDelete($id){
+
+        $transaction = Transaction::find($id);
+
+ 
+        if(empty($transaction)){
+            return "error";
+        }
+
+        $transaction->delete($id);
+        
+
     }
 
 

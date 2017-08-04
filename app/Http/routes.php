@@ -44,6 +44,8 @@ Route::group(['prefix'=>'users'],function(){
 	//user profile
 	Route::get('getUserProfile',['as'=>'users.getUserProfile','uses'=>'Auth\AuthController@getUserProfile']);
 	Route::post('postUserProfile',['as'=>'users.postUserProfile','uses'=>'Auth\AuthController@postUserProfile']);
+
+	Route::post('postProfileResetPassword',['as'=>'users.postProfileResetPassword','uses'=>'Auth\AuthController@postProfileResetPassword']);
 	
 });
 
@@ -101,10 +103,18 @@ Route::group(['prefix'=>'categorys'],function(){
 
 Route::group(['prefix'=>'transection'],function(){
 
+	// List
 	Route::get('getList',['as'=>'transection.getList','uses'=>'TransactionController@getList']);
-
+	// add
 	Route::get('getAdd',['as'=>'transection.getAdd','uses'=>'TransactionController@getAdd']);
 	Route::post('postAdd',['as'=>'transection.postAdd','uses'=>'TransactionController@postAdd']);
+
+	//Edit
+	Route::get('getEdit/{id}',['as'=>'transection.getEdit','uses'=>'TransactionController@getEdit']);
+	Route::post('postEdit/{id}',['as'=>'transection.postEdit','uses'=>'TransactionController@postEdit']);
+
+	//Delete
+	Route::get('getDelete/{id}',['as'=>'transection.getDelete','uses'=>'TransactionController@getDelete']);
 	
 
 });

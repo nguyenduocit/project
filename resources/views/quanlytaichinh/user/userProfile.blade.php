@@ -70,9 +70,8 @@
 
                  <strong><i class="glyphicon glyphicon-lock margin-r-5"></i>Password</strong>
 
-                <p class="text-muted">***************</p><a href="" style="font-size: 12px;">Edit Password</a>
-
-                <hr>
+                <p class="text-muted">***************</p>
+                
 
                 <strong><i class="fa fa-map-marker margin-r-5"></i>Adderss</strong>
 
@@ -128,17 +127,17 @@
         </div>
         <!-- /.col -->
         <div class="col-md-9">
+          {{-- start --}}
+          @include('quanlytaichinh.include.alert')
           <div class="nav-tabs-custom">
-
-            @include('quanlytaichinh.include.alert')
-
             <ul class="nav nav-tabs">
-              <li class="active" ><a href="#activity" data-toggle="tab" >Edit Profile </a></li>
-              
+              <li class="active"><a href="#activity" data-toggle="tab">Edit Profile </a></li>
+              <li><a href="#settings" data-toggle="tab">Change Password</a></li>
             </ul>
             <div class="tab-content">
-                <div class=" active tab-pane" id="settings">
-                    
+              <div class="active tab-pane" id="activity">
+                <!-- Post -->
+                <div class="post">
                     <form id="newHotnessForm" action="{{ URL::route('users.postUserProfile')}}" method="post" enctype="multipart/form-data" >
 
                         <input type="hidden" name="_token" value="{{ csrf_token()}}">
@@ -212,12 +211,55 @@
                         </div>
                     </form>
                 </div>
+                <!-- /.post -->
+              </div>
+              <!-- /.tab-pane -->
               <!-- /.tab-pane -->
 
+              <div class="tab-pane" id="settings">
+
+                   <form id="newHotnessForm" class="form-horizontal"  action="{{ URL::route('users.postProfileResetPassword')}}" method="post" >
+
+                        <input type="hidden" name="_token" value="{{ csrf_token()}}">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group has-feedback @if($errors->first('passwordold')) has-error @endif">
+                                    <div class="col-md-12 col-sm-12"> 
+                                        <input type="password" name="passwordold" class="form-control" placeholder="Password old">
+                                        <span class="text-danger"><p>{{ $errors->first('passwordold') }}</p></span>
+                                        <span class="glyphicon glyphicon-lock form-control-feedback"  ></span>
+                                    </div>
+                                </div>
+                                <div class="form-group has-feedback @if($errors->first('password')) has-error @endif">
+                                    <div class="col-md-12 col-sm-12"> 
+                                        <input type="password" name="password" class="form-control" placeholder="Password">
+                                        <span class="text-danger"><p>{{ $errors->first('password') }}</p></span>
+                                        <span class="glyphicon glyphicon-lock form-control-feedback"  ></span>
+                                    </div>
+                                </div>
+                                <div class="form-group has-feedback @if($errors->first('rpassword')) has-error @endif">
+                                    <div class="col-md-12 col-sm-12"> 
+                                        <input type="password" name="rpassword" class="form-control" placeholder="Retype password">
+                                        <span class="text-danger"><p>{{ $errors->first('rpassword') }}</p></span>
+                                        <span class="glyphicon glyphicon-log-in form-control-feedback" ></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div> 
+                        <div class="row">
+                          <div class="col-xs-2">
+                              <button type="submit" class="btn btn-primary btn-block btn-flat">Change Password</button>
+                          </div>
+                          <!-- /.col -->
+                        </div>
+                    </form>
+              </div>
+              <!-- /.tab-pane -->
             </div>
             <!-- /.tab-content -->
           </div>
-          <!-- /.nav-tabs-custom -->
+          {{-- endstart --}}
         </div>
         <!-- /.col -->
       </div>

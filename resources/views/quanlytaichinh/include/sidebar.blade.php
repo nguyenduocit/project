@@ -36,7 +36,7 @@
 
             <a href="{{ URL::route('wallets.getAdd') }}">
 
-                <i class="fa fa-square"></i>
+                <i class="fa fa-plus-square"></i>
 
                 <span>Add Wallets </span>
 
@@ -48,7 +48,7 @@
 
             <a href="{{ URL::route('wallets.getList') }}">
 
-                <i class="fa fa-list"></i>
+                <i class="fa fa-list-ol"></i>
 
                 <span>List Wallets </span>
 
@@ -59,7 +59,7 @@
         <li class="treeview ">
             <a href="{{URL::route('wallets.getTransfersMoney')}}">
 
-                <i class="fa fa-files-o"></i>
+                <i class="fa fa-plus-square"></i>
 
                 <span>Transfers Money</span>
 
@@ -70,7 +70,7 @@
         <li class="treeview ">
 
             <a href="{{URL::route('wallets.getListTransfers')}}">
-                <i class="fa fa-files-o"></i>
+                <i class="fa fa-list-ol"></i>
 
                 <span>List Transfers Money</span>
 
@@ -81,24 +81,32 @@
 
         <li class="treeview ">
             <a href="{{URL::route('categorys.getAdd')}}">
-                <i class="fa fa-th"></i> <span>Add Categorys</span>
+                <i class="fa fa-plus-square"></i> <span>Add Categorys</span>
                 <small class="label pull-right bg-green"></small>
             </a> 
         </li>
 
         <li class="treeview " >
             <a href="{{URL::route('categorys.getList')}}">
-                <i class="fa fa-th"></i> <span>List Categorys</span>
+                <i class="fa fa-list-ol"></i> <span>List Categorys</span>
                 <small class="label pull-right bg-green"></small>
             </a>
         </li>
 
         <li class="treeview " >
             <a href="{{URL::route('transection.getAdd')}}">
-                <i class="fa fa-th"></i> <span>Add Transaction</span>
+                <i class="fa fa-plus-square"></i> <span>Add Transaction</span>
                 <small class="label pull-right bg-green"></small>
             </a>
         </li>
+
+        <li class="treeview " >
+            <a href="{{URL::route('transection.getList')}}">
+                <i class="fa fa-list-ol"></i> <span>List Transaction</span>
+                <small class="label pull-right bg-green"></small>
+            </a>
+        </li>
+
 
     </ul>
     </section>

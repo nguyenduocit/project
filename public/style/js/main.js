@@ -252,7 +252,7 @@ $(document).ready(function($) {
     /**
 	 * delete Transaction 
 	 */
-	$('.delete-transaction').click(function(){
+	$('.delete-transfers').click(function(){
 
 		var id = $(this).attr('id');
 		
@@ -413,8 +413,86 @@ $(document).ready(function($) {
 		});
 
 
-	//
+	//transaction 
 	
+	$('.delete-transaction').click(function(){
+
+		var id = $(this).attr('id');
+		
+		if(!confirm('You confirm the deletion ?'))
+		{
+			return false;
+		}
+		
+		$.ajax({
+				url:link+'transection/getDelete/'+id, 
+				type:'get',
+				async:true,
+		 		dataType:'text',
+				data :{'id': id},
+				success: function(data)
+				{
+					
+					if(data != 'error'){
+
+						$('tr.row_'+id).fadeOut();
+
+					}else{
+						alert('Can not delete !!! You need to delete the subcategories first.')
+					}
+					
+				}
+
+			});
+		
+	});
+
+
+	var linkEdit = link +'transection/getEdit/';
+	
+	/**
+	 * Number of products per page
+	 */
+	$('#number-list-transaction').change(function(){
+
+			var num = $('#number-list-transaction').find(":selected").val();
+
+			$('#example1_paginate').hide();
+
+			$.ajax({
+			 	url:link+'transection/getList',
+			 	type:'get',
+			 	async:true,
+			 	dataType:'json',
+			 	data:{'num':num },
+			 	success:function(data)
+			 	{
+			 		console.log(data);
+			 		var html = '';
+					var stt = 0;
+					$.each (data, function (key,transaction){
+
+						stt = stt +1;
+						html += '<tr class="row_'+transaction['id']+' select" >';
+						html += '<td>'+stt+'</td>';
+						html += '<td>'+transaction['nameWallets']+'</td>';
+						html += '<td>'+transaction['nameCategory']+'</td>';
+						html += '<td>'+transaction['amount']+'</td>';
+						html += '<td>'+transaction['describe']+'</td>';
+						html += '<td>'+transaction['created_at']+'</td>';
+						html += '<td>'+transaction['updated_at']+'</td>';
+						html += '<td>';
+						html += '<a href="'+linkEdit+transaction['id']+'"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>';
+						html += '<a   title="Delete" class="delete-transaction" id="'+transaction['id']+'"><i class="fa fa-fw fa-trash-o"></i></a>'
+         				html += '</td>'
+						html += '</tr>';
+					});
+
+					$('#tbody-wallets').html(html); 
+				}
+			 	
+			 });
+		});
 
 
 

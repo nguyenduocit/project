@@ -100,7 +100,7 @@
                                                         <td> {{ $val->updated_at}}</td>
                                                         <td>
                                                             <a href="{{URL::route('wallets.getEditTransfers',$val->id)}}"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>
-                                                            <a   title="Delete" class="delete-transaction" id="{{ $val->id}}"><i  class="fa fa-fw fa-trash-o"></i></a>
+                                                            <a   title="Delete" class="delete-transfers" id="{{ $val->id}}"><i  class="fa fa-fw fa-trash-o"></i></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach 
