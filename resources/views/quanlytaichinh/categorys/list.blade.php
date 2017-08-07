@@ -95,7 +95,7 @@
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 244px;">Type</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Category Parent</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Created at</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Updated at</th>
+                                                {{-- <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Updated at</th> --}}
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Add Subcategories</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Action</th>
                                                 
@@ -115,12 +115,13 @@
                                                                 Expenses
                                                             @elseif($val->type == 2)
                                                                 Income
-                                                            @endif
-                                                            
+                                                            @endif 
                                                         </td>
                                                         <td> {{ $val ->nameParent }}</td>
-                                                        <td> {{ $val ->created_at}}</td>
-                                                        <td> {{ $val->updated_at}}</td>
+                                                        <td> 
+                                                            <?php echo \Carbon\Carbon::createFromTimestamp(strtotime($val ->created_at))->diffForHumans(); ?>
+                                                        </td>
+                                                        {{-- <td> {{ $val->updated_at}}</td> --}}
                                                         <td>
                                                             @if($val ->parent_id == 0)
                                                             <a href="{{URL::route('categorys.getAddSubcategories',$val->id)}}" class="btn btn-primary text-center">Add</a>

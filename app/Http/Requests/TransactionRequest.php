@@ -26,7 +26,7 @@ class TransactionRequest extends Request
     {
         return [
         
-            'amount' => 'required',
+            'amount' => 'required|numeric',
         ];
     }
 

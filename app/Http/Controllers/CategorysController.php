@@ -41,7 +41,8 @@ class CategorysController extends Controller
 						$category ->nameParent = "";
 					}
 					
-
+                    $category ->format_time = \Carbon\Carbon::createFromTimestamp(strtotime($category ->created_at))->diffForHumans();
+            
 				}
 
 			}

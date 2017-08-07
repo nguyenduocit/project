@@ -96,7 +96,7 @@
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Amount</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Describe</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Created at</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Updated at</th>
+                                                {{-- <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Updated at</th> --}}
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Action</th>
                                                 
                                                 
@@ -111,17 +111,43 @@
                                                         <td> {{ $stt = $stt +1 }}</td>
                                                         <td> {{ $val->nameWallets}} </td>
                                                         <td> {{ $val ->nameCategory}}</td>
-                                                        <td> {{ number_format($val->amount) }}</td>
+                                                        <td style="@if($val->nameType == 1) color: red; @elseif($val->nameType == 2) color:#31e915; @endif"> @if($val->nameType == 1) - @elseif($val->nameType == 2) + @endif {{ number_format($val->amount) }} đ</td>
+
                                                         <td> {{ $val ->describe }}</td>
-                                                        <td> {{ $val ->created_at}}</td>
-                                                        <td> {{ $val->updated_at}}</td>
+                                                        <td> 
+                                                            <?php echo $times = \Carbon\Carbon::createFromTimestamp(strtotime($val ->created_at))->diffForHumans(); ?>
+                                                        </td>
+                                                        {{-- <td> {{ $val->updated_at}}</td> --}}
                                                         <td>
                                                             <a href="{{URL::route('transection.getEdit',$val->id)}}"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>
                                                             <a   title="Delete" class="delete-transaction" id="{{ $val->id}}" ><i  class="fa fa-fw fa-trash-o"></i></a>
                                                             
                                                         </td>
                                                     </tr>
+                                                    
                                                 @endforeach 
+                                                    <tr>
+                                                        <td colspan="3" rowspan="" headers="" class="text-center"> <b>Total Expenses/Total Income</b> </td>
+                                                        <?php
+                                                            $TotalExpenses = 0; 
+                                                            $TotalIncome   = 0;
+                                                            foreach($listTransaction as $val){
+                                                                if($val ->nameType == 1){
+
+                                                                    $TotalExpenses = $TotalExpenses + $val->amount;
+
+                                                                }
+
+
+                                                                if($val ->nameType == 2){
+                                                                    
+                                                                    $TotalIncome = $TotalIncome + $val->amount;
+                                                                }
+                                                            }
+                                                         ?>
+
+                                                        <td colspan="5" > <b style="color: red;"> -{{ number_format($TotalExpenses)}}đ </b >/<b style="color: #31e915;"> + {{ number_format($TotalIncome)}}đ </b> </td>
+                                                    </tr>
                                         </tbody>
                                       
                                     </table>

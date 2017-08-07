@@ -12,15 +12,20 @@ use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\UserProfileRequest;
 use App\Http\Requests\ChangePasswordRequest;
 use Illuminate\Support\Facades\Auth;
-use File;
 use Illuminate\Mail\Mailer;
 use Illuminate\Mail\Message;
 use Illuminate\Http\Response;
+use App\Wallets;
+use App\TransfersMoney;
+use App\Transaction;
+use App\Categorys;
 use DB;
 use Hash;
 use Session;
 use Mail;
 use Cookie;
+use File;
+use Carbon;
 
 
 class AuthController extends Controller
@@ -280,14 +285,19 @@ class AuthController extends Controller
     public function getConfirmEmail($token){
         
         // select information user
-        $user = DB::table('users')->where('remember_token', $token)->get();
-
+        $users = DB::table('users')->where('remember_token', $token)->get();
+        
         // check empty user
-        if(empty($user)){
+        if(empty($users)){
 
             return redirect('users/getResetPassword')->with(['flash_level'=>'danger','flash_message'=>'Accounts do not exist in the database.']);
 
         }
+
+        //$times = \Carbon\Carbon::createFromTimestamp(strtotime($users[0]->created_at))->diffForHumans();
+        
+        $times = \Carbon\ Carbon::now();
+        
         // update status
         $user = User::find($user[0]->id);
 
@@ -302,7 +312,26 @@ class AuthController extends Controller
 
     public function getUserProfile(){
 
-        return view('quanlytaichinh.user.userProfile');
+        $id = Auth::user()->id;
+
+        $sumAmountWallets = DB::table('wallets')->where('user_id',$id)->sum('amount');
+
+        $sumAmountTransactionExpenses = DB::table('transactions')
+                               ->join('categorys', function($join){
+                                    $join ->on('categorys.id','=','transactions.category_id')
+                                          ->where('transactions.user_id','=',Auth::user()->id)
+                                          -> where('type' , '=',1);
+                               })->sum('amount'); 
+
+        $sumAmountTransactionIncome = DB::table('transactions')
+                               ->join('categorys', function($join){
+                                    $join ->on('categorys.id','=','transactions.category_id')
+                                          ->where('transactions.user_id','=',Auth::user()->id)
+                                          -> where('type' , '=',2);
+                               })->sum('amount'); 
+                               
+
+        return view('quanlytaichinh.user.userProfile',compact('sumAmountWallets','sumAmountTransactionExpenses','sumAmountTransactionIncome'));
     }
      
     public function postUserProfile(UserProfileRequest $request){

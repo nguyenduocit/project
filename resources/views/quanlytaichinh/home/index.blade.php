@@ -83,6 +83,24 @@
                 </div>
                   <!-- /.box -->
             </section>
+             <section class="content">
+                <!-- Default box -->
+                <div class="box">
+                    <div class="box-body">
+                        <!-- /.box-header -->
+                        <div class="box-body table-responsive no-padding">
+                            
+
+                        </div>
+                        <div class="col-sm-12">
+                           
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                  <!-- /.box -->
+            </section>
             <!-- /.content -->
         </div>
     @stop

@@ -52,7 +52,7 @@ Route::group(['prefix'=>'users'],function(){
 
 Route::get('home',['as' =>'home','uses' =>'HomeController@index']);
 
-Route::group(['prefix'=>'wallets'],function(){
+Route::group(['prefix'=>'wallets' , 'middleware'=>'auth'],function(){
 
 	Route::get('getAdd',['as'=>'wallets.getAdd','uses'=>'WalletsController@getAdd']);
 	Route::post('postAdd',['as'=>'wallets.postAdd','uses'=>'WalletsController@postAdd']);
@@ -81,7 +81,7 @@ Route::group(['prefix'=>'wallets'],function(){
 });
 
 
-Route::group(['prefix'=>'categorys'],function(){
+Route::group(['prefix'=>'categorys','middleware'=>'auth'],function(){
 
 	Route::get('getList',['as'=>'categorys.getList','uses'=>'CategorysController@getList']);
 
@@ -101,10 +101,12 @@ Route::group(['prefix'=>'categorys'],function(){
 	Route::get('getDelete/{id}',['as'=>'categorys.getDelete','uses'=>'CategorysController@getDelete']);
 });
 
-Route::group(['prefix'=>'transection'],function(){
+Route::group(['prefix'=>'transection','middleware'=>'auth'],function(){
 
 	// List
 	Route::get('getList',['as'=>'transection.getList','uses'=>'TransactionController@getList']);
+	Route::get('getCategorys',['as'=>'transection.getCategorys','uses'=>'TransactionController@getCategorys']);
+	
 	// add
 	Route::get('getAdd',['as'=>'transection.getAdd','uses'=>'TransactionController@getAdd']);
 	Route::post('postAdd',['as'=>'transection.postAdd','uses'=>'TransactionController@postAdd']);

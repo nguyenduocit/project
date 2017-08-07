@@ -36,13 +36,24 @@ class TransactionController extends Controller
             }
 
             foreach($listTransaction as $transaction){
-                $category = Categorys::select('id','name')->where('id',$transaction->category_id)->get()->toArray();
+                $category = Categorys::select('id','name','type')->where('id',$transaction->category_id)->get()->toArray();
 
                 $transaction->nameCategory = $category[0]['name'];
+                $transaction->nameType     = $category[0]['type'];
+
+            }
+
+            foreach($listTransaction as $transaction){
+
+                $transaction ->format_time = \Carbon\Carbon::createFromTimestamp(strtotime($transaction ->created_at))->diffForHumans();
+
             }
             die(json_encode($listTransaction));
+
             
         }else{
+
+            $sumAmountTransaction = DB::table('transactions')->where('user_id',Auth::user()->id)->sum('amount'); 
 
             $listTransaction = Transaction::select('id','category_id','user_id','wallets_id','amount','describe', 'created_at', 'updated_at')->where('user_id',Auth::user()->id)->orderBy('id','DESC')->paginate($num);
 
@@ -52,12 +63,14 @@ class TransactionController extends Controller
             }
 
             foreach($listTransaction as $transaction){
-                $category = Categorys::select('id','name')->where('id',$transaction->category_id)->get()->toArray();
+                $category = Categorys::select('id','name','type')->where('id',$transaction->category_id)->get()->toArray();
 
                 $transaction->nameCategory = $category[0]['name'];
+                $transaction->nameType     = $category[0]['type'];
             }
+            
 
-            return view('quanlytaichinh.transaction.list',compact("listTransaction"));
+            return view('quanlytaichinh.transaction.list',compact("listTransaction","sumAmountTransaction"));
 
         }
        
@@ -72,9 +85,18 @@ class TransactionController extends Controller
     public function getAdd(){
 
 		$wallets  = Wallets::select('id','name')->where('user_id',Auth::user()->id)->get()->toArray();
-		$category = Categorys::select('id','name')->where('user_id',Auth::user()->id)->get()->toArray();
-
+		
     	return view('quanlytaichinh.transaction.add',compact('wallets','category'));
+    }
+
+    public function getCategorys(Request $request){
+
+        $type = $request ->type;
+
+        $listCategory = Categorys::select('id','name','parent_id','type')->where('user_id',Auth::user()->id)->where('type',$type)->get()->toArray();
+
+        die(json_encode($listCategory));
+
     }
 
 
@@ -114,9 +136,11 @@ class TransactionController extends Controller
 
 
         $wallets  = Wallets::select('id','name')->where('user_id',Auth::user()->id)->get()->toArray();
-        $category = Categorys::select('id','name')->where('user_id',Auth::user()->id)->get()->toArray();
 
         $transaction = Transaction::find($id);
+        $category = Categorys::select('id','name',"parent_id",'type')->where('user_id',Auth::user()->id)->where('id',$transaction ->category_id)->get()->toArray();
+
+        //pre($category);
 
         return view('quanlytaichinh.transaction.edit',compact('wallets','category','transaction'));
     }

@@ -125,7 +125,7 @@
     function cateParent($data,$select_name="",$parent = 0, $str ='--',$select=0){
        foreach ($data as $key => $value)
        {
-            $id = $value['id'];
+           $id = $value['id'];
            $name = $value['name'];
 
             if($value['parent_id'] == $parent )
@@ -137,7 +137,7 @@
 
                     echo 'selected ="selected"';
 
-                    }   
+                    }
                     echo" value='".$value['id']."' selected='selected'> $str $name</option>";
                 }
                 else{
@@ -149,7 +149,7 @@
                   }   
                   echo"value='".$value['id']."'> $str $name</option>";
                 }
-                cateParent($data,$id,$str.'--',$select);
+                cateParent($data,$name,$id,$str.'--',$select);
             }
 
        }

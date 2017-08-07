@@ -70,8 +70,8 @@ $(document).ready(function($) {
 						html += '<td>'+wallets['name']+'</td>';
 						html += '<td><input type="color" name="" value="'+wallets['color']+'"></td>';
 						html += '<td>'+wallets['amount']+'</td>';
-						html += '<td>'+wallets['created_at']+'</td>';
-						html += '<td>'+wallets['updated_at']+'</td>';
+						html += '<td>'+wallets['format_time']+'</td>';
+						// html += '<td>'+wallets['updated_at']+'</td>';
 						html += '<td>';
 						html += '<a href="'+linkEdit+wallets['id']+'"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>';
 						html += '<a   title="Delete" class="delete" id="'+wallets['id']+'"><i class="fa fa-fw fa-trash-o"></i></a>'
@@ -113,8 +113,8 @@ $(document).ready(function($) {
 						html += '<td>'+wallets['name']+'</td>';
 						html += '<td><input type="color" name="" value="'+wallets['color']+'"></td>';
 						html += '<td>'+wallets['amount']+'</td>';
-						html += '<td>'+wallets['created_at']+'</td>';
-						html += '<td>'+wallets['updated_at']+'</td>';
+						html += '<td>'+wallets['format_time']+'</td>';
+						// html += '<td>'+wallets['updated_at']+'</td>';
 						html += '<td>';
 						html += '<a href="'+linkEdit+wallets['id']+'"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>';
 						html += '<a   title="Delete" class="delete" id="'+wallets['id']+'"><i onclick=" return confirmDelete("You confirm the deletion")" class="fa fa-fw fa-trash-o"></i></a>'
@@ -282,7 +282,7 @@ $(document).ready(function($) {
 	 * search 
 	 */
 	var linkEditTransfers = link+'wallets/getEditTransfers/';
-	$('#search-transaction').keyup(function(){
+	$('#search-transfers').keyup(function(){
 
 		var key = $(this).val();
 		console.log(key);
@@ -307,7 +307,7 @@ $(document).ready(function($) {
 						html += '<td>'+transfersMoney['name_receive_wallet']+'</td>';
 						html += '<td>'+transfersMoney['amount']+'</td>';
 						html += '<td>'+transfersMoney['created_at']+'</td>';
-						html += '<td>'+transfersMoney['updated_at']+'</td>';
+						// html += '<td>'+transfersMoney['updated_at']+'</td>';
 						html += '<td>';
 						html += '<a href="'+linkEditTransfers+transfersMoney['id']+'"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>';
 						html += '<a   title="Delete" class="delete-transaction" id="'+transfersMoney['id']+'"><i class="fa fa-fw fa-trash-o"></i></a>'
@@ -392,8 +392,8 @@ $(document).ready(function($) {
 						}
 
 						html += '<td>'+category['nameParent']+'</td>';
-						html += '<td>'+category['created_at']+'</td>';
-						html += '<td>'+category['updated_at']+'</td>';
+						html += '<td>'+category['format_time']+'</td>';
+						// html += '<td>'+category['updated_at']+'</td>';
 						html += '<td>';
 						if(category['parent_id'] == 0){
 							html += '<a href="'+linkAdd +category['id']+'" class="btn btn-primary text-center">Add</a>'
@@ -479,8 +479,8 @@ $(document).ready(function($) {
 						html += '<td>'+transaction['nameCategory']+'</td>';
 						html += '<td>'+transaction['amount']+'</td>';
 						html += '<td>'+transaction['describe']+'</td>';
-						html += '<td>'+transaction['created_at']+'</td>';
-						html += '<td>'+transaction['updated_at']+'</td>';
+						html += '<td>'+transaction['format_time']+'</td>';
+						// html += '<td>'+transaction['updated_at']+'</td>';
 						html += '<td>';
 						html += '<a href="'+linkEdit+transaction['id']+'"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>';
 						html += '<a   title="Delete" class="delete-transaction" id="'+transaction['id']+'"><i class="fa fa-fw fa-trash-o"></i></a>'
@@ -493,6 +493,37 @@ $(document).ready(function($) {
 			 	
 			 });
 		});
+
+
+		$('#type-transaction').change(function(){
+
+			var type = $('#type-transaction').find(":selected").val();
+			console.log(type);
+			$.ajax({
+			 	url:link+'transection/getCategorys',
+			 	type:'get',
+			 	async:true,
+			 	dataType:'json',
+			 	data:{'type':type },
+			 	success:function(data)
+			 	{
+			 		console.log(data);
+			 		var html = '';
+					
+					$.each (data, function (key,category){
+
+						html += '<option  value="'+category['id']+'">'+category['name']+'</option>';
+
+					
+					});
+
+					$('#type-category').html(html); 
+				}
+			 	
+			 });
+		});
+
+
 
 
 

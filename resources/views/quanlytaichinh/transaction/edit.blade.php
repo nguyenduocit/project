@@ -54,6 +54,7 @@
                                                 value="{{ $val['id']}}" >{{ $val['name']}}</option>
 
                                                 @endforeach
+
                                                 
                                             </select>
                                             <span class="text-danger"><p>{{ $errors->first('wallets_id') }}</p></span>
@@ -65,24 +66,30 @@
 
                                     <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                         <div class="col-md-3 col-sm-6 col-xs-12 ">
+                                             <label for="exampleInputEmail1">Type<span class="obligatory">*</span></label>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12 @if($errors->first('type')) has-error @endif">
+                                            <select name="type" id="type-transaction"   class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                                <option value=""></option>
+                                                <option @if(old('type') == 1 ) selected ="selected" @elseif($category[0]['type'] == 1) selected ="selected" @endif value="1" >Expenses</option>
+                                                <option @if(old('type') == 2 ) selected ="selected" @elseif($category[0]['type'] == 2) selected ="selected" @endif value="2" >Income</option>
+                                            </select>
+                                            <span class="text-danger"><p>{{ $errors->first('type') }}</p></span>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-xs-0 ">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-3 col-sm-6 col-xs-12 ">
                                              <label for="exampleInputEmail1">Categorys<span class="obligatory">*</span></label>
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-12 @if($errors->first('category_id')) has-error @endif">
-                                            <select name="category_id" id="type"   class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                                                @foreach($category as $val)
-                                                <option 
-                                                    @if(old('category_id') == $val['id']) 
-
-                                                        selected ="selected"
-
-                                                    @elseif($transaction ->category_id == $val['id'])
-
-                                                    selected ="selected" 
-
-                                                    @endif
-                                                    value="{{ $val['id']}}" >{{ $val['name']}}
-                                                </option>
-                                                @endforeach
+                                            <select name="category_id" id="type-category"   class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                                
+                                               <option value="{{ $category[0]['id']}}">{{ $category[0]['name']}}</option>
+                                               
                                                 
                                             </select>
                                             <span class="text-danger"><p>{{ $errors->first('category_id') }}</p></span>
@@ -107,9 +114,7 @@
                                             <label for="exampleInputEmail1">Describe<span class="obligatory">*</span></label>
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-12 @if($errors->first('describe')) has-error @endif">
-                                            <textarea name="describe" class="form-control" rows="10">
-                                                {{ $transaction->describe }}
-                                            </textarea>
+                                            <textarea name="describe" class="form-control" rows="10">{{ $transaction->describe }}</textarea>
                                             <span class="text-danger"><p>{{ $errors->first('describe') }}</p></span>
                                         </div>
                                     </div>

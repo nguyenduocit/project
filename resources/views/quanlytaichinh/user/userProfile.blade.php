@@ -39,13 +39,13 @@
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b> Amount </b> <a class="pull-right">1,322</a>
+                  <b> Amount </b> <a class="pull-right">{{ number_format($sumAmountWallets + $sumAmountTransactionIncome )}}đ</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Used</b> <a class="pull-right">543</a>
+                  <b>Used</b> <a class="pull-right">{{ number_format($sumAmountTransactionExpenses) }}đ</a>
                 </li>
                 <li class="list-group-item">
-                  <b>Remain</b> <a class="pull-right">13,287</a>
+                  <b>Remain</b> <a class="pull-right">{{ number_format( ($sumAmountWallets + $sumAmountTransactionIncome) - $sumAmountTransactionExpenses )}}đ</a>
                 </li>
               </ul>
 

@@ -46,13 +46,6 @@ class WalletsController extends Controller
      * @return [type] [description]
      */
     public function getAdd(){
-
-        if(!Auth::check()){
-
-            return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'You need to sign in to use']);
-
-        }
-    	//
         return view('quanlytaichinh.wallets.add');
     }
 
@@ -81,11 +74,6 @@ class WalletsController extends Controller
 
     public function getList(Request $request){
        
-        if(!Auth::check()){
-
-            return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'You need to sign in to use']);
-
-        }
 
         $id =  Auth::user()->id;
 
@@ -96,6 +84,11 @@ class WalletsController extends Controller
             $num = $request->num;
 
             $listWallets = Wallets::where('user_id',$id)->orderBy('id','DESC')->skip(0)->take($num)->get();
+
+            foreach($listWallets as $wallets){
+
+                $wallets ->format_time = \Carbon\Carbon::createFromTimestamp(strtotime($wallets ->created_at))->diffForHumans();
+            }
             
 
             die(json_encode($listWallets));
@@ -107,7 +100,7 @@ class WalletsController extends Controller
 
             $sumAmount = DB::table('wallets')->where('user_id',$id)->sum('amount');
 
-             return view('quanlytaichinh.wallets.list', compact('listWallets','sumAmount'));
+            return view('quanlytaichinh.wallets.list', compact('listWallets','sumAmount'));
         }  
 
     }
@@ -123,6 +116,11 @@ class WalletsController extends Controller
     public function keySearch($key){
 
         $listWallets = Wallets::where('name','like',"%$key%")->orWhere('amount','like',"%$key%")->get();
+
+        foreach($listWallets as $wallets){
+
+            $wallets ->format_time = \Carbon\Carbon::createFromTimestamp(strtotime($wallets ->created_at))->diffForHumans();
+        }
 
         die (json_encode($listWallets));
         

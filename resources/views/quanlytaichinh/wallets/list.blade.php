@@ -102,7 +102,7 @@
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 244px;">Color</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Amount</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Created at</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Updated at</th>
+                                                {{-- <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Updated at</th> --}}
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Action</th>
                                             </tr>
                                         </thead>
@@ -114,8 +114,12 @@
                                                     <td> {{ $val->name }} </td>
                                                     <td><input type="color" name="" value="{{ $val->color }}"></td>
                                                     <td> {{ number_format($val->amount) }}đ</td>
-                                                    <td> {{ $val ->created_at}}</td>
-                                                    <td>{{ $val->updated_at}}</td>
+                                                    <td>
+                                                        <?php
+                                                            echo \Carbon\Carbon::createFromTimestamp(strtotime($val ->created_at))->diffForHumans();
+                                                        ?>
+                                                    </td>
+                                                    {{-- <td>{{ $val->updated_at}}</td> --}}
                                                     <td>
                                                         <a href="{{URL::route('wallets.getEdit',$val->id)}}"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>
                                                         <a   title="Delete" class="delete" id="{{ $val->id}}" name="{{ $val->name }}"><i class="fa fa-fw fa-trash-o"></i></a>
