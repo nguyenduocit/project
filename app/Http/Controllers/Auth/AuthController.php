@@ -296,7 +296,7 @@ class AuthController extends Controller
 
         //$times = \Carbon\Carbon::createFromTimestamp(strtotime($users[0]->created_at))->diffForHumans();
         
-        $times = \Carbon\ Carbon::now();
+        $times = \Carbon\Carbon::now();
         
         // update status
         $user = User::find($user[0]->id);
@@ -377,11 +377,21 @@ class AuthController extends Controller
      */
     public function postProfileResetPassword(ChangePasswordRequest $request){
 
-      $id             = Auth::user() ->id;
-      $user           = User::find($id);
-      $user->password = Hash::make($request->rpassword);
-      $user->save();
-      return redirect('users/getUserProfile')->with(['flash_level'=>'success','flash_message'=>'Edit password successfully !!!']);
+        $id             = Auth::user() ->id;
+        $user           = User::find($id);
+        if(!Hash::check($request->rpassword, $user->password)){
+
+            return redirect('users/getUserProfile')->with(['flash_level'=>'danger','flash_message'=>'Password does not exist !!!']);
+
+        }else{
+
+            $user->password = Hash::make($request->rpassword);
+            $user->save();
+
+            return redirect('users/getUserProfile')->with(['flash_level'=>'success','flash_message'=>'Edit password successfully !!!']);
+        }
+      
+      
     }
 
     /**

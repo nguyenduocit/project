@@ -459,6 +459,7 @@ $(document).ready(function($) {
 
 			$('#example1_paginate').hide();
 
+
 			$.ajax({
 			 	url:link+'transection/getList',
 			 	type:'get',
@@ -477,7 +478,21 @@ $(document).ready(function($) {
 						html += '<td>'+stt+'</td>';
 						html += '<td>'+transaction['nameWallets']+'</td>';
 						html += '<td>'+transaction['nameCategory']+'</td>';
-						html += '<td>'+transaction['amount']+'</td>';
+						html += '<td style ="';
+								if(transaction['nameType'] == 1){
+									html += 'color : red;';
+								}else if(transaction['nameType'] == 2){
+									html += 'color : #31e915;';
+								}
+						html += '">';
+
+						if(transaction['nameType'] == 1){
+									html += '-';
+								}else if(transaction['nameType'] == 2){
+									html += '+';
+								}
+
+						html += transaction['amount']+'</td>';
 						html += '<td>'+transaction['describe']+'</td>';
 						html += '<td>'+transaction['format_time']+'</td>';
 						// html += '<td>'+transaction['updated_at']+'</td>';
@@ -489,6 +504,7 @@ $(document).ready(function($) {
 					});
 
 					$('#tbody-wallets').html(html); 
+					$('tr#total').show();
 				}
 			 	
 			 });

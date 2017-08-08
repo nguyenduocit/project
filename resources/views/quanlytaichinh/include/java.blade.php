@@ -1,11 +1,4 @@
-<?php $link =  url('/');?>
-<script >
-	var link = '{{ $link }}'+'/';
-</script>
-<!-- jQuery 2.2.0 -->
-<script src="{{ url('public/plugins/jQuery/jQuery-2.2.0.min.js') }}"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="{{ url('public/bootstrap/js/bootstrap.min.js') }}"></script>
+
 <!-- iCheck -->
 <script src="{{ url('public/plugins/iCheck/icheck.min.js') }}"></script>
 <!-- Bootstrap 3.3.6 -->
@@ -18,3 +11,4 @@
 <script src="{{ url('public/dist/js/demo.js') }}"></script>
 
 <script src="{{ url('public/style/js/main.js')}}" ></script>
+

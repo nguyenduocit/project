@@ -71,8 +71,8 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12 @if($errors->first('type')) has-error @endif">
                                             <select name="type" id="type-transaction"   class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                                 <option value=""></option>
-                                                <option @if(old('type') == 1 ) selected ="selected" @elseif($category[0]['type'] == 1) selected ="selected" @endif value="1" >Expenses</option>
-                                                <option @if(old('type') == 2 ) selected ="selected" @elseif($category[0]['type'] == 2) selected ="selected" @endif value="2" >Income</option>
+                                                <option @if(old('type') == 1 ) selected ="selected" @elseif($transaction ->type == 1) selected ="selected" @endif value="1" >Expenses</option>
+                                                <option @if(old('type') == 2 ) selected ="selected" @elseif($transaction ->type == 2) selected ="selected" @endif value="2" >Income</option>
                                             </select>
                                             <span class="text-danger"><p>{{ $errors->first('type') }}</p></span>
                                         </div>

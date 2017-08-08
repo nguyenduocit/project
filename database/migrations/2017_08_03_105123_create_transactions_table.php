@@ -21,6 +21,9 @@ class CreateTransactionsTable extends Migration
             $table->integer('wallets_id')->unsigned();
             $table->foreign('wallets_id')->references('id')->on('wallets')->onDelete('cascade');
             $table->bigInteger('amount');
+            $table->index('amount');
+            $table->tinyInteger('type');
+            $table->tinyInteger('month');
             $table->text('describe');
             $table->timestamps();
         });

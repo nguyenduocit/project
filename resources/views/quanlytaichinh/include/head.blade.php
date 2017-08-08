@@ -20,6 +20,17 @@
   <link rel="stylesheet" href="{{ url('public/plugins/iCheck/square/blue.css') }}">
   <link rel="stylesheet" href="{{ url('public/style/css/style.css') }}">
 
+  <?php $link =  url('/');?>
+<script >
+  var link = '{{ $link }}'+'/';
+</script>
+<!-- jQuery 2.2.0 -->
+<script src="{{ url('public/plugins/jQuery/jQuery-2.2.0.min.js') }}"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="{{ url('public/bootstrap/js/bootstrap.min.js') }}"></script>
+<!-- ChartJS 1.0.1 -->
+<script src="{{ url('public/plugins/chartjs/Chart.min.js') }}"></script>
+
   
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

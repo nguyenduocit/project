@@ -126,7 +126,7 @@
                                                     </tr>
                                                     
                                                 @endforeach 
-                                                    <tr>
+                                                    <tr id="total">
                                                         <td colspan="3" rowspan="" headers="" class="text-center"> <b>Total Expenses/Total Income</b> </td>
                                                         <?php
                                                             $TotalExpenses = 0; 

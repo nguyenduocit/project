@@ -116,6 +116,7 @@ class TransactionController extends Controller
         $transaction ->user_id     = Auth::user()->id;
         $transaction ->wallets_id  = $request->wallets_id;
         $transaction ->amount      = $request->amount;
+        $transaction ->type     = $request->type;
         $transaction ->describe    = $request->describe;
 
 		$transaction ->save();
@@ -140,8 +141,6 @@ class TransactionController extends Controller
         $transaction = Transaction::find($id);
         $category = Categorys::select('id','name',"parent_id",'type')->where('user_id',Auth::user()->id)->where('id',$transaction ->category_id)->get()->toArray();
 
-        //pre($category);
-
         return view('quanlytaichinh.transaction.edit',compact('wallets','category','transaction'));
     }
 
@@ -160,6 +159,7 @@ class TransactionController extends Controller
         $transaction ->category_id = $request->category_id;
         $transaction ->wallets_id  = $request->wallets_id;
         $transaction ->amount      = $request->amount;
+        $transaction ->type     = $request->type;
         $transaction ->describe    = $request->describe;
 
         $transaction ->save();
