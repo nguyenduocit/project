@@ -14,11 +14,10 @@ use DB;
 class TransactionController extends Controller
 {
     /**
-     * Gets the list transaction  
+     * Gets the list transaction
      *
-     * @return     <type>  The list transaction 
+     * @return     <type>  The list transaction
      */
-    
     public function getList(Request $request){
 
         // The number of elements displayed on a page . Eit in file constant.php (NUMBER_PAGINATE = 15)
@@ -50,7 +49,7 @@ class TransactionController extends Controller
             }
             die(json_encode($listTransaction));
 
-            
+
         }else{
 
             $sumAmountTransaction = DB::table('transactions')->where('user_id',Auth::user()->id)->sum('amount'); 
@@ -68,13 +67,10 @@ class TransactionController extends Controller
                 $transaction->nameCategory = $category[0]['name'];
                 $transaction->nameType     = $category[0]['type'];
             }
-            
 
             return view('quanlytaichinh.transaction.list',compact("listTransaction","sumAmountTransaction"));
 
         }
-       
-        
     }
 
     /**
@@ -85,7 +81,6 @@ class TransactionController extends Controller
     public function getAdd(){
 
 		$wallets  = Wallets::select('id','name')->where('user_id',Auth::user()->id)->get()->toArray();
-		
     	return view('quanlytaichinh.transaction.add',compact('wallets','category'));
     }
 
@@ -107,7 +102,6 @@ class TransactionController extends Controller
      *
      * @return     <type>                                 ( description_of_the_return_value )
      */
-    
     public function postAdd(TransactionRequest $request){
 
     	$transaction = new Transaction;
@@ -155,13 +149,11 @@ class TransactionController extends Controller
     public function postEdit($id,TransactionRequest $request){
 
         $transaction = Transaction::find($id);
-
         $transaction ->category_id = $request->category_id;
         $transaction ->wallets_id  = $request->wallets_id;
         $transaction ->amount      = $request->amount;
-        $transaction ->type     = $request->type;
+        $transaction ->type        = $request->type;
         $transaction ->describe    = $request->describe;
-
         $transaction ->save();
 
         return redirect('transection/getList')->with(['flash_level'=>'success','flash_message'=>'Edit successful transactions !!!']);
@@ -170,14 +162,11 @@ class TransactionController extends Controller
     public function getDelete($id){
 
         $transaction = Transaction::find($id);
-
- 
         if(empty($transaction)){
             return "error";
         }
 
         $transaction->delete($id);
-        
 
     }
 

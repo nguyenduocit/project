@@ -8,6 +8,7 @@ use App\Http\Requests\WalletsRequest;
 use App\Http\Requests;
 use App\Wallets;
 use App\TransfersMoney;
+use App\Transaction;
 use DB;
 
 class WalletsController extends Controller
@@ -20,10 +21,8 @@ class WalletsController extends Controller
     public function getInfoWallets($id){
 
 
-        
         $transfersMoney = DB::table('transfers_moneys')->where('transfer_wallet',$id)->orWhere('receive_wallet',$id)->orderBy('id','DESC')->paginate(15);
         // pre($transfersMoney);
-        
         foreach($transfersMoney as $transfers){
             $nameWalletTransfers = DB::table('wallets')->where('id',$transfers->transfer_wallet)->get();
             $transfers ->name_transfer_wallet = $nameWalletTransfers[0]->name;
@@ -33,14 +32,12 @@ class WalletsController extends Controller
             $nameWalletReceive = DB::table('wallets')->where('id',$transfer->receive_wallet)->get();
             $transfer ->name_receive_wallet = $nameWalletReceive[0]->name;
 
-
         }
         return view('quanlytaichinh.wallets.infoWallets',compact('transfersMoney'));
 
     }
 
 
-   
     /**
      * load form creat wallets 
      * @return [type] [description]
@@ -73,14 +70,12 @@ class WalletsController extends Controller
      */
 
     public function getList(Request $request){
-       
 
         $id =  Auth::user()->id;
 
         // The number of elements displayed on a page . Eit in file constant.php (NUMBER_PAGINATE = 15)
         $num = NUMBER_PAGINATE;
         if(isset($request->num)){
-            
             $num = $request->num;
 
             $listWallets = Wallets::where('user_id',$id)->orderBy('id','DESC')->skip(0)->take($num)->get();
@@ -89,26 +84,22 @@ class WalletsController extends Controller
 
                 $wallets ->format_time = \Carbon\Carbon::createFromTimestamp(strtotime($wallets ->created_at))->diffForHumans();
             }
-            
-
             die(json_encode($listWallets));
 
         }else{
-            
 
             $listWallets = Wallets::where('user_id',$id)->orderBy('id','DESC')->paginate($num);
 
             $sumAmount = DB::table('wallets')->where('user_id',$id)->sum('amount');
 
             return view('quanlytaichinh.wallets.list', compact('listWallets','sumAmount'));
-        }  
+        }
 
     }
 
- 
 
     /**
-     * search data name and amount 
+     * search data name and amount
      *
      * @param      <type>  $key    The key
      */
@@ -123,7 +114,6 @@ class WalletsController extends Controller
         }
 
         die (json_encode($listWallets));
-        
     }
 
     /**
@@ -187,7 +177,6 @@ class WalletsController extends Controller
         if(empty($wallets)){
 
             return 'error';
-            
         }
 
         $transfersMoney = DB::table('transfers_moneys')->where('transfer_wallet',$id)->orWhere('receive_wallet',$id)->get();
@@ -196,9 +185,13 @@ class WalletsController extends Controller
             return 'error';
 
         }
+        $transaction = Transaction::select('id')->where('wallets_id',$id)->get();
+        if(!empty($transaction)){
 
+            return 'error';
+
+        }
         $wallets->delete($id);
-        
 
     }
 
@@ -228,8 +221,4 @@ class WalletsController extends Controller
     //     }
 
     // }
-
-    
-
-
 }

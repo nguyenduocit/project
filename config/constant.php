@@ -36,3 +36,14 @@ define('NUMBER_MINUTES_LOCK',15);
  * number page paginate 
  */
 define('NUMBER_PAGINATE',15);
+
+/**
+ *type of the transaction  Expenses
+ */
+define('TYPE_EXPENSES',1);
+
+/**
+ *type of the transaction INCOM
+ */
+
+define('TYPE_INCOM',2);

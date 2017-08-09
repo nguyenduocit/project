@@ -90,11 +90,8 @@
 
             // EMAIL_ADMIN = duocnguyenit1994@gmail.com  edit bootstrap constant.php
             // NAME_ADMIN = Administrator  edit bootstrap constant.php
-            
             $message->from(EMAIL_ADMIN, NAME_ADMIN);
-            
             $message->to( Session::get('email'), Session::get('name'))->subject('Confirmation Email');
-        
         });
 
     }
@@ -146,7 +143,7 @@
 
                     echo 'selected ="selected"';
 
-                  }   
+                  }
                   echo"value='".$value['id']."'> $str $name</option>";
                 }
                 cateParent($data,$name,$id,$str.'--',$select);
@@ -157,9 +154,13 @@
     }
 
 
-    
+function random_color_part() {
+    return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+}
+
+function random_color() {
+    return random_color_part() . random_color_part() . random_color_part();
+}
 
 
-
-    
 ?>

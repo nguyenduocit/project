@@ -17,7 +17,6 @@
             </section>
 
             <!-- Main content -->
-            
             <section class="content">
                 <!-- Default box -->
                 <div class="box">
@@ -26,7 +25,7 @@
                           @include('quanlytaichinh.include.alert')
                             <div class="row">
                                 {{-- <div class="col-sm-7">
-                                    <!--  <h3 class="box-title">Responsive Hover Table</h3> -->
+                                      <h3 class="box-title">Responsive Hover Table</h3>
                                 </div>
                                 <div class="col-sm-2">
                                     <div class="box-tools">
@@ -42,17 +41,17 @@
 
                                 <div class="col-sm-3">
                                     <a href="{{ URL::route('wallets.getAdd') }}" class="btn btn-app">
-                                        <i class="fa fa-square"></i> Add Wallets 
+                                        <i class="fa fa-square"></i> Add Wallets
                                     </a>
 
                                      <a href="{{ URL::route('wallets.getList') }}" class="btn btn-app">
-                                        <i class="fa fa-list"></i> List Wallets 
+                                        <i class="fa fa-list"></i> List Wallets
                                     </a>
                                 </div> --}}
                             </div>
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body table-responsive no-padding">
+                        <div class="box-body table-responsive "><!-- no-padding hien thi thanh truot keo xuong-->
                             @foreach($listWallets as $val)
                                 <div class="col-lg-3 col-xs-6">
                                   <!-- small box -->
@@ -75,7 +74,6 @@
                             <div class="col-sm-4"></div>
                             <div class="col-sm-4 text-center">{!! $listWallets -> links()!!}</div>
                             <div class="col-sm-4"></div>
-                            
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -83,114 +81,103 @@
                 </div>
                   <!-- /.box -->
             </section>
-            
             <section class="content-header">
               <h1>
-                ChartJS
+                Money Lover ChartJS
                 <small>Preview sample</small>
               </h1>
-              <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="#">Charts</a></li>
-                <li class="active">ChartJS</li>
-              </ol>
             </section>
             <section class="content">
-            <div class="row">
-              <div class="col-md-6">
-                <!-- AREA CHART -->
-                <div class="box box-primary">
-                  <div class="box-header with-border">
-                    <h3 class="box-title">Area Chart</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                          <!-- BAR CHART -->
+                        <div class="box box-success">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Bar Chart  </h3>
 
-                    <div class="box-tools pull-right">
-                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                      </button>
-                      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                <div class="box-tools pull-right">
+                                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                  </button>
+                                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div class="chart">
+                                  <canvas id="barChart" style="height: 250px; width: 755px;" width="755" height="230"></canvas>
+                                </div>
+                            </div>
+                          <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+
+                        <!-- DONUT CHART -->
+                        <div class="box box-danger">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Categorys Chart Expenses</h3>
+
+                                <div class="box-tools pull-right">
+                                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                  </button>
+                                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <canvas id="pieChart" style="height: 387px; width: 775px;" width="775" height="387"></canvas>
+                            </div>
+                          <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+
                     </div>
-                  </div>
-                  <div class="box-body">
-                    <div class="chart">
-                      <canvas id="areaChart" style="height: 250px; width: 755px;" width="755" height="250"></canvas>
+                    <!-- /.col (LEFT) -->
+                    <div class="col-md-6">
+
+                        <!-- AREA CHART -->
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Area Chart</h3>
+
+                                <div class="box-tools pull-right">
+                                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                  </button>
+                                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div class="chart">
+                                  <canvas id="areaChart" style="height: 250px; width: 755px;" width="755" height="250"></canvas>
+                                </div>
+                            </div>
+                          <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                        <!-- LINE CHART -->
+                        <div class="box box-info">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Categorys Chart Incom </h3>
+
+                                <div class="box-tools pull-right">
+                                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                  </button>
+                                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                          <div class="box-body">
+                            <div class="chart">
+                              <canvas id="pieChartTest" style="height: 387px; width: 755px;" width="755" height="250"></canvas>
+                            </div>
+                          </div>
+                          <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
                     </div>
-                  </div>
-                  <!-- /.box-body -->
+                    <!-- /.col (RIGHT) -->
                 </div>
-                <!-- /.box -->
-
-                <!-- DONUT CHART -->
-                <div class="box box-danger">
-                  <div class="box-header with-border">
-                    <h3 class="box-title">Donut Chart</h3>
-
-                    <div class="box-tools pull-right">
-                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                      </button>
-                      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>
-                  </div>
-                  <div class="box-body">
-                    <canvas id="pieChart" style="height: 387px; width: 775px;" width="775" height="387"></canvas>
-                  </div>
-                  <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-
-              </div>
-              <!-- /.col (LEFT) -->
-              <div class="col-md-6">
-                <!-- LINE CHART -->
-                <div class="box box-info">
-                  <div class="box-header with-border">
-                    <h3 class="box-title">Line Chart</h3>
-
-                    <div class="box-tools pull-right">
-                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                      </button>
-                      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>
-                  </div>
-                  <div class="box-body">
-                    <div class="chart">
-                      <canvas id="lineChart" style="height: 250px; width: 755px;" width="755" height="250"></canvas>
-                    </div>
-                  </div>
-                  <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-
-                <!-- BAR CHART -->
-                <div class="box box-success">
-                  <div class="box-header with-border">
-                    <h3 class="box-title">Bar Chart </h3>
-
-                    <div class="box-tools pull-right">
-                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                      </button>
-                      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>
-                  </div>
-                  <div class="box-body">
-                    <div class="chart">
-                      <canvas id="barChart" style="height: 230px; width: 755px;" width="755" height="230"></canvas>
-                    </div>
-                  </div>
-                  <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-
-              </div>
-              <!-- /.col (RIGHT) -->
-            </div>
-      <!-- /.row -->
-
+            <!-- /.row -->
             </section>
             <!-- /.content -->
         </div>
-        <?php pre($dataIncom); ?>
-
         <script>
-
 
           $(function () {
             /* ChartJS
@@ -220,6 +207,9 @@
                   pointHighlightStroke: "rgba(220,220,220,1)",
                   data: [
 
+                        @for($i =0 ;$i<12 ;$i++)
+                            {{ $resultExpenses[$i]}},
+                        @endfor
                   ]
                 },
                 {
@@ -232,7 +222,9 @@
                   pointHighlightStroke: "rgba(60,141,188,1)",
                   data: [
 
-                       
+                        @for($i =0 ;$i<12 ;$i++)
+                            {{ $resultIncom[$i]}},
+                        @endfor
                   ]
                 }
               ]
@@ -283,11 +275,11 @@
             //-------------
             //- LINE CHART -
             //--------------
-            var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
-            var lineChart = new Chart(lineChartCanvas);
-            var lineChartOptions = areaChartOptions;
-            lineChartOptions.datasetFill = false;
-            lineChart.Line(areaChartData, lineChartOptions);
+            //var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
+            // var lineChart = new Chart(lineChartCanvas);
+            // var lineChartOptions = areaChartOptions;
+            // lineChartOptions.datasetFill = false;
+            // lineChart.Line(areaChartData, lineChartOptions);
 
             //-------------
             //- PIE CHART -
@@ -296,42 +288,58 @@
             var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
             var pieChart = new Chart(pieChartCanvas);
             var PieData = [
-              {
-                value: 300,
-                color: "#f56954",
-                highlight: "#f56954",
-                label: "Chrome"
-              },
-              {
-                value: 500,
-                color: "#00a65a",
-                highlight: "#00a65a",
-                label: "IE"
-              },
-              {
-                value: 400,
-                color: "#f39c12",
-                highlight: "#f39c12",
-                label: "FireFox"
-              },
-              {
-                value: 600,
-                color: "#00c0ef",
-                highlight: "#00c0ef",
-                label: "Safari"
-              },
-              {
-                value: 900,
-                color: "#3c8dbc",
-                highlight: "#3c8dbc",
-                label: "Opera"
-              },
-              {
-                value: 100,
-                color: "#d2d6de",
-                highlight: "#d2d6de",
-                label: "Navigator"
-              }
+                @foreach($dataCategoryExpenses as $val)
+                  {
+                    value: {{ $val->total}},
+                    color: "{{$val->color}}",
+                    highlight: "{{$val->color}}",
+                    label: "{{$val->name}}"
+                  },
+                @endforeach
+            ];
+            var pieOptions = {
+              //Boolean - Whether we should show a stroke on each segment
+              segmentShowStroke: true,
+              //String - The colour of each segment stroke
+              segmentStrokeColor: "#fff",
+              //Number - The width of each segment stroke
+              segmentStrokeWidth: 2,
+              //Number - The percentage of the chart that we cut out of the middle
+              percentageInnerCutout: 50, // This is 0 for Pie charts
+              //Number - Amount of animation steps
+              animationSteps: 100,
+              //String - Animation easing effect
+              animationEasing: "easeOutBounce",
+              //Boolean - Whether we animate the rotation of the Doughnut
+              animateRotate: true,
+              //Boolean - Whether we animate scaling the Doughnut from the centre
+              animateScale: false,
+              //Boolean - whether to make the chart responsive to window resizing
+              responsive: true,
+              // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+              maintainAspectRatio: true,
+              //String - A legend template
+              legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+            };
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            pieChart.Doughnut(PieData, pieOptions);
+
+            //-------------
+            //- PIE CHART TEST -
+            //-------------
+            // Get context with jQuery - using jQuery's .get() method.
+            var pieChartCanvas = $("#pieChartTest").get(0).getContext("2d");
+            var pieChart = new Chart(pieChartCanvas);
+            var PieData = [
+              @foreach($dataCategoryIncom as $val)
+                  {
+                    value: {{ $val->total}},
+                    color: "{{$val->color}}",
+                    highlight: "{{$val->color}}",
+                    label: "{{$val->name}}"
+                  },
+                @endforeach
             ];
             var pieOptions = {
               //Boolean - Whether we should show a stroke on each segment

@@ -12,14 +12,12 @@ $(document).ready(function($) {
 
 		var id = $(this).attr('id');
 		var name = $(this).attr('name');
-		
 		if(!confirm('You confirm the deletion '+name+'?'))
 		{
 			return false;
 		}
-		
 		$.ajax({
-				url:link+'wallets/getDelete/'+id, 
+				url:link+'wallets/getDelete/'+id,
 				type:'get',
 				async:true,
 		 		dataType:'text',
@@ -29,37 +27,33 @@ $(document).ready(function($) {
 					if(data !='error'){
 
 						$('tr.row_'+id).fadeOut();
+						window.location.href = link +'wallets/getList';
 					}else{
 						alert('Can not delete !!! You need to delete the previous wallets transaction')
 					}
-					
-					
 				}
 
 			});
-		
 	});
 
 	var linkEdit = link+'wallets/getEdit/';
 
 	/**
 	 * Search for data wallets by name and amount
-	 * Call to function  keySearch in WalletsController.php 
+	 * Call to function  keySearch in WalletsController.php
 	 */
 
 	$('#search').keyup(function(){
 
 		var key = $(this).val();
-		
 		$.ajax({
-				url:link+'wallets/keySearch/'+key, 
+				url:link+'wallets/keySearch/'+key,
 				type:'get',
 				async:true,
 		 		dataType:'json',
 				data :{'key': key},
 				success: function(data)
 				{
-					
 					var html = '';
 					var stt = 0;
 					$.each (data, function (key, wallets){
@@ -79,11 +73,10 @@ $(document).ready(function($) {
 						html += '</tr>';
 					});
 
-					$('#tbody-wallets').html(html); 
+					$('#tbody-wallets').html(html);
 				}
 
 			});
-		
 	});
 
 	/**
@@ -117,27 +110,25 @@ $(document).ready(function($) {
 						// html += '<td>'+wallets['updated_at']+'</td>';
 						html += '<td>';
 						html += '<a href="'+linkEdit+wallets['id']+'"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>';
-						html += '<a   title="Delete" class="delete" id="'+wallets['id']+'"><i onclick=" return confirmDelete("You confirm the deletion")" class="fa fa-fw fa-trash-o"></i></a>'
+						html += '<a   title="Delete" class="delete" id="'+wallets['id']+'"><i onclick=" return confirmDelete("You confirm the deletion")" class="fa fa-fw fa-trash-o"></i></a>';
          				html += '</td>'
 						html += '</tr>';
 					});
 
-					$('#tbody-wallets').html(html); 
+					$('#tbody-wallets').html(html);
 				}
-			 	
-			 });
+			});
 		});
 
-	/**  * Check all  * @return {[type]} [description]  */ 
-	$('.checkall').click(function() {     
-			var checked = $(this).prop('checked');     
-			$('.select').find('input:checkbox').prop('checked', checked);   
-		}); 
+	/**  * Check all  * @return {[type]} [description]  */
+	$('.checkall').click(function() {
+				var checked = $(this).prop('checked');
+				$('.select').find('input:checkbox').prop('checked', checked);
+		});
 
 
-    $(".Choicefile").bind('click', function  () { 
+    $(".Choicefile").bind('click', function  () {
     $("#uploadfile").click();
-               
    });
    $(".removeimg").click(function () {
       $("#thumbimage").attr('src', '').hide();
@@ -152,15 +143,14 @@ $(document).ready(function($) {
     });
 
    /**
-    * show amount transfer wallet 
+    * show amount transfer wallet
     */
 
    $('#transfer-wallet').change(function(){
-		
 		var id = $('#transfer-wallet').find(":selected").val();
 		results  = '#transfer-wallets';
 		$.ajax({
-				url:link+'wallets/getAmountTransfers/'+id, 
+				url:link+'wallets/getAmountTransfers/'+id,
 				type:'get',
 				async:true,
 		 		dataType:'text',
@@ -173,7 +163,6 @@ $(document).ready(function($) {
 				}
 
 			});
-		
 	});
 
    /**
@@ -181,11 +170,10 @@ $(document).ready(function($) {
     */
 
    $('#receive-wallet').change(function(){
-		
 		var id = $('#receive-wallet').find(":selected").val();
 		console.log(id);
 		$.ajax({
-				url:link+'wallets/getAmountTransfers/'+id, 
+				url:link+'wallets/getAmountTransfers/'+id,
 				type:'get',
 				async:true,
 		 		dataType:'text',
@@ -198,7 +186,6 @@ $(document).ready(function($) {
 				}
 
 			});
-		
 	});
    // hide input Image preview...
    $('.showimg').hide();
@@ -226,43 +213,40 @@ $(document).ready(function($) {
     });
 
     /**
-     * function formart number 
+     * function formart number
      *
      * @param      {<type>}  results  The results
      */
 
     function formatNumber(results){
-    	var val = $(results).val();        
-        val = val.replace(/,/igm, '');        
-        val = val.split('').reverse().join('');        
-        val = val.replace(/(\d{3})/ig, "$1 ").trim().split('').reverse().join('').replace(/\s/igm, ',');        
+    	var val = $(results).val();
+    	        val = val.replace(/,/igm, '');
+    	        val = val.split('').reverse().join('');
+        val = val.replace(/(\d{3})/ig, "$1 ").trim().split('').reverse().join('').replace(/\s/igm, ',');
         $(results).val(val);
     }
-    
 
-    $('body').on('click', '#btn-submit', function () {        
-    	var total=$('#exampleInputAmount').val().replace(/,/igm,''); 
-    	$('#exampleInputAmount').val(total);        
-    	$('#form-add').submit();    
+    $('body').on('click', '#btn-submit', function () {
+    	var total=$('#exampleInputAmount').val().replace(/,/igm,'');
+    	$('#exampleInputAmount').val(total);
+    	$('#form-add').submit();
     });
 
 
-    //Transaction 
+    //Transaction
     //
     /**
-	 * delete Transaction 
+	 * delete Transaction
 	 */
 	$('.delete-transfers').click(function(){
 
 		var id = $(this).attr('id');
-		
 		if(!confirm('You confirm the deletion '+name+'?'))
 		{
 			return false;
 		}
-		
 		$.ajax({
-				url:link+'wallets/getDeleteTransfers/'+id, 
+				url:link+'wallets/getDeleteTransfers/'+id,
 				type:'get',
 				async:true,
 		 		dataType:'text',
@@ -271,15 +255,12 @@ $(document).ready(function($) {
 				{
 					console.log(data);
 					$('tr.row_'+id).fadeOut();
-					
 				}
 
 			});
-		
 	});
-    
 	/*
-	 * search 
+	 * search
 	 */
 	var linkEditTransfers = link+'wallets/getEditTransfers/';
 	$('#search-transfers').keyup(function(){
@@ -287,14 +268,13 @@ $(document).ready(function($) {
 		var key = $(this).val();
 		console.log(key);
 		$.ajax({
-				url:link+'wallets/keySearchTransfers/'+key, 
+				url:link+'wallets/keySearchTransfers/'+key,
 				type:'get',
 				async:true,
 		 		dataType:'json',
 				data :{'key': key},
 				success: function(data)
 				{
-					
 					var html = '';
 					var stt = 0;
 					$.each (data, function (key, transfersMoney){
@@ -315,26 +295,23 @@ $(document).ready(function($) {
 						html += '</tr>';
 					});
 
-					$('#tbody-wallets').html(html); 
+					$('#tbody-wallets').html(html);
 				}
 
 			});
-		
 	});
 
-	// Category 
-	// 
+	// Category
+	//
 	$('.delete-categorys').click(function(){
 
 		var id = $(this).attr('id');
-		
 		if(!confirm('You confirm the deletion '+name+'?'))
 		{
 			return false;
 		}
-		
 		$.ajax({
-				url:link+'categorys/getDelete/'+id, 
+				url:link+'categorys/getDelete/'+id,
 				type:'get',
 				async:true,
 		 		dataType:'text',
@@ -346,14 +323,14 @@ $(document).ready(function($) {
 
 						$('tr.row_'+id).fadeOut();
 
+					}else if(data == 'error-transaction'){
+						alert('Can not delete !!! You need to delete the previous category transaction.')
 					}else{
 						alert('Can not delete !!! You need to delete the subcategories first.')
 					}
-					
 				}
 
 			});
-		
 	});
 
 	var linkEdit = link +'categorys/getEdit/';
@@ -406,50 +383,43 @@ $(document).ready(function($) {
 						html += '</tr>';
 					});
 
-					$('#tbody-wallets').html(html); 
+					$('#tbody-wallets').html(html);
 				}
-			 	
 			 });
 		});
 
 
-	//transaction 
-	
+	//transaction
 	$('.delete-transaction').click(function(){
 
 		var id = $(this).attr('id');
-		
 		if(!confirm('You confirm the deletion ?'))
 		{
 			return false;
 		}
-		
 		$.ajax({
-				url:link+'transection/getDelete/'+id, 
+				url:link+'transection/getDelete/'+id,
 				type:'get',
 				async:true,
 		 		dataType:'text',
 				data :{'id': id},
 				success: function(data)
 				{
-					
 					if(data != 'error'){
 
 						$('tr.row_'+id).fadeOut();
+						window.location.href = link +'transection/getList';
 
 					}else{
 						alert('Can not delete !!! You need to delete the subcategories first.')
 					}
-					
 				}
 
 			});
-		
 	});
 
 
 	var linkEdit = link +'transection/getEdit/';
-	
 	/**
 	 * Number of products per page
 	 */
@@ -503,47 +473,42 @@ $(document).ready(function($) {
 						html += '</tr>';
 					});
 
-					$('#tbody-wallets').html(html); 
+					$('#tbody-wallets').html(html);
 					$('tr#total').show();
 				}
-			 	
 			 });
 		});
 
 
-		$('#type-transaction').change(function(){
+	$('#type-transaction').change(function(){
 
-			var type = $('#type-transaction').find(":selected").val();
-			console.log(type);
-			$.ajax({
-			 	url:link+'transection/getCategorys',
-			 	type:'get',
-			 	async:true,
-			 	dataType:'json',
-			 	data:{'type':type },
-			 	success:function(data)
-			 	{
-			 		console.log(data);
-			 		var html = '';
-					
-					$.each (data, function (key,category){
+		var type = $('#type-transaction').find(":selected").val();
+		console.log(type);
+		$.ajax({
+		 	url:link+'transection/getCategorys',
+		 	type:'get',
+		 	async:true,
+		 	dataType:'json',
+		 	data:{'type':type },
+		 	success:function(data)
+		 	{
+		 		console.log(data);
+		 		var html = '';
+				$.each (data, function (key,category){
 
-						html += '<option  value="'+category['id']+'">'+category['name']+'</option>';
+					html += '<option  value="'+category['id']+'">'+category['name']+'</option>';
+				});
 
-					
-					});
-
-					$('#type-category').html(html); 
-				}
-			 	
-			 });
-		});
+				$('#type-category').html(html);
+			}
+		 });
+	});
 
 
+	$('li.treeview').click(function(){
+		 $(this).addClass("active");
 
-
-
-
+	});
 
 });
 
@@ -551,13 +516,13 @@ $(document).ready(function($) {
 
 
 /**
- * show img 
+ * show img
  *
  * @param      {<type>}  input       The input
  * @param      {<type>}  thumbimage  The thumbimage
  */
 function  readURL(input,thumbimage) {
-   if  (input.files && input.files[0]) { 
+   if  (input.files && input.files[0]) {
    var  reader = new FileReader();
     reader.onload = function (e) {
     $("#thumbimage").attr('src', e.target.result);
@@ -566,18 +531,14 @@ function  readURL(input,thumbimage) {
     }
     else  { // Sử dụng cho IE
       $("#thumbimage").attr('src', input.value);
-  
     }
     $("#thumbimage").show();
     $('.filename').text($("#uploadfile").val());
     $('.Choicefile').css('background', '#C4C4C4');
     $('.Choicefile').css('cursor', 'default');
     $(".removeimg").show();
-    $(".Choicefile").unbind('click'); 
-          
+    $(".Choicefile").unbind('click');
   }
-
-
 
 // Confirm Delete
 	function confirmDelete(msg){

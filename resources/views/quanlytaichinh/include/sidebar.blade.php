@@ -30,7 +30,6 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
-            
 
         <li class="treeview">
 
@@ -41,10 +40,10 @@
                 <span>Add Wallets </span>
 
                 <span class="label label-primary pull-right"></span>
-            </a> 
+            </a>
         </li>
 
-        <li class="treeview ">
+        <li class="treeview">
 
             <a href="{{ URL::route('wallets.getList') }}">
 
@@ -53,10 +52,10 @@
                 <span>List Wallets </span>
 
                 <span class="label label-primary pull-right"></span>
-            </a>   
+            </a>
         </li>
 
-        <li class="treeview ">
+        <li class="treeview">
             <a href="{{URL::route('wallets.getTransfersMoney')}}">
 
                 <i class="fa fa-plus-square"></i>
@@ -67,7 +66,7 @@
             </a>
         </li>
 
-        <li class="treeview ">
+        <li class="treeview">
 
             <a href="{{URL::route('wallets.getListTransfers')}}">
                 <i class="fa fa-list-ol"></i>
@@ -75,32 +74,32 @@
                 <span>List Transfers Money</span>
 
                 <span class="label label-primary pull-right"></span>
-            </a>   
+            </a>
         </li>
 
 
-        <li class="treeview ">
+        <li class="treeview">
             <a href="{{URL::route('categorys.getAdd')}}">
                 <i class="fa fa-plus-square"></i> <span>Add Categorys</span>
                 <small class="label pull-right bg-green"></small>
             </a> 
         </li>
 
-        <li class="treeview " >
+        <li class="treeview" >
             <a href="{{URL::route('categorys.getList')}}">
                 <i class="fa fa-list-ol"></i> <span>List Categorys</span>
                 <small class="label pull-right bg-green"></small>
             </a>
         </li>
 
-        <li class="treeview " >
+        <li class="treeview" >
             <a href="{{URL::route('transection.getAdd')}}">
                 <i class="fa fa-plus-square"></i> <span>Add Transaction</span>
                 <small class="label pull-right bg-green"></small>
             </a>
         </li>
 
-        <li class="treeview " >
+        <li class="treeview" >
             <a href="{{URL::route('transection.getList')}}">
                 <i class="fa fa-list-ol"></i> <span>List Transaction</span>
                 <small class="label pull-right bg-green"></small>

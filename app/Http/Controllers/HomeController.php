@@ -35,16 +35,64 @@ class HomeController extends Controller
 
     	$listWallets = Wallets::where('user_id',$id)->orderBy('id','DESC')->paginate(4);
 
-        $dataExpenses = DB::table('transactions')->selectRaw( ' DATE_FORMAT( created_at,  "%Y-%m" ) AS DATE ,DATE_FORMAT( created_at,  "%m" ) AS MONTH, DATE_FORMAT( created_at,  "%Y" ) AS YEAR , SUM( amount ) AS total ')->where('type',1)->where('user_id', $id)->groupBy('DATE')->orderBy('DATE')->get();
+        $dataExpenses = DB::table('transactions')->selectRaw( ' DATE_FORMAT( created_at,  "%Y-%m" ) AS DATE ,DATE_FORMAT( created_at,  "%m" ) AS MONTH, DATE_FORMAT( created_at,  "%Y" ) AS YEAR , SUM( amount ) AS total ')->where('type',TYPE_EXPENSES)->where('user_id', $id)->groupBy('DATE')->having('YEAR','=',$year)->orderBy('DATE')->get();
 
-       
-        $dataExpenses = array('0'=>0,'1'=>0,'2'=>0,'3'=>0,'4'=>0,'5'=>0,'6'=>0,'7'=>0,'8'=>0,'9'=>0,'10'=>0,'11'=>0,);
-       
-        pre($dataExpenses);
+       foreach($dataExpenses as $key =>$val){
 
-        $dataIncom = DB::table('transactions')->selectRaw( ' DATE_FORMAT( created_at,  "%m" ) AS MONTH, DATE_FORMAT( created_at,  "%Y" ) AS YEAR , SUM( amount ) AS total ')->where(array('type'=>2,'user_id'=> $id,'YEAR'=>$year))->groupBy('MONTH')->orderBy('MONTH')->get();
-        
-    
-    	return view('quanlytaichinh.home.index',compact('listWallets',"dataExpenses",'dataIncom'));
+        $arrayExpenses[intval($val ->MONTH)] = $val ->total;
+
+       }
+
+        $dataMonth = array('0'=>0,'1'=>0,'2'=>0,'3'=>0,'4'=>0,'5'=>0,'6'=>0,'7'=>0,'8'=>0,'9'=>0,'10'=>0,'11'=>0);
+
+        $resultExpenses = $arrayExpenses + $dataMonth;
+
+        ksort($resultExpenses);
+
+        $dataIncom =  DB::table('transactions')->selectRaw( ' DATE_FORMAT( created_at,  "%Y-%m" ) AS DATE ,DATE_FORMAT( created_at,  "%m" ) AS MONTH, DATE_FORMAT( created_at,  "%Y" ) AS YEAR , SUM( amount ) AS total ')->where('type',TYPE_INCOM)->where('user_id', $id)->groupBy('DATE')->having('YEAR','=',$year)->orderBy('DATE')->get();
+
+        foreach($dataIncom as $key =>$val){
+
+        $arrayIncom[intval($val ->MONTH)] = $val ->total;
+
+        }
+
+        $resultIncom = $arrayIncom + $dataMonth;
+
+        ksort($resultIncom);
+
+
+        $dataCategoryExpenses =  DB::table('transactions')->selectRaw( ' DATE_FORMAT( transactions.created_at,  "%Y" ) AS YEAR , SUM( amount ) AS total , category_id ,categorys.name , transactions.type')->join('categorys',function($join){
+
+            $join-> on ('categorys.id' ,'=','transactions.category_id')
+                ->where('transactions.user_id','=', Auth::user()->id)
+                ->where('transactions.type','=',TYPE_EXPENSES);
+
+        })->groupBy('transactions.category_id')->having('YEAR','=',$year)->orderBy('transactions.category_id')->get();
+
+
+        foreach($dataCategoryExpenses as $categorys){
+            $rand = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
+            $color = '#'.$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)];
+            $categorys ->color =  $color;
+        }
+
+        $dataCategoryIncom =  DB::table('transactions')->selectRaw( ' DATE_FORMAT( transactions.created_at,  "%Y" ) AS YEAR , SUM( amount ) AS total , category_id ,categorys.name , transactions.type')->join('categorys',function($join){
+
+            $join-> on ('categorys.id' ,'=','transactions.category_id')
+                ->where('transactions.user_id','=', Auth::user()->id)
+                ->where('transactions.type','=',TYPE_INCOM);
+
+        })->groupBy('transactions.category_id')->having('YEAR','=',$year)->orderBy('transactions.category_id')->get();
+
+        foreach($dataCategoryIncom as $categoryIcome){
+            $rand = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
+            $color = '#'.$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)];
+            $categoryIcome ->color = $color;
+
+        }
+
+
+        return view('quanlytaichinh.home.index',compact('listWallets',"resultExpenses",'resultIncom','dataCategoryExpenses','dataCategoryIncom'));
     }
 }

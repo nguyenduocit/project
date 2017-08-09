@@ -31,8 +31,6 @@ use Carbon;
 class AuthController extends Controller
 {
 
-
-   
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
@@ -90,8 +88,6 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
-
-    
      /**
      * Load form Register.
      *
@@ -106,8 +102,6 @@ class AuthController extends Controller
         }
         return view('quanlytaichinh.register');
     }
-
-    
      /**
      * Create a new user instance after a valid registration.
      *
@@ -136,18 +130,15 @@ class AuthController extends Controller
         $user->birthday       = $request->birthday;
         $user->remember_token = $request->_token;
         $user->sex            = $request->sex;
-       
-       
 
-        // Send mail 
-        // create session 
+        // Send mail
+        // create session
         Session::put('email', $request->email);
         Session::put('name', $request->name);
         $data = ['token' => $request->_token ];
         $link = 'emails.blanks';
-        
         // function send mail libtary
-        sendMail($link,$data); 
+        sendMail($link,$data);
 
         $user->save();
         return redirect('users/getLogin')->with(['flash_level'=>'success','flash_message'=>'You need to confirm your email before signing in']);
@@ -157,16 +148,14 @@ class AuthController extends Controller
     /**
      * Send mail test
      *
-     * @return    
+     * @return
      */
     public function sendMail(){
 
         $data = ['hoten'=>'Nguyenduoc'];
         Mail::send('emails.blanks', $data, function ($message) {
             $message->from( EMAIL_ADMIN, NAME_ADMIN );
-            
             $message->to('duocnv@rikkeisoft.com', 'John Doe')->subject('test gui mail');
-        
         });
     }
 
@@ -202,12 +191,9 @@ class AuthController extends Controller
         $login = array(
                         'email'    => $request->email,
                         'password' => $request->password
-                        
                       );
         // kiem tra nguoi dung da xac nhan email
         $user = DB::table('users')->where('email', $request->email)->get();
-       
-        
         // Check that the user exists
         if(empty($user)){
 
@@ -224,15 +210,12 @@ class AuthController extends Controller
             return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'The login account has been locked. Login after 15 minutes.']);
 
         }
-        
         // create session login
-        
         if(Session::has('number')){
 
             $number = Session::get('number');
 
             Session::put('number', $number);
-            
         }else{
 
             Session::put('number', '0');
@@ -240,7 +223,6 @@ class AuthController extends Controller
         }
 
         // number of logins NUMBER_LOGIN_ERORR = 3  edit bootstrap constant.php 
-        
         if(Session::has('number') && Session::get('number') > NUMBER_LOGIN_ERORR){
             $response = new Response();
 
@@ -271,7 +253,6 @@ class AuthController extends Controller
             return redirect('users/getLogin')->with(['flash_level'=>'danger','flash_message'=>'The account information is incorrect.']);
         }
 
-        
     }
 
     /**
@@ -283,10 +264,8 @@ class AuthController extends Controller
      */
 
     public function getConfirmEmail($token){
-        
         // select information user
         $users = DB::table('users')->where('remember_token', $token)->get();
-        
         // check empty user
         if(empty($users)){
 
@@ -295,9 +274,7 @@ class AuthController extends Controller
         }
 
         //$times = \Carbon\Carbon::createFromTimestamp(strtotime($users[0]->created_at))->diffForHumans();
-        
         $times = \Carbon\Carbon::now();
-        
         // update status
         $user = User::find($user[0]->id);
 
@@ -307,7 +284,6 @@ class AuthController extends Controller
 
         return redirect('users/getLogin')->with(['flash_level'=>'success','flash_message'=>'Successful confirmation email']);
 
-        
     }
 
     public function getUserProfile(){
@@ -316,27 +292,14 @@ class AuthController extends Controller
 
         $sumAmountWallets = DB::table('wallets')->where('user_id',$id)->sum('amount');
 
-        $sumAmountTransactionExpenses = DB::table('transactions')
-                               ->join('categorys', function($join){
-                                    $join ->on('categorys.id','=','transactions.category_id')
-                                          ->where('transactions.user_id','=',Auth::user()->id)
-                                          -> where('type' , '=',1);
-                               })->sum('amount'); 
+        $sumAmountTransactionExpenses = DB::table('transactions')->where('user_id','=',Auth::user()->id)-> where('type' , '=',1)->sum('amount');
 
-        $sumAmountTransactionIncome = DB::table('transactions')
-                               ->join('categorys', function($join){
-                                    $join ->on('categorys.id','=','transactions.category_id')
-                                          ->where('transactions.user_id','=',Auth::user()->id)
-                                          -> where('type' , '=',2);
-                               })->sum('amount'); 
-                               
+        $sumAmountTransactionIncome = DB::table('transactions')->where('user_id','=',Auth::user()->id)-> where('type' , '=',2)->sum('amount');
 
         return view('quanlytaichinh.user.userProfile',compact('sumAmountWallets','sumAmountTransactionExpenses','sumAmountTransactionIncome'));
     }
-     
     public function postUserProfile(UserProfileRequest $request){
 
-    
         if(Auth::check()){
 
             $id = Auth::user() ->id;
@@ -355,17 +318,14 @@ class AuthController extends Controller
 
                 File::delete(FOLDER_PHOTOS.'/'.Auth::user()->avata);
             }
-            
             $user->phone          = $request->phone;
             $user->address        = $request->address;
             $user->birthday       = $request->birthday;
             $user->sex            = $request->sex;
             // Directory path upload photos  FOLDER_PHOTOS edit bootstrap constant.php
-            
             $user->save();
 
             Session::forget('id');
-            
             return redirect('users/getUserProfile')->with(['flash_level'=>'success','flash_message'=>'Edit success information !!!']);
 
         }
@@ -390,28 +350,16 @@ class AuthController extends Controller
 
             return redirect('users/getUserProfile')->with(['flash_level'=>'success','flash_message'=>'Edit password successfully !!!']);
         }
-      
-      
     }
 
     /**
      * logout
      */
-    
     public function getLogout(){
 
         Auth::logout();
 
         return redirect('users/getLogin');
     }
-
-
-
-
-   
-
-    
-
-    
 
 }

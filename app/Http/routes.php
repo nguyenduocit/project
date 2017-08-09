@@ -25,7 +25,6 @@ Route::group(['prefix'=>'users'],function(){
 	// login
 	Route::get('getLogin',['as'=>'users.getLogin','uses'=>'Auth\AuthController@getLogin']);
 	Route::post('postLogin',['as'=>'users.postLogin','uses'=>'Auth\AuthController@postLogin']);
-	
 	//logout 
 	Route::get('getLogout',['as' =>'users.getLogout','uses' =>'Auth\AuthController@getLogout']);
 
@@ -46,7 +45,6 @@ Route::group(['prefix'=>'users'],function(){
 	Route::post('postUserProfile',['as'=>'users.postUserProfile','uses'=>'Auth\AuthController@postUserProfile']);
 
 	Route::post('postProfileResetPassword',['as'=>'users.postProfileResetPassword','uses'=>'Auth\AuthController@postProfileResetPassword']);
-	
 });
 
 
@@ -61,13 +59,10 @@ Route::group(['prefix'=>'wallets' , 'middleware'=>'auth'],function(){
 	Route::get('keySearch/{key}',['as'=>'wallets.keySearch','uses'=>'WalletsController@keySearch']);
 	Route::get('getEdit/{id}',['as'=>'wallets.getEdit','uses'=>'WalletsController@getEdit']);
 	Route::post('postEdit/{id}',['as'=>'wallets.postEdit','uses'=>'WalletsController@postEdit']);
-	
 	//wallets
 	Route::get('getInfoWallets/{id}',['as'=>'wallets.getInfoWallets','uses'=>'WalletsController@getInfoWallets']);
-	
 	// Transfers money
 	Route::get('getListTransfers',['as'=>'wallets.getListTransfers','uses'=>'TransfersMoneyController@getListTransfers']);
-	
 	Route::get('getTransfersMoney',['as'=>'wallets.getTransfersMoney','uses'=>'TransfersMoneyController@getTransfersMoney']);
 	Route::post('postTransfersMoney',['as'=>'wallets.postTransfersMoney','uses'=>'TransfersMoneyController@postTransfersMoney']);
 

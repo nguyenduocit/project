@@ -42,13 +42,11 @@ class PasswordController extends Controller
 
 
     /**
-     *  function forgot Password 
+     *  function forgot Password
      */
-    
     public function getForgotPassword(){
 
         return view("quanlytaichinh.forgotPass");
-        
     }
 
     /**
@@ -67,18 +65,16 @@ class PasswordController extends Controller
             return redirect('users/getForgotPassword')->with(['flash_level'=>'danger','flash_message'=>'Email accounts do not exist in the database.']);
 
         }
-            // Send mail 
-            // create session 
+            // Send mail
+            // create session
             Session::put('email', $user[0]->email);
             Session::put('name',  $user[0]->name);
             $token  = $user[0]->remember_token;
-        
-        // Send mail 
-        // 
+        // Send mail
         $data = ['token' => $token ];
         $link = 'emails.confirmpass';
-        
-        // function send mail 
+
+        // function send mail
         sendMail($link,$data);
 
         return redirect('users/getForgotPassword')->with(['flash_level'=>'success','flash_message'=>'Check the email we sent you a password.']);
@@ -86,7 +82,7 @@ class PasswordController extends Controller
     }
 
     /**
-     * comfirm validate reset password 
+     * comfirm validate reset password
      *
      * @param      $token
      *
@@ -111,7 +107,7 @@ class PasswordController extends Controller
     }
 
     /**
-     * 
+     *
      *
      * @return     <type>  The reset password.
      */
@@ -141,7 +137,6 @@ class PasswordController extends Controller
             $user->save();
 
             Session::forget('id');
-            
             return redirect('users/getLogin')->with(['flash_level'=>'success','flash_message'=>'Change password successfully invite you to login']);
 
         }else{
@@ -149,8 +144,6 @@ class PasswordController extends Controller
             return redirect('users/getForgotPassword')->with(['flash_level'=>'danger','flash_message'=>'Enter email to change password']);
 
         }
-
-    
     }
 
 }

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
 use App\Http\Requests\CategoryRequest;
 use App\Categorys;
+use App\Transaction;
 
 
 class CategorysController extends Controller
@@ -40,9 +41,7 @@ class CategorysController extends Controller
 					}else{
 						$category ->nameParent = "";
 					}
-					
                     $category ->format_time = \Carbon\Carbon::createFromTimestamp(strtotime($category ->created_at))->diffForHumans();
-            
 				}
 
 			}
@@ -66,7 +65,6 @@ class CategorysController extends Controller
 					}else{
 						$category ->nameParent = "";
 					}
-					
 
 				}
 
@@ -101,7 +99,6 @@ class CategorysController extends Controller
 		$category->type      = $request->type;
 		$category->parent_id = "";
 		$category->user_id   = Auth::user()->id;
-		
 		$category ->save();
 
 		return redirect('categorys/getList')->with(['flash_level'=>'success','flash_message'=>"Add category successfully !!!"]);
@@ -112,10 +109,7 @@ class CategorysController extends Controller
      *
      * @return     <type>  The edit.
      */
-    
     public function getEdit($id){
-    	
-    	
     	$category = Categorys::select('id','name','parent_id','type')->where('id',$id)->get();
 
     	return view('quanlytaichinh.categorys.edit',compact('category'));
@@ -157,7 +151,6 @@ class CategorysController extends Controller
      *
      * @return     string  The delete.
      */
-    
     public function getDelete($id){
 
     	$category = Categorys::find($id);
@@ -169,11 +162,14 @@ class CategorysController extends Controller
 
     	$parrent = Categorys::select('id')->where('parent_id',$id)->get()->toArray();
 
+        $transaction = Transaction::select('id')->where('category_id',$id)->get()->toArray();
 
-
-    	if(!empty($parrent)){
-    		return "error";
+    	if(!empty($transaction)){
+    		return "error-transaction";
     	}
+        if(!empty($parrent)){
+            return "error";
+        }
 
     	$category ->delete($id);
 
@@ -203,11 +199,9 @@ class CategorysController extends Controller
 
                     $category ->nameParent = "";
                 }
-            
             }
 
         }
-        
         return view('quanlytaichinh.categorys.addSubcategories',compact('listCategory'));
 
     }
@@ -224,7 +218,6 @@ class CategorysController extends Controller
         $category->type      = $request->type;
         $category->parent_id = $request->parent_id;
         $category->user_id   = Auth::user()->id;
-        
         $category ->save();
 
         return redirect('categorys/getList')->with(['flash_level'=>'success','flash_message'=>"Add category successfully !!!"]);
