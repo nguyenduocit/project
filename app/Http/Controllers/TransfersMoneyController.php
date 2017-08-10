@@ -22,10 +22,7 @@ class TransfersMoneyController extends Controller
 
         // The number of elements displayed on a page . Eit in file constant.php (NUMBER_PAGINATE = 15)
         $num = NUMBER_PAGINATE;
-        
         $transfersMoney = DB::table('transfers_moneys')->where('user_id',Auth::user()->id)->orderBy('id','DESC')->paginate($num);
-        
-        
         foreach($transfersMoney as $transfers){
             $nameWalletTransfers = DB::table('wallets')->where('id',$transfers->transfer_wallet)->get();
             $transfers ->name_transfer_wallet = $nameWalletTransfers[0]->name;

@@ -17,7 +17,6 @@
             </section>
 
             <!-- Main content -->
-            
             <section class="content">
                 <!-- Default box -->
                 <div class="box">
@@ -53,9 +52,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    
                                    {{--  <div style="padding-top: 15px;" id="example1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm" placeholder="" id="search-transaction" aria-controls="example1"></label></div> --}}
-                                    
                                     <div class="col-sm-5">
                                        {{--  <label>
                                             Arrange
@@ -69,7 +66,6 @@
                                         </label> --}}
                                     </div>
 
-                                    
 
                                     <div class="col-sm-1">
                                         <a href="{{URL::route('transection.getAdd')}}" class="btn btn-app">
@@ -79,10 +75,8 @@
                                        {{--  <a href="{{URL::route('categorys.getList')}}" class="btn btn-app">
                                             <i class="fa fa-list"></i> List Category 
                                         </a> --}}
-                                      
                                     </div>
                                 </div>
-                                
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
@@ -98,8 +92,6 @@
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Created at</th>
                                                 {{-- <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Updated at</th> --}}
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Action</th>
-                                                
-                                                
 
                                             </tr>
                                         </thead>
@@ -121,10 +113,8 @@
                                                         <td>
                                                             <a href="{{URL::route('transection.getEdit',$val->id)}}"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>
                                                             <a   title="Delete" class="delete-transaction" id="{{ $val->id}}" ><i  class="fa fa-fw fa-trash-o"></i></a>
-                                                            
                                                         </td>
                                                     </tr>
-                                                    
                                                 @endforeach 
                                                     <tr id="total">
                                                         <td colspan="3" rowspan="" headers="" class="text-center"> <b>Total Expenses/Total Income</b> </td>
@@ -140,7 +130,6 @@
 
 
                                                                 if($val ->nameType == 2){
-                                                                    
                                                                     $TotalIncome = $TotalIncome + $val->amount;
                                                                 }
                                                             }
@@ -149,7 +138,6 @@
                                                         <td colspan="5" > <b style="color: red;"> -{{ number_format($TotalExpenses)}}đ </b >/<b style="color: #31e915;"> + {{ number_format($TotalIncome)}}đ </b> </td>
                                                     </tr>
                                         </tbody>
-                                      
                                     </table>
                                 </div>
                             </div>
@@ -170,7 +158,6 @@
                                 </div>
                             </div>
                         </div>
-                       
                         <!-- /.box-body -->
                     </div>
                     <!-- /.box-body -->

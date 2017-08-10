@@ -1,4 +1,5 @@
-
+<!--bootstrap-multiselect-->
+<script src="{{ url('public/bootstrap-multiselect/dist/js/bootstrap-multiselect.js') }}"></script>
 <!-- iCheck -->
 <script src="{{ url('public/plugins/iCheck/icheck.min.js') }}"></script>
 <!-- Bootstrap 3.3.6 -->

@@ -24,30 +24,7 @@
                         <div class="box-header">
                           @include('quanlytaichinh.include.alert')
                             <div class="row">
-                                {{-- <div class="col-sm-7">
-                                      <h3 class="box-title">Responsive Hover Table</h3>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="box-tools">
-                                        <div class="input-group input-group-sm" style="width: 150px; padding-top: 15px;">
-                                          <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                                          <div class="input-group-btn">
-                                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                          </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-3">
-                                    <a href="{{ URL::route('wallets.getAdd') }}" class="btn btn-app">
-                                        <i class="fa fa-square"></i> Add Wallets
-                                    </a>
-
-                                     <a href="{{ URL::route('wallets.getList') }}" class="btn btn-app">
-                                        <i class="fa fa-list"></i> List Wallets
-                                    </a>
-                                </div> --}}
+                                
                             </div>
                         </div>
                         <!-- /.box-header -->
@@ -87,8 +64,55 @@
                 <small>Preview sample</small>
               </h1>
             </section>
+
+            {{-- Chart --}}
             <section class="content">
                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-sm-3">
+                            <div class="dataTables_length" id="example1_length" style="padding-top: 15px;">
+                                <?php 
+                                    $date = \Carbon\Carbon::now();
+                                    $year_now = $date->year;
+                                    $year = $year_now - 5;
+                                ?>
+                                <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-4 col-sm-6 col-xs-12 ">
+                                             <label for="exampleInputEmail1">Select Year</label>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12 @if($errors->first('type')) has-error @endif">
+                                            <select name="type" id="type-transaction"   class="form-control select2 select2-hidden-accessible select-year" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                                <option value=""></option>
+                                                @for($i=0 ; $i< 15 ; $i++)
+
+                                                    {{ $year = $year +1}}
+                                                    <option @if($year_now == $year) selected="selected" @endif value="{{$year}}">{{ $year}}</option>
+                                    
+                                                @endfor
+                                            </select>
+                                            <span class="text-danger"><p>{{ $errors->first('type') }}</p></span>
+                                        </div>
+                                        <div class="col-md-1 col-sm-3 col-xs-0 ">
+
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="dataTables_length select-year " id="example1_length" style="padding-top: 15px;">
+                                <label>
+                                  Select Wallets
+                                   <select id="select-category" class="select-wallets" multiple="multiple">
+
+                                    @foreach($listWallets as $val)
+                                    <option value="{{$val->id}}">{{ $val->name }}</option>
+                                    @endforeach
+                                    
+                                  </select>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-6">
                           <!-- BAR CHART -->
                         <div class="box box-success">

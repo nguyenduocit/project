@@ -25,10 +25,9 @@ class User extends Authenticatable
     ];
 
     /**
-     *  hasMany 
+     *  hasMany
      * @return [type] [description]
      */
-    
     public function wallets(){
         return $this->hasMany('App\Wallets');
     }

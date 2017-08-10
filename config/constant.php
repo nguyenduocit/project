@@ -17,7 +17,7 @@ define('FOLDER_PHOTOS','public/upload/images');
 define('NAME_ADMIN','Administrator');
 
 /**
- * Email 
+ * Email
  */
 define('EMAIL_ADMIN','duocnguyenit1994@gmail.com');
 

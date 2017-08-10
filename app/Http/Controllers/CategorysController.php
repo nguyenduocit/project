@@ -170,6 +170,7 @@ class CategorysController extends Controller
         if(!empty($parrent)){
             return "error";
         }
+        dd($transaction);
 
     	$category ->delete($id);
 

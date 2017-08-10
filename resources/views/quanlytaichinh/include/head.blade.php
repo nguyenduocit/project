@@ -18,7 +18,9 @@
 
  <!-- iCheck -->
   <link rel="stylesheet" href="{{ url('public/plugins/iCheck/square/blue.css') }}">
+  <!--bootstrap-multiselect-->
   <link rel="stylesheet" href="{{ url('public/style/css/style.css') }}">
+  <link rel="stylesheet" href="{{ url('public/bootstrap-multiselect/dist/css/bootstrap-multiselect.css') }}">
 
   <?php $link =  url('/');?>
 <script >

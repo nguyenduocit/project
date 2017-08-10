@@ -17,7 +17,6 @@
             </section>
 
             <!-- Main content -->
-            
             <section class="content">
                 <!-- Default box -->
                 <div class="box">
@@ -53,9 +52,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    
                                    {{--  <div style="padding-top: 15px;" id="example1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm" placeholder="" id="search-transaction" aria-controls="example1"></label></div> --}}
-                                    
                                     <div class="col-sm-5">
                                        {{--  <label>
                                             Arrange
@@ -68,9 +65,6 @@
                                             </select>
                                         </label> --}}
                                     </div>
-
-                                    
-
                                     <div class="col-sm-1">
                                         <a href="{{URL::route('categorys.getAdd')}}" class="btn btn-app">
                                             <i class="fa fa-square"></i> Add Category 
@@ -79,10 +73,8 @@
                                        {{--  <a href="{{URL::route('categorys.getList')}}" class="btn btn-app">
                                             <i class="fa fa-list"></i> List Category 
                                         </a> --}}
-                                      
                                     </div>
                                 </div>
-                                
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
@@ -98,8 +90,6 @@
                                                 {{-- <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Updated at</th> --}}
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Add Subcategories</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 181px;">Action</th>
-                                                
-                                                
 
                                             </tr>
                                         </thead>
@@ -130,12 +120,10 @@
                                                         <td>
                                                             <a href="{{URL::route('categorys.getEdit',$val->id)}}"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>
                                                             <a   title="Delete" class="delete-categorys" id="{{ $val->id}}" name="{{ $val->name}}"><i  class="fa fa-fw fa-trash-o"></i></a>
-                                                            
                                                         </td>
                                                     </tr>
                                                 @endforeach 
                                         </tbody>
-                                      
                                     </table>
                                 </div>
                             </div>
@@ -156,7 +144,6 @@
                                 </div>
                             </div>
                         </div>
-                       
                         <!-- /.box-body -->
                     </div>
                     <!-- /.box-body -->

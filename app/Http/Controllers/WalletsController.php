@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\WalletsRequest;
 use App\Http\Requests;
+use App\User;
 use App\Wallets;
 use App\TransfersMoney;
 use App\Transaction;
@@ -21,8 +22,14 @@ class WalletsController extends Controller
     public function getInfoWallets($id){
 
 
-        $transfersMoney = DB::table('transfers_moneys')->where('transfer_wallet',$id)->orWhere('receive_wallet',$id)->orderBy('id','DESC')->paginate(15);
+        // $transfersMoney = TransfersMoney::select('*')
+        // ->join('wallets','wallets.id','=','transfers_moneys.transfer_wallet')
+        // ->where('transfer_wallet',$id)
+        // ->orWhere('receive_wallet',$id)->get();
         // pre($transfersMoney);
+        // The number of elements displayed on a page . Eit in file constant.php (NUMBER_PAGINATE = 15)
+        $num = NUMBER_PAGINATE;
+        $transfersMoney = DB::table('transfers_moneys')->where('user_id',Auth::user()->id)->where('transfer_wallet',$id)->orWhere('receive_wallet',$id)->orderBy('id','DESC')->paginate($num);
         foreach($transfersMoney as $transfers){
             $nameWalletTransfers = DB::table('wallets')->where('id',$transfers->transfer_wallet)->get();
             $transfers ->name_transfer_wallet = $nameWalletTransfers[0]->name;
@@ -31,15 +38,30 @@ class WalletsController extends Controller
         foreach($transfersMoney as $transfer){
             $nameWalletReceive = DB::table('wallets')->where('id',$transfer->receive_wallet)->get();
             $transfer ->name_receive_wallet = $nameWalletReceive[0]->name;
-
         }
-        return view('quanlytaichinh.wallets.infoWallets',compact('transfersMoney'));
+
+
+        $datatransactionexpenses =  Transaction::select('transactions.amount','transactions.type','categorys.name as nameCategory','wallets.name as nameWallets','describe','transactions.created_at')
+        ->join('categorys','categorys.id' ,'=','transactions.category_id')
+        ->join('wallets','wallets.id' ,'=','transactions.wallets_id')
+        ->where('wallets_id','=',$id)->where('transactions.type','=',TYPE_EXPENSES)->orderBy('transactions.id','DESC')->paginate($num);
+
+        $totalexpenses = DB::table('transactions')->where('wallets_id','=',$id)->where('transactions.type','=',TYPE_EXPENSES)->orderBy('transactions.id','DESC')->sum('amount');
+
+        $totalincom = DB::table('transactions')->where('wallets_id','=',$id)->where('transactions.type','=',TYPE_INCOM)->orderBy('transactions.id','DESC')->sum('amount');
+
+        $datatransactionincom =  Transaction::select('transactions.amount','transactions.type','categorys.name as nameCategory','wallets.name as nameWallets','describe','transactions.created_at')
+        ->join('categorys','categorys.id' ,'=','transactions.category_id')
+        ->join('wallets','wallets.id' ,'=','transactions.wallets_id')
+        ->where('wallets_id','=',$id)->where('transactions.type','=',TYPE_INCOM)->orderBy('transactions.id','DESC')->paginate($num);
+
+        return view('quanlytaichinh.wallets.infoWallets',compact('datatransactionexpenses','datatransactionincom','transfersMoney','id','totalexpenses','totalincom'));
 
     }
 
 
     /**
-     * load form creat wallets 
+     * load form creat wallets
      * @return [type] [description]
      */
     public function getAdd(){
@@ -70,6 +92,9 @@ class WalletsController extends Controller
      */
 
     public function getList(Request $request){
+
+        // $data = User::with('wallets')->find(8)->toArray();
+        // pre($data['wallets']);
 
         $id =  Auth::user()->id;
 
