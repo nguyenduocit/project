@@ -50,7 +50,8 @@ Route::group(['prefix'=>'users'],function(){
 
 Route::get('home',['as' =>'home','uses' =>'HomeController@index']);
 
-Route::get('chart',['as' =>'chart','uses' =>'HomeController@resultAjaxDataChart']);
+Route::get('chart',['as' =>'chart','uses' =>'HomeController@resultAjaxDataChartAll']);
+Route::get('chartyear',['as' =>'chartyear','uses' =>'HomeController@resultAjaxDataChartYear']);
 
 Route::group(['prefix'=>'wallets' , 'middleware'=>'auth'],function(){
 

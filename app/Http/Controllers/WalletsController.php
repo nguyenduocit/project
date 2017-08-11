@@ -102,6 +102,7 @@ class WalletsController extends Controller
         $num = NUMBER_PAGINATE;
         if(isset($request->num)){
             $num = $request->num;
+            $key = $request ->key;
 
             $listWallets = Wallets::where('user_id',$id)->orderBy('id','DESC')->skip(0)->take($num)->get();
 
@@ -131,7 +132,7 @@ class WalletsController extends Controller
 
     public function keySearch($key){
 
-        $listWallets = Wallets::where('name','like',"%$key%")->orWhere('amount','like',"%$key%")->get();
+        $listWallets = Wallets::where('user_id',Auth::user()->id)->where('name','like',"%$key%")->orWhere('amount','like',"%$key%")->orderBy('id','DESC')->get();
 
         foreach($listWallets as $wallets){
 
@@ -199,23 +200,23 @@ class WalletsController extends Controller
 
         $wallets = Wallets::find($id);
 
-        if(empty($wallets)){
 
-            return 'error';
-        }
+    
+        $transfersMoney = TransfersMoney::select('id')->where('transfer_wallet',$id)->orWhere('receive_wallet',$id)->get()->toArray();
 
-        $transfersMoney = DB::table('transfers_moneys')->where('transfer_wallet',$id)->orWhere('receive_wallet',$id)->get();
         if(!empty($transfersMoney)){
 
             return 'error';
 
         }
-        $transaction = Transaction::select('id')->where('wallets_id',$id)->get();
+        $transaction = Transaction::select('id')->where('wallets_id',$id)->get()->toArray();
+
+
         if(!empty($transaction)){
 
             return 'error';
-
         }
+
         $wallets->delete($id);
 
     }

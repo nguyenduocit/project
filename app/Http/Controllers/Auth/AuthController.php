@@ -276,7 +276,7 @@ class AuthController extends Controller
         //$times = \Carbon\Carbon::createFromTimestamp(strtotime($users[0]->created_at))->diffForHumans();
         $times = \Carbon\Carbon::now();
         // update status
-        $user = User::find($user[0]->id);
+        $user = User::find($users[0]->id);
 
         $user->status = 1;
 

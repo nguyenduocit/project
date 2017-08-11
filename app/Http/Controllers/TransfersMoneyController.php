@@ -121,7 +121,7 @@ class TransfersMoneyController extends Controller
         $transfersMoney ->save();
 
 
-        return redirect('wallets/getTransfersMoney')->with(['flash_level'=>'success','flash_message'=>'Transfer money successfully!!!']);
+        return redirect('wallets/getListTransfers')->with(['flash_level'=>'success','flash_message'=>'Transfer money successfully!!!']);
     }
 
     /**

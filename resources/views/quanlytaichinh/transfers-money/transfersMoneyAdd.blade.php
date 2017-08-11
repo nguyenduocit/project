@@ -45,7 +45,7 @@
                                             <select name="transfer_wallet" id="transfer-wallet"  class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                               <option value=""></option>
                                               @foreach($listwallets as $vallets)
-                                                    <option value="{{ $vallets->id }}">{{ $vallets->name }}</option>
+                                                    <option @if(old('transfer_wallet') == $vallets->id  ) selected ="selected" @endif value="{{ $vallets->id }}">{{ the_excerpt($vallets->name ,STRING_MIN) }} @if(strlen($vallets->name)  > STRING_MIN) ... @endif</option>
                                               @endforeach
                                             </select>
                                             <span class="text-danger"><p>{{ $errors->first('transfer_wallet') }}</p></span>
@@ -57,10 +57,10 @@
 
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                     <div class="col-md-3 col-sm-6 col-xs-12 ">
-                                        <label for="exampleInputEmail1">Amount Transfer </label>
+                                        <label for="exampleInputEmail1">The current amount  </label>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12 ">
-                                        <input type="text" id="transfer-wallets" readonly="readonly" class="form-control" value="" id="exampleInputAmount" placeholder="Amount Transfer">
+                                        <input type="text" id="transfer-wallets" readonly="readonly" class="form-control" value="" id="exampleInputAmount" placeholder="">
                                     </div>
                                 </div>
 
@@ -72,7 +72,7 @@
                                             <select name="receive_wallet" id="receive-wallet"  class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                               <option value=""></option>
                                               @foreach($listwallets as $vallets)
-                                                    <option value="{{ $vallets->id }}" >{{ $vallets->name }}</option>
+                                                    <option @if(old('receive_wallet') == $vallets->id  ) selected ="selected" @endif value="{{ $vallets->id }}" >{{ the_excerpt($vallets->name ,STRING_MIN) }} @if(strlen($vallets->name)  > STRING_MIN) ... @endif </option>
                                               @endforeach
                                             </select>
                                             <span class="text-danger"><p>{{ $errors->first('receive_wallet') }}</p></span>
@@ -84,19 +84,19 @@
 
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                     <div class="col-md-3 col-sm-6 col-xs-12 ">
-                                        <label for="exampleInputEmail1">Amount Receive </label>
+                                        <label for="exampleInputEmail1">The current amount </label>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12 ">
-                                        <input type="text" id="receive-wallets" readonly="readonly"  class="form-control" id="exampleInputAmount" placeholder="Amount Receive">
+                                        <input type="text" id="receive-wallets" readonly="readonly"  class="form-control" id="exampleInputAmount" placeholder="">
                                     </div>
                                 </div>
                                
                                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                     <div class="col-md-3 col-sm-6 col-xs-12 ">
-                                        <label for="exampleInputEmail1">Amount <span class="obligatory">*</span></label>
+                                        <label for="exampleInputEmail1">Amount transferred <span class="obligatory">*</span></label>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12 @if($errors->first('amount')) has-error @endif">
-                                        <input type="text" name="amount" class="form-control" id="exampleInputAmount" placeholder="Enter Amount" value="{{ old('amount')}}">
+                                        <input type="text" name="amount" class="form-control" id="exampleInputAmount" placeholder="Enter Amount transferred" value="{{ old('amount')}}">
                                         <span class="text-danger"><p>{{ $errors->first('amount') }}</p></span>
                                     </div>
                                 </div><br> <br>

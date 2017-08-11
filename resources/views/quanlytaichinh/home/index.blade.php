@@ -36,7 +36,7 @@
                                     <div class="inner">
                                       <b>{{ number_format($val->amount) }}đ</b>
 
-                                      <p>{{ $val -> name }}</p>
+                                      <p>{{ the_excerpt($val->name,50) }} @if(strlen($val->name)  > STRING_MIN) ... @endif</p>
                                     </div>
                                     <div class="icon">
                                       <i class="ion ion-bag"></i>
@@ -99,7 +99,7 @@
                             </div>
                         </div>
                         <div class="col-sm-3">
-                            <div class="dataTables_length select-year " id="example1_length" style="padding-top: 15px;">
+                            <div class="dataTables_length" id="example1_length" style="padding-top: 15px;">
                                 <label>
                                   Select Wallets
                                    <select id="select-category" class="select-wallets" multiple="multiple">

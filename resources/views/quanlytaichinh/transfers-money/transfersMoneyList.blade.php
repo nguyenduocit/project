@@ -91,10 +91,9 @@
                                             <?php $stt = 0 ;?>
                                                 @foreach($transfersMoney as $val)
                                                     <tr class="row_{{ $val->id }} select" >
-                                                        
                                                         <td> {{ $stt = $stt +1 }}</td>
-                                                        <td> {{ $val->name_transfer_wallet}} </td>
-                                                        <td> {{ $val->name_receive_wallet }}</td>
+                                                        <td> {{ the_excerpt($val->name_transfer_wallet,STRING_MIN) }} @if(strlen($val->name)  > STRING_MIN) ... @endif </td>
+                                                        <td> {{ the_excerpt($val->name_receive_wallet,STRING_MIN) }} @if(strlen($val->name)  > STRING_MIN) ... @endif </td>
                                                         <td> {{ number_format($val->amount) }}đ</td>
                                                         <td> 
                                                             <?php echo \Carbon\Carbon::createFromTimestamp(strtotime($val ->created_at))->diffForHumans(); ?>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Requests\ChartRequest;
 use Illuminate\Http\Request;
 use App\TransfersMoney;
 use App\Transaction;
@@ -98,19 +98,20 @@ class HomeController extends Controller
      */
     public function index(Request $request){
 
-    	
+        
         $id =  Auth::user()->id;
         $date = \Carbon\Carbon::now();
 
         $year = $date->year;
 
-    	$listWallets = Wallets::where('user_id',$id)->orderBy('id','DESC')->paginate(4);
+        $listWallets = Wallets::where('user_id',$id)->orderBy('id','DESC')->paginate(4);
 
         $resultExpenses = $this->dataChartTransaction($id,$year,TYPE_EXPENSES);
 
         $resultIncom =  $this->dataChartTransaction($id,$year,TYPE_INCOM);
 
         $dataCategoryExpenses =  $this->dataChartCategory($year,TYPE_EXPENSES);
+
 
         $dataCategoryIncom =  $this->dataChartCategory($year,TYPE_INCOM);
 
@@ -122,7 +123,7 @@ class HomeController extends Controller
      * { function_description }
      */
 
-    public function resultAjaxDataChart(Request $request){
+    public function resultAjaxDataChartAll(Request $request){
 
         $id =  Auth::user()->id;
         $date = \Carbon\Carbon::now();
@@ -134,7 +135,7 @@ class HomeController extends Controller
             $year = $request ->year;
         }
 
-        $datas = Wallets::select('id')->get()->toArray();
+        $datas = Wallets::select('id')->where('user_id',$id)->get()->toArray();
 
         foreach ($datas as $key => $value) {
             # code...
@@ -142,13 +143,11 @@ class HomeController extends Controller
             $wallets[] = $value['id'];
         }
 
-        
        if(isset($request->wallets)){
 
         $wallets = $request->wallets;
 
        }
-
 
 
         // $resultExpenses = $this->dataChartTransaction($id,$year,TYPE_EXPENSES);
@@ -182,10 +181,11 @@ class HomeController extends Controller
             }
 
 
+
         //$resultIncom =  $this->dataChartTransaction($id,$year,TYPE_INCOM);
         $dataIncom =  DB::table('transactions')
             ->selectRaw( ' DATE_FORMAT( created_at,  "%Y-%m" ) AS DATE ,DATE_FORMAT( created_at,  "%m" ) AS MONTH, DATE_FORMAT( created_at,  "%Y" ) AS YEAR , SUM( amount ) AS total ')
-            ->where('type',TYPE_EXPENSES)
+            ->where('type',TYPE_INCOM)
             ->where('user_id', $id)
             ->whereIn('wallets_id',$wallets)
             ->groupBy('DATE')
@@ -217,4 +217,30 @@ class HomeController extends Controller
         die(json_encode($data));
 
     }
+
+
+    public function resultAjaxDataChartYear(ChartRequest $request){
+
+        $id =  Auth::user()->id;
+        $date = \Carbon\Carbon::now();
+
+        $year = $date->year;
+
+        if(isset($request ->year)){
+
+            $year = $request ->year;
+        }
+
+        $resultExpenses = $this->dataChartTransaction($id,$year,TYPE_EXPENSES);
+        $resultIncom =  $this->dataChartTransaction($id,$year,TYPE_INCOM);
+
+        $data = array('dataresultExpenses'=> $resultExpenses, 'dataresultIncom'=>$resultIncom);
+
+        return $data;
+
+        die(json_encode($data));
+
+    }
+
+    
 }

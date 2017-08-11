@@ -8,7 +8,7 @@ $(document).ready(function($) {
 	/**
 	 * delete wallets
 	 */
-	$('.delete').click(function(){
+	$('.delete-wallets').click(function(){
 
 		var id = $(this).attr('id');
 		var name = $(this).attr('name');
@@ -36,7 +36,7 @@ $(document).ready(function($) {
 			});
 	});
 
-	var linkEdit = link+'wallets/getEdit/';
+	
 
 	/**
 	 * Search for data wallets by name and amount
@@ -68,7 +68,7 @@ $(document).ready(function($) {
 						// html += '<td>'+wallets['updated_at']+'</td>';
 						html += '<td>';
 						html += '<a href="'+linkEdit+wallets['id']+'"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>';
-						html += '<a   title="Delete" class="delete" id="'+wallets['id']+'"><i class="fa fa-fw fa-trash-o"></i></a>'
+						html += '<a   title="Delete" class="delete-wallets" id="'+wallets['id']+'"><i class="fa fa-fw fa-trash-o"></i></a>'
          				html += '</td>'
 						html += '</tr>';
 					});
@@ -84,7 +84,10 @@ $(document).ready(function($) {
 	 */
 	$('#number-list-wallets').change(function(){
 
+			var linkEdit = link+'wallets/getEdit/';
+
 			var num = $('#number-list-wallets').find(":selected").val();
+			var key = $(this).val();
 
 			$('#example1_paginate').hide();
 
@@ -93,7 +96,7 @@ $(document).ready(function($) {
 			 	type:'get',
 			 	async:true,
 			 	dataType:'json',
-			 	data:{'num':num },
+			 	data:{'num':num,'key':key},
 			 	success:function(data)
 			 	{
 			 		var html = '';
@@ -110,7 +113,7 @@ $(document).ready(function($) {
 						// html += '<td>'+wallets['updated_at']+'</td>';
 						html += '<td>';
 						html += '<a href="'+linkEdit+wallets['id']+'"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>';
-						html += '<a   title="Delete" class="delete" id="'+wallets['id']+'"><i onclick=" return confirmDelete("You confirm the deletion")" class="fa fa-fw fa-trash-o"></i></a>';
+						html += '<a title="Delete" class="delete-wallets" id="'+wallets['id']+'"><i class="fa fa-fw fa-trash-o"></i></a>';
          				html += '</td>'
 						html += '</tr>';
 					});
@@ -513,9 +516,6 @@ $(document).ready(function($) {
 		var year = $('#type-transaction').val();
 		var wallets = $('#select-category').val();
 
-		console.log(year);
-		console.log(wallets );
-		
 		$.ajax({
 		 	url:link+'chart',
 		 	type:'get',
@@ -524,7 +524,7 @@ $(document).ready(function($) {
 		 	data:{'year':year,'wallets':wallets},
 		 	success:function(datachart)
 		 	{
-		 		console.log(datachart);
+		 		console.log('1'+datachart);
 		 		//--------------
 		            //- AREA CHART -
 		            //--------------
@@ -673,16 +673,15 @@ $(document).ready(function($) {
 	$('.select-year').change(function(){
 
 		var year = $('#type-transaction').val();
-		console.log(year);
 		$.ajax({
-		 	url:link+'chart',
+		 	url:link+'chartyear',
 		 	type:'get',
 		 	async:true,
-		 	dataType:'text',
+		 	dataType:'json',
 		 	data:{'year':year},
-		 	success:function(datachart)
+		 	success:function(datachartYear)
 		 	{
-		 		console.log(datachart);
+		 		console.log('2'+datachartYear);
 		 		//--------------
 		            //- AREA CHART -
 		            //--------------
@@ -705,10 +704,10 @@ $(document).ready(function($) {
 		                  pointHighlightStroke: "rgba(220,220,220,1)",
 		                  data: [
 
-		                  	   datachart['resultExpenses'][0],datachart['resultExpenses'][1],datachart['resultExpenses'][2],
-		                       datachart['resultExpenses'][3],datachart['resultExpenses'][4],datachart['resultExpenses'][5],
-		                       datachart['resultExpenses'][6],datachart['resultExpenses'][7],datachart['resultExpenses'][8],
-		                       datachart['resultExpenses'][9],datachart['resultExpenses'][10],datachart['resultExpenses'][11],
+		                  	   datachartYear['dataresultExpenses'][0],datachartYear['dataresultExpenses'][1],datachartYear['dataresultExpenses'][2],
+		                       datachartYear['dataresultExpenses'][3],datachartYear['dataresultExpenses'][4],datachartYear['dataresultExpenses'][5],
+		                       datachartYear['dataresultExpenses'][6],datachartYear['dataresultExpenses'][7],datachartYear['dataresultExpenses'][8],
+		                       datachartYear['dataresultExpenses'][9],datachartYear['dataresultExpenses'][10],datachartYear['dataresultExpenses'][11],
 
 
 		                  ]
@@ -723,10 +722,10 @@ $(document).ready(function($) {
 		                  pointHighlightStroke: "rgba(60,141,188,1)",
 		                  data: [
 		                       
-		                       datachart['resultIncom'][0],datachart['resultIncom'][1],datachart['resultIncom'][2],
-		                       datachart['resultIncom'][3],datachart['resultIncom'][4],datachart['resultIncom'][5],
-		                       datachart['resultIncom'][6],datachart['resultIncom'][7],datachart['resultIncom'][8],
-		                       datachart['resultIncom'][9],datachart['resultIncom'][10],datachart['resultIncom'][11],
+		                       datachartYear['dataresultIncom'][0],datachartYear['dataresultIncom'][1],datachartYear['dataresultIncom'][2],
+		                       datachartYear['dataresultIncom'][3],datachartYear['dataresultIncom'][4],datachartYear['dataresultIncom'][5],
+		                       datachartYear['dataresultIncom'][6],datachartYear['dataresultIncom'][7],datachartYear['dataresultIncom'][8],
+		                       datachartYear['dataresultIncom'][9],datachartYear['dataresultIncom'][10],datachartYear['dataresultIncom'][11],
 		                  	]
 		                }
 		              ]

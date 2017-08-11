@@ -27,7 +27,7 @@ class RegisterRequest extends Request
             
             'name'      => 'required',
             'email'     => 'required|email|unique:users,email,'. $this->id,
-            'password'  => 'required|min:6',
+            'password'  => 'required|min:8',
             'rpassword' => 'required|same:password',
             'phone'     => 'numeric',
             'Image'     => 'image|max:2048',
@@ -44,7 +44,7 @@ class RegisterRequest extends Request
                 'email.email'       => ' Please enter the correct email format.',
                 'email.unique'      => ' The Email was registered .',
                 'password.required' => ' Please enter your password.',
-                'password.min'      => ' Password long than 6 characters ',
+                'password.min'      => ' Password long than 8 characters ',
                 'rpassword'         => ' Passwords do not match',
                 'phone.numeric'     => ' Phone numbers must be in digital format.',
                 

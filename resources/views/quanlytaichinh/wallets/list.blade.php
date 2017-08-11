@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     
-                                    <div style="padding-top: 15px;" id="example1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm" placeholder="" id="search" aria-controls="example1"></label></div>
+                                   {{--  <div style="padding-top: 15px;" id="example1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm" placeholder="" id="search" aria-controls="example1"></label></div> --}}
                                     
                                    {{--  <div class="col-sm-6">
                                         <label>
@@ -111,7 +111,7 @@
                                             @foreach($listWallets as $val)
                                                 <tr class="row_{{ $val->id }} select" >
                                                     <td> {{ $stt = $stt +1 }}</td>
-                                                    <td> {{ $val->name }} </td>
+                                                    <td> {{ the_excerpt($val->name,STRING_MIN) }} @if(strlen($val->name)  > STRING_MIN) ... @endif </td>
                                                     <td><input type="color" name="" value="{{ $val->color }}"></td>
                                                     <td> {{ number_format($val->amount) }}đ</td>
                                                     <td>
@@ -122,7 +122,7 @@
                                                     {{-- <td>{{ $val->updated_at}}</td> --}}
                                                     <td>
                                                         <a href="{{URL::route('wallets.getEdit',$val->id)}}"  title="Edit" class=""><i class="fa fa-fw fa-edit"></i></a>
-                                                        <a   title="Delete" class="delete" id="{{ $val->id}}" name="{{ $val->name }}"><i class="fa fa-fw fa-trash-o"></i></a>
+                                                        <a   title="Delete" class="delete-wallets" id="{{ $val->id}}" name="{{ $val->name }}"><i class="fa fa-fw fa-trash-o"></i></a>
                                                     </td>
                                                 </tr>
 
