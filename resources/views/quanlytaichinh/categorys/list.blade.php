@@ -99,7 +99,7 @@
                                                 @foreach($listCategory as $val)
                                                     <tr class="row_{{ $val->id }} select" >
                                                         <td> {{ $stt = $stt +1 }}</td>
-                                                        <td> {{ the_excerpt($val->name,70) }} @if(strlen($val->name)  > STRING_MIN) ... @endif  </td>
+                                                        <td> {{ the_excerpt($val->name,STRING_MIN) }} @if(strlen($val->name)  > STRING_MIN) ... @endif  </td>
                                                         <td>
                                                             @if($val->type == 1)
                                                                 Expenses

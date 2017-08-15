@@ -137,7 +137,7 @@
                         <!-- DONUT CHART -->
                         <div class="box box-danger">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Categorys Chart Expenses</h3>
+                                <h3 class="box-title">Chart Categorys Expenses</h3>
 
                                 <div class="box-tools pull-right">
                                   <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -178,7 +178,7 @@
                         <!-- LINE CHART -->
                         <div class="box box-info">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Categorys Chart Incom </h3>
+                                <h3 class="box-title"> Chart Categorys Incom </h3>
 
                                 <div class="box-tools pull-right">
                                   <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>

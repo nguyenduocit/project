@@ -50,4 +50,4 @@ define('TYPE_INCOM',2);
 
 //Limit the number of displayed characters
 
-define('STRING_MIN',70);
+define('STRING_MIN',30);

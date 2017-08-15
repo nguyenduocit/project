@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+@section('title')
+  Forgot Password
+@stop
 <html>
 <head>
    @include('quanlytaichinh.include.head')
@@ -18,7 +21,7 @@
 
       <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-      <div class="form-group has-feedback">
+      <div class="form-group has-feedback @if($errors->first('email')) has-error @endif ">
 
         <input type="email" name="email" class="form-control" placeholder="Email">
 

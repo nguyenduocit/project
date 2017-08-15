@@ -93,32 +93,19 @@ class TransfersMoneyController extends Controller
             return redirect('wallets/getTransfersMoney')->with(['flash_level'=>'danger','flash_message'=>"The money in the wallet is not enough to transfer !"]);
         }
 
-        // // Get data received
-        // $amountReceive = Wallets::select('amount')->where('id',$request->receive_wallet)->get();
-
-        // $amountRec = $amountReceive[0]->amount;
-
-        // $amountReceiveUpdate = $amountRec + $request->amount;
-
-        // // Update Receive Wallet
-        // $wallets = Wallets::find($request->receive_wallet);
-        // $wallets->amount      = $amountReceiveUpdate;
-        // $wallets->save();
-
-        // // Update Transfer wallet 
-        // $amountTransferUpdate = $amountTran - $request->amount;
-        // $wallets = Wallets::find($request->transfer_wallet);
-        // $wallets->amount      = $amountTransferUpdate;
-        // $wallets->save();
-
+        
         // insert Transfers Money
         $transfersMoney                   = new TransfersMoney;
         $transfersMoney ->transfer_wallet = $request->transfer_wallet;
         $transfersMoney ->receive_wallet  = $request->receive_wallet;
         $transfersMoney ->amount          = $request->amount;
         $transfersMoney ->user_id         = Auth::user()->id;
-        
         $transfersMoney ->save();
+
+        DB::table('transactions')->insert([
+            ['user_id' => Auth::user()->id, 'wallets_id' => $request->transfer_wallet,'amount'=> $request->amount,'type'=>1],
+            ['user_id' => Auth::user()->id, 'wallets_id' => $request->receive_wallet,'amount'=> $request->amount,'type'=>2],
+        ]);
 
 
         return redirect('wallets/getListTransfers')->with(['flash_level'=>'success','flash_message'=>'Transfer money successfully!!!']);

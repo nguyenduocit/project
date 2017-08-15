@@ -54,19 +54,27 @@ class TransactionController extends Controller
 
             $sumAmountTransaction = DB::table('transactions')->where('user_id',Auth::user()->id)->sum('amount'); 
 
-            $listTransaction = Transaction::select('id','category_id','user_id','wallets_id','amount','describe', 'created_at', 'updated_at')->where('user_id',Auth::user()->id)->orderBy('id','DESC')->paginate($num);
+            $listTransaction = Transaction::select('id','category_id','user_id','wallets_id','amount','describe','type','created_at', 'updated_at')->where('user_id',Auth::user()->id)->orderBy('id','DESC')->paginate($num);
 
             foreach($listTransaction as $transaction){
                 $wallets = Wallets::select('id','name')->where('id',$transaction->wallets_id)->get()->toArray();
-                $transaction->nameWallets = $wallets[0]['name'];
+                if(!empty($wallets)){
+                    $transaction->nameWallets = $wallets[0]['name'];
+                }
+                
             }
 
             foreach($listTransaction as $transaction){
                 $category = Categorys::select('id','name','type')->where('id',$transaction->category_id)->get()->toArray();
 
+               if(!empty($category)){
+
                 $transaction->nameCategory = $category[0]['name'];
-                $transaction->nameType     = $category[0]['type'];
+                
+               }
             }
+
+           
 
             return view('quanlytaichinh.transaction.list',compact("listTransaction","sumAmountTransaction"));
 

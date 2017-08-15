@@ -101,11 +101,11 @@
                                                 @foreach($listTransaction as $val)
                                                     <tr class="row_{{ $val->id }} select" >
                                                         <td> {{ $stt = $stt +1 }}</td>
-                                                        <td> {{ $val->nameWallets}} </td>
-                                                        <td> {{ $val ->nameCategory}}</td>
-                                                        <td style="@if($val->nameType == 1) color: red; @elseif($val->nameType == 2) color:#31e915; @endif"> @if($val->nameType == 1) - @elseif($val->nameType == 2) + @endif {{ number_format($val->amount) }} đ</td>
+                                                        <td> <p title="{{ $val->nameWallets  }}">{{ the_excerpt($val->nameWallets,STRING_MIN) }} @if(strlen($val->nameWallets)  > STRING_MIN) ... @endif</p></td>
+                                                        <td> <p title="{{ $val ->nameCategory }}">@if($val->category_id  == NULL) Giao dich chuyển tiền  @else {{ the_excerpt($val ->nameCategory,STRING_MIN) }} @endif</p> <p>@if(strlen($val ->nameCategory)  > STRING_MIN) ... @endif</p></td>
+                                                        <td style="@if($val->type == 1) color: red; @elseif($val->type == 2) color:#31e915; @endif"> @if($val->type == 1) - @elseif($val->type == 2) + @endif {{ number_format($val->amount) }} đ</td>
 
-                                                        <td> {{ $val ->describe }}</td>
+                                                        <td> <p title="{{ $val ->describe  }}"> {{ the_excerpt($val ->describe,STRING_MIN)  }}</p></td>
                                                         <td> 
                                                             <?php echo $times = \Carbon\Carbon::createFromTimestamp(strtotime($val ->created_at))->diffForHumans(); ?>
                                                         </td>
@@ -122,14 +122,14 @@
                                                             $TotalExpenses = 0; 
                                                             $TotalIncome   = 0;
                                                             foreach($listTransaction as $val){
-                                                                if($val ->nameType == 1){
+                                                                if($val ->type == 1){
 
                                                                     $TotalExpenses = $TotalExpenses + $val->amount;
 
                                                                 }
 
 
-                                                                if($val ->nameType == 2){
+                                                                if($val ->type == 2){
                                                                     $TotalIncome = $TotalIncome + $val->amount;
                                                                 }
                                                             }
