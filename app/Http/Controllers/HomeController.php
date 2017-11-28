@@ -106,6 +106,8 @@ class HomeController extends Controller
 
         $listWallets = Wallets::where('user_id',$id)->orderBy('id','DESC')->paginate(4);
 
+
+
         $resultExpenses = $this->dataChartTransaction($id,$year,TYPE_EXPENSES);
 
         $resultIncom =  $this->dataChartTransaction($id,$year,TYPE_INCOM);
@@ -114,6 +116,8 @@ class HomeController extends Controller
 
 
         $dataCategoryIncom =  $this->dataChartCategory($year,TYPE_INCOM);
+
+       // update wallets 
 
         return view('quanlytaichinh.home.index',compact('listWallets',"resultExpenses",'resultIncom','dataCategoryExpenses','dataCategoryIncom'));
 

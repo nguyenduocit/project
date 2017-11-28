@@ -101,6 +101,16 @@
 
                                     <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                         <div class="col-md-3 col-sm-6 col-xs-12 ">
+                                            <label for="exampleInputEmail1">Date <span class="obligatory">*</span></label>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12 @if($errors->first('amount')) has-error @endif">
+                                            <input type="date" name="date_now" class="form-control" id="exampleInputAmount" maxlength="18" value="{{date($transaction ->created_at)}}">
+                                            <span class="text-danger"><p>{{ $errors->first('amount') }}</p></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-3 col-sm-6 col-xs-12 ">
                                             <label for="exampleInputEmail1">Amount <span class="obligatory">*</span></label>
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-12 @if($errors->first('amount')) has-error @endif">

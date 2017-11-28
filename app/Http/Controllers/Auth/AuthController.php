@@ -264,6 +264,7 @@ class AuthController extends Controller
      */
 
     public function getConfirmEmail($token){
+
         // select information user
         $users = DB::table('users')->where('remember_token', $token)->get();
         // check empty user

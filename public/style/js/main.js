@@ -524,8 +524,7 @@ $(document).ready(function($) {
 		 	data:{'year':year,'wallets':wallets},
 		 	success:function(datachart)
 		 	{
-		 		console.log('1'+datachart);
-		 		//--------------
+		 		
 		            //- AREA CHART -
 		            //--------------
 

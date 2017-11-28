@@ -118,8 +118,9 @@ class TransactionController extends Controller
         $transaction ->user_id     = Auth::user()->id;
         $transaction ->wallets_id  = $request->wallets_id;
         $transaction ->amount      = $request->amount;
-        $transaction ->type     = $request->type;
+        $transaction ->type        = $request->type;
         $transaction ->describe    = $request->describe;
+        $transaction ->created_at  = $request->date_now;
 
 		$transaction ->save();
 

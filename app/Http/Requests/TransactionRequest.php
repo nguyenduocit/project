@@ -25,14 +25,14 @@ class TransactionRequest extends Request
     public function rules()
     {
         return [
-        
+            'date_now'=>'required',
             'amount' => 'required|numeric',
         ];
     }
 
     public function  messages(){
         return [
-
+            'date_now.required' => 'Please select the date',
             'amount.required' => 'Enter the amount in the transaction',
             'amount.numeric'  => 'Amount must be numeric',
             

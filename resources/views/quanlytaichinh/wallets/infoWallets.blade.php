@@ -15,10 +15,10 @@
                <li><a href="#"> Information Wallets </a></li>
                 @foreach($transfersMoney as $val)
                     @if($val->transfer_wallet == $id)
-                       <li><a href="#">{{ $val->name_transfer_wallet}} </a></li>
+                       <li><a href="#">{{  the_excerpt($val->name_transfer_wallet,STRING_MIN)}} @if(strlen($val->name_transfer_wallet)  > STRING_MIN) ... @endif </a></li>
                        @break;
                     @elseif($val ->receive_wallet == $id)
-                       <li><a href="#">{{ $val->name_receive_wallet }} </a></li>
+                       <li><a href="#">{{  the_excerpt($val->name_receive_wallet,STRING_MIN) }} @if(strlen($val->name_receive_wallet)  > STRING_MIN) ... @endif</a></li>
                        @break;
                     @endif
                 @endforeach
@@ -97,8 +97,8 @@
                                                 @foreach($transfersMoney as $val)
                                                     <tr class="row_{{ $val->id }} select" >
                                                         <td> {{ $stt = $stt +1 }}</td>
-                                                        <td> {{ $val->name_transfer_wallet}} </td>
-                                                        <td> {{ $val->name_receive_wallet }}</td>
+                                                        <td> <p title="{{$val->name_transfer_wallet}}">{{ the_excerpt($val->name_transfer_wallet,STRING_MIN)}} @if(strlen($val->name_transfer_wallet)  > STRING_MIN) ... @endif</p> </td>
+                                                        <td> <p title="{{$val->name_receive_wallet}}">{{ the_excerpt($val->name_receive_wallet,STRING_MIN) }} @if(strlen($val->name_receive_wallet)  > STRING_MIN) ... @endif</p></td>
                                                         <td style=" 
                                                                 @if($val->transfer_wallet == $id)
                                                                  color:red;
@@ -197,8 +197,8 @@
                                                 @foreach($datatransactionexpenses as $val)
                                                     <tr class="row}} select" >
                                                         <td> {{ $stt = $stt +1 }}</td>
-                                                        <td> {{ $val->nameWallets}} </td>
-                                                        <td> {{ $val->nameCategory}}</td>
+                                                        <td> <p title="{{$val->nameWallets}}">{{ the_excerpt($val->nameWallets,STRING_MIN)}} @if(strlen($val->nameWallets)  > STRING_MIN) ... @endif</p></td>
+                                                        <td> <p title="{{$val->nameCategory}}">{{ the_excerpt($val->nameCategory,STRING_MIN)}} @if(strlen($val->nameCategory)  > STRING_MIN) ... @endif</p></td>
                                                         <td style="@if($val->type == 1) color: red; @elseif($val->type == 2) color:#31e915; @endif"> @if($val->type == 1) - @elseif($val->type == 2) + @endif {{ number_format($val->amount) }} đ</td>
 
                                                         <td> {{ $val ->describe }}</td>
@@ -298,8 +298,8 @@
                                                 @foreach($datatransactionincom as $val)
                                                     <tr class="row}} select" >
                                                         <td> {{ $stt = $stt +1 }}</td>
-                                                        <td> {{ $val->nameWallets}} </td>
-                                                        <td> {{ $val->nameCategory}}</td>
+                                                        <td><p title="{{$val->nameWallets}}">{{ the_excerpt($val->nameWallets,STRING_MIN)}} @if(strlen($val->nameWallets)  > STRING_MIN) ... @endif</p></td>
+                                                        <td><p title="{{$val->nameCategory}}">{{ the_excerpt($val->nameCategory,STRING_MIN)}} @if(strlen($val->nameCategory)  > STRING_MIN) ... @endif</p></td>
                                                         <td style="@if($val->type == 1) color: red; @elseif($val->type == 2) color:#31e915; @endif"> @if($val->type == 1) - @elseif($val->type == 2) + @endif {{ number_format($val->amount) }} đ</td>
 
                                                         <td> {{ $val ->describe }}</td>
