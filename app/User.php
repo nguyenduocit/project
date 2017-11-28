@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'address', 'phone', 'avata', 'birthday', 'sex', 'status', 'remember_token',
     ];
 
     /**
@@ -23,4 +23,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     *  hasMany
+     * @return [type] [description]
+     */
+    public function wallets(){
+        return $this->hasMany('App\Wallets');
+    }
 }

@@ -20,6 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('address');
             $table->string('avata');
             $table->integer('phone');
+            $table->date('birthday');
+            $table->tinyInteger('sex');
             $table->tinyInteger('status');
             $table->rememberToken();
             $table->timestamps();

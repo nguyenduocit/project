@@ -1,49 +1,112 @@
 <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->
+      @if(Auth::check())
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+           @if(Auth::user()->avata)
+                <img src="{{url('public/upload/images')}}/{{ Auth::user()->avata }}" class="img-circle" alt="User Image">
+           @else
+                <img src="{{url('public/upload/icon/user.jpg')}}" class="img-circle" alt="User Image">
+           @endif
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          <p>{{ Auth::user()->name}}</p>
+          <a href="{{ URL::route('users.getUserProfile')}}"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
+      @endif
       <!-- search form -->
       <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
+          {{-- <input type="text" name="q" class="form-control" placeholder="Search...">
               <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>
-              </span>
+              </span> --}}
         </div>
       </form>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu">
+    <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="treeview active">
-          <a href="#">
-            <i class="fa fa-files-o"></i>
-            <span>Layout Options</span>
-            <span class="label label-primary pull-right">4</span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="../layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-            <li><a href="../layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-            <li class="active"><a href="../layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-            <li><a href="collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="../widgets.html">
-            <i class="fa fa-th"></i> <span>Widgets</span>
-            <small class="label pull-right bg-green">new</small>
-          </a>
+
+        <li class="treeview">
+
+            <a href="{{ URL::route('wallets.getAdd') }}">
+
+                <i class="fa fa-plus-square"></i>
+
+                <span>Add Wallets </span>
+
+                <span class="label label-primary pull-right"></span>
+            </a>
         </li>
 
-      </ul>
+        <li class="treeview">
+
+            <a href="{{ URL::route('wallets.getList') }}">
+
+                <i class="fa fa-list-ol"></i>
+
+                <span>List Wallets </span>
+
+                <span class="label label-primary pull-right"></span>
+            </a>
+        </li>
+
+        <li class="treeview">
+            <a href="{{URL::route('wallets.getTransfersMoney')}}">
+
+                <i class="fa fa-plus-square"></i>
+
+                <span>Transfers Money</span>
+
+                <span class="label label-primary pull-right"></span>
+            </a>
+        </li>
+
+        <li class="treeview">
+
+            <a href="{{URL::route('wallets.getListTransfers')}}">
+                <i class="fa fa-list-ol"></i>
+
+                <span>List Transfers Money</span>
+
+                <span class="label label-primary pull-right"></span>
+            </a>
+        </li>
+
+
+        <li class="treeview">
+            <a href="{{URL::route('categorys.getAdd')}}">
+                <i class="fa fa-plus-square"></i> <span>Add Categorys</span>
+                <small class="label pull-right bg-green"></small>
+            </a> 
+        </li>
+
+        <li class="treeview" >
+            <a href="{{URL::route('categorys.getList')}}">
+                <i class="fa fa-list-ol"></i> <span>List Categorys</span>
+                <small class="label pull-right bg-green"></small>
+            </a>
+        </li>
+
+        <li class="treeview" >
+            <a href="{{URL::route('transection.getAdd')}}">
+                <i class="fa fa-plus-square"></i> <span>Add Transaction</span>
+                <small class="label pull-right bg-green"></small>
+            </a>
+        </li>
+
+        <li class="treeview" >
+            <a href="{{URL::route('transection.getList')}}">
+                <i class="fa fa-list-ol"></i> <span>List Transaction</span>
+                <small class="label pull-right bg-green"></small>
+            </a>
+        </li>
+
+
+    </ul>
     </section>
     <!-- /.sidebar -->

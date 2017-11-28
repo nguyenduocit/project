@@ -1,91 +1,120 @@
 <!DOCTYPE html>
+@section('title')
+  Register
+@stop
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Registration Page</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-   <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="{{ url('public/bootstrap/css/bootstrap.min.css') }}">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{ url('public/dist/css/AdminLTE.min.css') }}">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="{{ url('public/plugins/iCheck/square/blue.css') }}">
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+  @include('quanlytaichinh.include.head')
 </head>
 <body class="hold-transition register-page">
 <div class="register-box">
   <div class="register-logo">
-    <a href="../../index2.html"><b>Admin</b>LTE</a>
+    <a href="../../index2.html"><b>Register</b>LTE</a>
   </div>
 
   <div class="register-box-body">
     <p class="login-box-msg">Register a new membership</p>
 
-    <form action="../../index.html" method="post">
-      <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="Full name">
-        <span class="glyphicon glyphicon-user form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email">
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Retype password">
-        <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
-      </div>
-      <div class="row">
-        <div class="col-xs-8">
-          <div class="checkbox icheck">
-            <label>
-              <input type="checkbox"> I agree to the <a href="#">terms</a>
-            </label>
+    <form action="{{ URL::route('users.postRegister')}}" method="post" enctype="multipart/form-data" >
+
+        <input type="hidden" name="_token" value="{{ csrf_token()}}">
+
+        <div class="form-group has-feedback @if($errors->first('name')) has-error @endif">
+
+            <input type="text" name="name" class="form-control" placeholder="Full name" value="{{ old('name')}}">
+             <span class="text-danger"><p>{{ $errors->first('name') }}</p></span>
+            <span class="glyphicon glyphicon-user form-control-feedback" style="color: red;"></span>
+        </div>
+        <div class="form-group has-feedback @if($errors->first('email')) has-error @endif">
+
+            <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email')}}" >
+
+            <span class="text-danger"><p>{{ $errors->first('email') }}</p></span>
+            <span class="glyphicon glyphicon-envelope form-control-feedback" style="color: red;" ></span>
+
+        </div>
+        <div class="form-group has-feedback @if($errors->first('password')) has-error @endif">
+
+            <input type="password" name="password" class="form-control" placeholder="Password">
+            <span class="text-danger"><p>{{ $errors->first('password') }}</p></span>
+            <span class="glyphicon glyphicon-lock form-control-feedback" style="color: red;" ></span>
+
+        </div>
+        <div class="form-group has-feedback @if($errors->first('rpassword')) has-error @endif">
+
+            <input type="password" name="rpassword" class="form-control" placeholder="Retype password">
+            <span class="text-danger"><p>{{ $errors->first('rpassword') }}</p></span>
+            <span class="glyphicon glyphicon-log-in form-control-feedback" style="color: red;"></span>
+        </div>
+        <div class="form-group has-feedback">
+
+            <input type="text" name="address" class="form-control" placeholder="Address" value="{{ old('address')}}" >
+            <span class="fa fa-road form-control-feedback"></span>
+        </div>
+
+        <div class="form-group has-feedback">
+
+            <input type="number" name="phone" class="form-control" placeholder="phone" value="{{ old('phone')}}" >
+            <span class="fa fa-phone-square form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+
+            <input type="date" name="birthday" class="form-control" placeholder="birthday" value="{{ old('birthday')}}">
+            
+            <span class="fa fa-calendar form-control-feedback"></span>
+            
+        </div>
+
+        <div class="form-group has-feedback">
+
+            <input type="radio" id="" name="sex" class="" checked="" value="1" placeholder = "">Male
+            
+            <input type="radio" id="" name="sex" class="" value="0" placeholder = "">Female
+        </div>
+
+        <div class="form-group has-feedback">
+
+            <input type="file" id="uploadfile" name="Image"  value="" placeholder = "" onchange="readURL(this);" >
+              <div class="preview showimg" id="thumbbox" >
+                  <img id="thumbimage"  src=""  width="30%" alt="Image preview...">
+                  <a class="removeimg" href="javascript:" ></a>
+              </div>
+
+              <span class="text-danger"><p>{{ $errors->first('Image') }}</p></span>
+        </div>
+        <div class="row">
+            <!-- <div class="col-xs-8">
+              <div class="checkbox icheck">
+                <label>
+                  <input type="checkbox"> I agree to the <a href="#">terms</a>
+                </label>
+              </div>
+          </div> -->
+          <!-- /.col -->
+          <div class="col-xs-4">
+              <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
           </div>
+          <!-- /.col -->
         </div>
-        <!-- /.col -->
-        <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
-        </div>
-        <!-- /.col -->
-      </div>
     </form>
 
-    <div class="social-auth-links text-center">
+   <!--  <div class="social-auth-links text-center">
       <p>- OR -</p>
       <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign up using
         Facebook</a>
       <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign up using
         Google+</a>
-    </div>
+    </div> -->
 
-    <a href="login.html" class="text-center">I already have a membership</a>
+    <a href="{{ URL::route('users.getLogin')}}" class="text-center">I already have a membership</a>
   </div>
   <!-- /.form-box -->
 </div>
 <!-- /.register-box -->
 
 <!-- jQuery 2.2.0 -->
-<script src="{{ url('public/plugins/jQuery/jQuery-2.2.0.min.js') }}"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="{{ url('public/bootstrap/js/bootstrap.min.js') }}"></script>
-<!-- iCheck -->
-<script src="{{ url('public/plugins/iCheck/icheck.min.js') }}"></script>
+
+@include('quanlytaichinh.include.java')
 <script>
   $(function () {
     $('input').iCheck({
